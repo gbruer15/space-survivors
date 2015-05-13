@@ -38,6 +38,9 @@ LUA_PATH, path = "?;?.lua",LUA_PATH
 LUA_PATH, path = path, LUA_PATH
 
 function love.load()
+	require('1stPartyLib/physics/collision')
+
+	
 	window = {}
 	window.width, window.height = love.graphics.getDimensions()
 	window.fullscreen = false
@@ -133,36 +136,39 @@ end
 
 
 function love.keypressed(key)
+	if STATE.keypressed then
+		STATE.keypressed(key)
+	end
 	if key == 'escape' then
 		love.event.quit()
 	end
 end	
---[[
+
 function love.keyreleased(key)
-	if states[state].keyreleased then
-		states[state].keyreleased(key)
+	if STATE.keyreleased then
+		STATE.keyreleased(key)
 	end
 end
 
 function love.mousepressed(x,y,b)
-	if states[state].mousepressed then
-		states[state].mousepressed(x,y,b)
+	if STATE.mousepressed then
+		STATE.mousepressed(x,y,b)
 	end
 end
 
 function love.mousereleased(x,y,b)
-	if states[state].mousereleased then
-		states[state].mousereleased(x,y,b)
+	if STATE.mousereleased then
+		STATE.mousereleased(x,y,b)
 	end
 end
 
 function love.textinput(text)
-	if states[state].textinput then
-		states[state].textinput(text)
+	if STATE.textinput then
+		STATE.textinput(text)
 	end
-	TYPED = TYPED .. text
+	--TYPED = TYPED .. text
 end
---]]
+
 
 function love.quit()
 	--execute this on quit
