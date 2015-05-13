@@ -32,12 +32,6 @@ function missile:draw()
 	love.graphics.line(self.x, self.y, self.endX, self.endY)
 end
 
-function missile:collideRectangle(x,y,w,h)
-	if type(x) == 'table' then
-		y = x.y
-		w = x.width
-		h = x.height
-		x = x.x
-	end
-	return collision.pointRectangle(self.x,self.y, x,y,w,h)
+function missile:isHittingRectangle(x,y,w,h)
+	return collision.pointRectangle(self.x,self.y, x,y,w,h) or collision.pointRectangle(self.endX,self.endY, x,y,w,h)
 end

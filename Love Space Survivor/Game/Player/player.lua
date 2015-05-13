@@ -5,12 +5,12 @@ function playerfunctions.make()
 	setmetatable(self, {__index = playerfunctions})
 
 	require("1stPartyLib/display/rectangle")
-	self.drawBox = rectangle.make(90,125)
-
-	self.collisionBox = rectangle.make(70,100)
 
 	self.x = window.width/2
 	self.y = window.height/2
+	self.drawBox = rectangle.make(90,125, self)
+
+	self.collisionBox = rectangle.make(70,100,self)
 
 	self.missiles = {}
 
@@ -30,7 +30,7 @@ function playerfunctions:draw()
 end
 
 function playerfunctions:fireMissile()
-	table.insert(self.missiles,missile.make(self.x,self.y-self.drawBox.height/2, 500,-math.pi/2))
+	table.insert(self.missiles,missile.make(self.x,self.y-self.drawBox.height/2, 50,-math.pi/2))
 end
 
 function playerfunctions:keypressed(key)

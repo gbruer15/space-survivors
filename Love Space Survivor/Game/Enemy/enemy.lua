@@ -6,23 +6,16 @@ function enemy.make(att)
 	setmetatable(self, enemy)
 
 	require("1stPartyLib/display/rectangle")
-	self.relDrawBox = rectangle.make(50,60)
-
-	self.relCollisionBox = rectangle.make(30,40)
 
 	self.x = att.x or 0
 	self.y = att.y or 0
-
-	self.absCollisionBox = {}
-	self.absCollisionBox.x = self.relCollisionBox.x + self.x
-	self.absCollisionBox.y = self.relCollisionBox.y + self.y
-	self.absCollisionBox.width = self.relCollisionBox.width
-	self.absCollisionBox.height = self.relCollisionBox.height
+	self.drawBox = rectangle.make(50,60, self)
+	self.collisionBox = rectangle.make(30,40,self)
 
 	self.yspeed = att.yspeed or 100
 
 	self.missiles = {}
-	self.firing = true
+	self.firing = false
 	self.fireDelay = att.fireDelay or 2
 	self.fireCountdown = self.fireDelay
 
@@ -34,9 +27,6 @@ end
 function enemy:update(dt)
 	self.y = self.y + self.yspeed*dt
 
-	self.absCollisionBox.x = self.relCollisionBox.x + self.x
-	self.absCollisionBox.y = self.relCollisionBox.y + self.y
-
 	self.fireCountdown = self.fireCountdown - dt
 	if self.fireCountdown <= 0 and self.firing then
 		self:fireMissile()
@@ -46,10 +36,14 @@ end
 
 function enemy:draw()
 	love.graphics.setColor(255,0,0)
-	self.relDrawBox:draw('fill',self.x,self.y)
+	self.drawBox:draw('fill')
 
 	love.graphics.setColor(0,255,0,100)
-	self.relCollisionBox:draw('fill',self.x,self.y)	
+	self.collisionBox:draw('fill')
+
+	love.graphics.setColor(255,255,255,100)
+	love.graphics.rectangle('fill',self.collisionBox:getLeft(),self.collisionBox:getTop(),self.collisionBox.width,self.collisionBox.height)
+	--love.graphics.printf(self.health, self.x-self.relDrawBox.width/2, self.y, self.relDrawBox.width,'center')
 end
 
 function enemy:fireMissile()
