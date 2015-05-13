@@ -42,24 +42,18 @@ function love.load()
 	window.width, window.height = love.graphics.getDimensions()
 	window.fullscreen = false
 	
-	TYPED = ""
-	QUIT = false
-	info = false	
-	clear = true
-	gameloaded = false
-	screenshots = {}
 	-- FPS cap
 	min_dt = 1/60
 	next_time = love.timer.getTime()
 
 	
-	resources.load()
-	music.fight.music:play()
+	--resources.load()
+	--music.fight.music:play()
 	
-	love.mouse.setVisible(false)
-	lovefunctions = {"mousepressed","mousereleased","keypressed","keyreleased"}
+	--love.mouse.setVisible(false)
+	--lovefunctions = {"mousepressed","mousereleased","keypressed","keyreleased"}
 	
-	states.loadingscreen.load('titlemenu',1.5)
+	--states.loadingscreen.load('titlemenu',1.5)
 	--states.empty.load()
 	
 end
@@ -68,7 +62,7 @@ function love.update(dt)
 	--  FPS cap
 	next_time = next_time + min_dt	
 
-	states[state].update(dt)
+	--states[state].update(dt)
 	
 	love.window.setTitle(love.timer.getFPS())
 
@@ -79,6 +73,7 @@ end
 
 
 function love.draw()
+	--[[
 	states[state].draw()	
 
 	------Draw Cool Cursor Thing--------
@@ -103,7 +98,7 @@ function love.draw()
 	love.graphics.setColor(0,0,0)
 	love.graphics.circle("fill",x,y,2)
 
-
+--]]
 	--[[
 	love.graphics.setColor(0,0,0)
 	love.graphics.rectangle("fill",0,0,window.width,window.height)
@@ -129,6 +124,7 @@ function love.draw()
 	love.timer.sleep(1*(next_time - cur_time))
 end
 
+--[[
 function love.keypressed(key)
 	if states[state].keypressed then
 		states[state].keypressed(key)
@@ -137,6 +133,7 @@ function love.keypressed(key)
 	if key == 'l' then
 		love.mouse.setVisible(not love.mouse.isVisible())
 	end
+
 end
 
 function love.keyreleased(key)
@@ -163,7 +160,7 @@ function love.textinput(text)
 	end
 	TYPED = TYPED .. text
 end
-
+--]]
 
 function love.quit()
 	--execute this on quit
