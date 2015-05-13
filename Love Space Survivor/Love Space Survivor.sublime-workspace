@@ -8,10 +8,45 @@
 	"buffers":
 	[
 		{
-			"file": "Love Space Survivor.sublime-project",
+			"file": "Game/States/game.lua",
 			"settings":
 			{
-				"buffer_size": 534,
+				"buffer_size": 426,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Game/Player/player.lua",
+			"settings":
+			{
+				"buffer_size": 1011,
+				"line_ending": "Unix",
+				"name": "local player = {}"
+			}
+		},
+		{
+			"file": "Game/Player/missile.lua",
+			"settings":
+			{
+				"buffer_size": 644,
+				"line_ending": "Unix",
+				"name": "missile = {}"
+			}
+		},
+		{
+			"file": "1stPartyLib/display/rectangle.lua",
+			"settings":
+			{
+				"buffer_size": 443,
+				"line_ending": "Unix",
+				"name": "rectangle = {}"
+			}
+		},
+		{
+			"file": "Game/States/titlemenu.lua",
+			"settings":
+			{
+				"buffer_size": 202,
 				"line_ending": "Unix"
 			}
 		},
@@ -19,7 +54,7 @@
 			"file": "main.lua",
 			"settings":
 			{
-				"buffer_size": 5665,
+				"buffer_size": 5726,
 				"line_ending": "Windows"
 			}
 		}
@@ -48,6 +83,10 @@
 	},
 	"file_history":
 	[
+		"/home/grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/States/game.lua",
+		"/home/grant/.config/sublime-text-2/Packages/Default/Default (Linux).sublime-keymap",
+		"/home/grant/.config/sublime-text-2/Packages/Default/Preferences.sublime-settings",
+		"/home/grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Love Space Survivor.sublime-project",
 		"/home/grant/scm/EatRepo/Eating/Game/enemy.lua",
 		"/home/grant/scm/EatRepo/Eating/camera.lua",
 		"/home/grant/scm/EatRepo/Eating/eating.sublime-project",
@@ -55,7 +94,7 @@
 	],
 	"find":
 	{
-		"height": 0.0
+		"height": 35.0
 	},
 	"find_in_files":
 	{
@@ -69,6 +108,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"f5",
+			"build"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -86,29 +127,28 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 5,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "Love Space Survivor.sublime-project",
+					"file": "Game/States/game.lua",
 					"settings":
 					{
-						"buffer_size": 534,
+						"buffer_size": 426,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								212,
-								212
+								408,
+								408
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JSON.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/Lua/Lua.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -118,18 +158,129 @@
 				},
 				{
 					"buffer": 1,
-					"file": "main.lua",
+					"file": "Game/Player/player.lua",
 					"settings":
 					{
-						"buffer_size": 5665,
+						"buffer_size": 1011,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4343,
-								4343
+								746,
+								746
+							]
+						],
+						"settings":
+						{
+							"auto_name": "local player = {}",
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 153.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "Game/Player/missile.lua",
+					"settings":
+					{
+						"buffer_size": 644,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								270,
+								270
+							]
+						],
+						"settings":
+						{
+							"auto_name": "missile = {}",
+							"spell_check": true,
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "1stPartyLib/display/rectangle.lua",
+					"settings":
+					{
+						"buffer_size": 443,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								413,
+								413
+							]
+						],
+						"settings":
+						{
+							"auto_name": "rectangle = {}",
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "Game/States/titlemenu.lua",
+					"settings":
+					{
+						"buffer_size": 202,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								37,
+								37
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "main.lua",
+					"settings":
+					{
+						"buffer_size": 5726,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3876,
+								3876
 							]
 						],
 						"settings":
@@ -138,7 +289,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 3570.0,
+						"translation.y": 2142.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -152,7 +303,7 @@
 	},
 	"input":
 	{
-		"height": 0.0
+		"height": 33.0
 	},
 	"layout":
 	{

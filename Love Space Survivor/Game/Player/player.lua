@@ -1,5 +1,5 @@
 local playerfunctions = {}
-require('Game/Player/missile')
+require('Game/missile')
 function playerfunctions.make()
 	local self = {}
 	setmetatable(self, {__index = playerfunctions})
@@ -19,10 +19,6 @@ end
 
 function playerfunctions:update(dt)
 	self.x,self.y = MOUSE.x,MOUSE.y
-
-	for i,v in ipairs(self.missiles) do
-		v:update(dt)
-	end
 end
 
 function playerfunctions:draw()
@@ -31,14 +27,10 @@ function playerfunctions:draw()
 
 	love.graphics.setColor(0,255,0,100)
 	self.collisionBox:draw('fill',self.x,self.y)	
-
-	for i,v in ipairs(self.missiles) do
-		v:draw()
-	end
 end
 
 function playerfunctions:fireMissile()
-	self.missiles[#self.missiles] = missile.make(self.x,self.y-self.height/2, 500,-math.pi/2)
+	table.insert(self.missiles,missile.make(self.x,self.y-self.drawBox.height/2, 500,-math.pi/2))
 end
 
 function playerfunctions:keypressed(key)
