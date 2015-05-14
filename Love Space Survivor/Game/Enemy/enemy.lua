@@ -15,8 +15,8 @@ function enemy.make(att)
 	self.yspeed = att.yspeed or 100
 
 	self.missiles = {}
-	self.firing = false
-	self.fireDelay = att.fireDelay or 2
+	self.firing = true
+	self.fireDelay = att.fireDelay or 1
 	self.fireCountdown = self.fireDelay
 
 	self.health = att.health or 1
@@ -47,7 +47,7 @@ function enemy:draw()
 end
 
 function enemy:fireMissile()
-	table.insert(self.missiles,missile.make(self.x,self.y+self.relDrawBox.height/2, 500,math.pi/2))
+	table.insert(self.missiles,missile.make(self.x,self.drawBox:getBottom(), 500,math.pi/2))
 end
 
 return enemy
