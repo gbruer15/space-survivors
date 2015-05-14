@@ -62,6 +62,7 @@ function level.update(dt)
 		level.enemiesKilled = level.enemiesKilled + 20
 	end
 
+	level.enemySpawnRateTimer = level.enemySpawnRateTimer - dt
 	if level.enemySpawnRateTimer <= 0 then
 		level.enemySpawnRateTimer = level.enemySpawnRateSlowdown
 		level.enemySpawnRateSlowdown = level.enemySpawnRateSlowdown + 0.125
@@ -73,34 +74,23 @@ function level.update(dt)
 		end
 	end
 
-	if level.enemyMissileFire then
-		for i,v in 
+	level.enemySpawnTimer = level.enemySpawnTimer - dt
+	if level.enemySpawnTimer <= 0 then
+		level.enemySpawnTimer = level.enemySpawnSlowdown
+		table.insert(level.enemies, enemy.make{
+										
 
+
+										})
 	end
-	if enemymissilefire:
-	    i = 0
-	    soundplayed = False
-	    while i <= len(enemymissileslowdown)-1:
-	        enemy = pygame.transform.scale(enemyImage, (enemywidth[i], int(round(enemywidth[i]*1.66666666666)))).get_rect()
-	        enemy.centerx = enemyx[i]
-	        enemy.top = enemyy[i]
-	        
-	        if enemy.left-ENEMYMISSILEMOTIONSENSOR <= player.right and enemy.right+ENEMYMISSILEMOTIONSENSOR >= player.left:
-	            if enemymissileslowdown[i] <=0:
-	                enemymissileslowdown[i] = ENEMYMISSILESLOWDOWN/movementchange
-	                enemymissilex.append(enemy.centerx)
-	                enemymissiley.append(enemy.bottom)
-	                if enemymissilesoundeffectcountdown <= 0 and not soundplayed:
-	                    enemymissilesoundeffect.play()
-	                    enemymissilesoundeffectcountdown = (0/FPS)/movementchange
-	                elif not soundplayed:
-	                    enemymissilesoundeffectcountdown -= 1
-	                soundplayed = True
-	                
-	            else:
-	                enemymissileslowdown[i] -= 1
-	        i += 1
-               
+
+	if level.enemyMissileFire then
+		for i,enemy in ipairs(level.enemies) do
+			self.firing = enemy.drawBox:getLeft-level.enemyMissileMotionSensor <= level.player.drawBox:getRight()
+							and enemy.drawBox:getRight+level.enemyMissileMotionSensor >= player.drawBox:getLeft() 
+		end
+	end
+
 end
 
 function level.draw()
