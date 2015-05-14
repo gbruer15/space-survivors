@@ -12,6 +12,10 @@ function enemy.make(att)
 	self.drawBox = rectangle.make(50,60, self)
 	self.collisionBox = rectangle.make(30,60,self)
 
+	self.Image = images.enemySpaceship
+	self.drawBox.height = self.drawBox.width/self.Image.width*self.Image.height
+	self.drawBox.dy = self.drawBox.height/2
+
 	self.yspeed = att.yspeed or 100
 
 	self.missiles = {}
@@ -21,9 +25,9 @@ function enemy.make(att)
 
 	self.health = att.health or 1
 
-	self.Image = images.enemySpaceship
-	self.drawBox.height = self.drawBox.width/self.Image.width*self.Image.height
-	self.drawBox.dy = self.drawBox.height/2
+	self.loot = math.ceil(self.drawBox.width * (math.random() + 0.5))
+	self.points = math.ceil(self.loot * 1.4)
+	
 
 	return self
 end

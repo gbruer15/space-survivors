@@ -38,6 +38,10 @@ end
 function state.draw()
 	state.drawStarryBackground()
 	state.state.draw()
+
+	love.graphics.setColor(255,255,255)
+	love.graphics.print('Cash: ' .. state.state.player.cash,0,0)
+	love.graphics.print('Score: ' .. state.state.player.score,0,15)
 end
 
 function state.keypressed(key)
