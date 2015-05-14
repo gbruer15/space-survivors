@@ -15,6 +15,8 @@ function missile.make(x,y,speed,angle, length, width)
 
 	self.length = length or 10
 	self.width = width or 2
+
+	self.endX, self.endY = self.x+self.length*math.cos(self.angle), self.y+self.length*math.sin(self.angle)
 	return self
 end
 

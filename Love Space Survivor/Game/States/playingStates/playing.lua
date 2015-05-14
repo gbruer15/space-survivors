@@ -47,6 +47,15 @@ function state.update(dt)
 			state.player.dead = true
 		end
 	end
+
+	if not state.player.dead then
+		for i,missile in ipairs(state.enemyMissiles) do
+			missile:update(dt)
+			if missile:isHittingRectangle(state.player.collisionBox:getRect()) then
+				state.player.dead = true
+			end
+		end
+	end
 end
 
 function state.draw()
@@ -71,7 +80,7 @@ end
 
 function state.mousepressed(x,y,button)
 	state.player:fireMissile()
-	table.insert(state.enemies, enemy.make{x=math.random(100,500),health = 1})
+	table.insert(state.enemies, enemy.make{x=math.random(100,500),health = 1,y=-80})
 end
 
 return state
