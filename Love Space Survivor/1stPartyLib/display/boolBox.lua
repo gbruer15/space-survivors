@@ -1,6 +1,6 @@
 boolBox = {}
 boolBox.__index = boolBox
-boolBox.pic = love.graphics.newImage("Art/Misc Pics/Green Rectangle with raised border gray.png")
+boolBox.pic = love.graphics.newImage(IMAGES_PATH .. "/Green Rectangle with raised border gray.png")
 boolBox.picwidth = boolBox.pic:getWidth()
 boolBox.picheight = boolBox.pic:getHeight()
 function boolBox.make(att)

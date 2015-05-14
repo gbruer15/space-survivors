@@ -37,9 +37,12 @@ LUA_PATH, path = "?;?.lua",LUA_PATH
 --requireDirectory("lib", true)
 LUA_PATH, path = path, LUA_PATH
 
-function love.load()
-	require('1stPartyLib/physics/collision')
 
+function love.load()
+	IMAGES_PATH = 'Assets/Images/'
+	lovefunctions = {'keypressed','keyreleased','mousepressed','mousereleased'}
+	require('1stPartyLib/physics/collision')
+	requireDirectory('1stPartyLib/display')
 	
 	window = {}
 	window.width, window.height = love.graphics.getDimensions()
