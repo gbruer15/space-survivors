@@ -42,6 +42,7 @@ function love.load()
 	IMAGES_PATH = 'Assets/Images/'
 	lovefunctions = {'keypressed','keyreleased','mousepressed','mousereleased'}
 	require('1stPartyLib/physics/collision')
+	require('resources')
 	requireDirectory('1stPartyLib/display')
 	
 	window = {}
