@@ -10,7 +10,11 @@ function enemy.make(att)
 	self.x = att.x or 0
 	self.y = att.y or 0
 	self.drawBox = rectangle.make(50,60, self)
-	self.collisionBox = rectangle.make(30,40,self)
+	self.collisionBox = rectangle.make(30,60,self)
+
+	self.Image = images.enemySpaceship
+	self.drawBox.height = self.drawBox.width/self.Image.width*self.Image.height
+	self.drawBox.dy = self.drawBox.height/2
 
 	self.yspeed = att.yspeed or 100
 
@@ -20,6 +24,10 @@ function enemy.make(att)
 	self.fireCountdown = self.fireDelay
 
 	self.health = att.health or 1
+
+	self.loot = math.ceil(self.drawBox.width * (math.random() + 0.5))
+	self.points = math.ceil(self.loot * 1.4)
+	
 
 	return self
 end
@@ -34,16 +42,14 @@ function enemy:update(dt)
 	end
 end
 
-function enemy:draw()
-	love.graphics.setColor(255,0,0)
-	self.drawBox:draw('fill')
+function enemy:draw(drawColBox, colBoxMode)
+	love.graphics.setColor(255,255,255)
+	love.graphics.draw(self.Image.image,self.drawBox:getLeft(),self.drawBox:getTop(),0,self.drawBox.width/self.Image.width, self.drawBox.height/self.Image.height)
 
-	love.graphics.setColor(0,255,0,100)
-	self.collisionBox:draw('fill')
-
-	love.graphics.setColor(255,255,255,100)
-	love.graphics.rectangle('fill',self.collisionBox:getLeft(),self.collisionBox:getTop(),self.collisionBox.width,self.collisionBox.height)
-	--love.graphics.printf(self.health, self.x-self.relDrawBox.width/2, self.y, self.relDrawBox.width,'center')
+	if drawColBox then
+		love.graphics.setColor(color or {0,255,0,100})
+		self.collisionBox:draw(colBoxMode or 'line')
+	end
 end
 
 function enemy:fireMissile()

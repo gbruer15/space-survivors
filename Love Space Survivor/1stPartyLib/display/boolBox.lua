@@ -1,23 +1,26 @@
 boolBox = {}
 boolBox.__index = boolBox
-boolBox.pic = love.graphics.newImage(IMAGES_PATH .. "/Green Rectangle with raised border gray.png")
+boolBox.pic = love.graphics.newImage(IMAGES_PATH .. "/outline1.png")--Green Rectangle with raised border gray.png")
 boolBox.picwidth = boolBox.pic:getWidth()
 boolBox.picheight = boolBox.pic:getHeight()
 function boolBox.make(att)
 	local self = {}
 	setmetatable(self,boolBox)
 	self.width = att.width or 270
-	self.height = att.height or 140
+	self.height = att.height or self.width/boolBox.picwidth*boolBox.picheight
 	
 	self.x = (att.centerx and att.centerx-self.width/2) or att.x or window.width/2-self.width/2
 	self.y = (att.centery and att.centery-self.height/2) or att.y or window.height/2-self.width/2
 	
 	self.titleText = att.titleText or ""
 	self.titleTextColor = att.titleTextColor or {255,255,255}
+
 	self.boxColor = att.boxColor or {100,100,100}
+	self.outlineColor = att.outlineColor or {200,200,200}
+
 	local cx = self.x+self.width/3
-	self.trueButton = button.make{text=att.trueText or "True",centerx=cx,y=self.y+self.height*0.7}
-	self.falseButton = button.make{text=att.falseText or "False",centerx=cx+self.width/3,y=self.y+self.height*0.7}
+	self.trueButton = button.make{text=att.trueText or "True",centerx=cx,centery=self.y+self.height*0.7}
+	self.falseButton = button.make{text=att.falseText or "False",centerx=cx+self.width/3,centery=self.y+self.height*0.7}
 	
 	self.value = nil
 	self.blurwidth = att.blurwidth or 10
@@ -45,6 +48,9 @@ function boolBox:draw(blur)
 		drawBlur.rectangle(self.x,self.y,self.width,self.height,self.blurwidth,{255,255,255},{255,255,255,0})
 	end
 	love.graphics.setColor(self.boxColor)
+	love.graphics.rectangle('fill',self.x,self.y,self.width,self.height)
+
+	love.graphics.setColor(self.outlineColor)
 	love.graphics.draw(boolBox.pic,self.x,self.y,0,self.width/boolBox.picwidth,self.height/boolBox.picheight)
 	
 	self.trueButton:draw()

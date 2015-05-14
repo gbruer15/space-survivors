@@ -41,7 +41,8 @@ function state.update(dt)
 		if v.drawBox:getTop() >= state.camera.y + state.camera.height/2 then
 			table.remove(state.enemies,i)
 		elseif v.health <= 0 then
-			print('dead')
+			state.player.cash = state.player.cash + v.loot
+			state.player.score = state.player.score + v.points
 			table.remove(state.enemies,i)
 		elseif state.player.collisionBox:collideRectangle(v.collisionBox) then
 			state.player.dead = true
@@ -61,6 +62,7 @@ end
 function state.draw()
 	state.player:draw()
 
+	love.graphics.setColor(255,255,0)
 	for i,v in ipairs(state.enemyMissiles) do
 		v:draw()
 	end
@@ -69,6 +71,7 @@ function state.draw()
 		v:draw()
 	end
 
+	love.graphics.setColor(255,0,0)
 	for i,v in ipairs(state.playerMissiles) do
 		v:draw()
 	end
@@ -79,7 +82,7 @@ function state.keypressed(key)
 end
 
 function state.mousepressed(x,y,button)
-	state.player:fireMissile()
+	state.player:mousepressed(x,y,button)
 	table.insert(state.enemies, enemy.make{x=math.random(100,500),health = 1,y=-80})
 end
 
