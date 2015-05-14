@@ -33,11 +33,17 @@ function requireDirectory(dirPath, isRecursive)
 end
 local path
 LUA_PATH, path = "?;?.lua",LUA_PATH
-requireDirectory("game") ---not recursive because Enemies are loaded after enemies.load is called
-requireDirectory("lib", true)
+--requireDirectory("game") ---not recursive because Enemies are loaded after enemies.load is called
+--requireDirectory("lib", true)
 LUA_PATH, path = path, LUA_PATH
 
+
 function love.load()
+	IMAGES_PATH = 'Assets/Images/'
+	lovefunctions = {'keypressed','keyreleased','mousepressed','mousereleased'}
+	require('1stPartyLib/physics/collision')
+	requireDirectory('1stPartyLib/display')
+	
 	window = {}
 	window.width, window.height = love.graphics.getDimensions()
 	window.fullscreen = false
@@ -46,7 +52,11 @@ function love.load()
 	min_dt = 1/60
 	next_time = love.timer.getTime()
 
-	
+	MOUSE = {}
+	MOUSE.x, MOUSE.y = love.mouse.getPosition()
+
+	STATE = require("Game/States/game")
+	STATE.load()
 	--resources.load()
 	--music.fight.music:play()
 	
@@ -62,7 +72,9 @@ function love.update(dt)
 	--  FPS cap
 	next_time = next_time + min_dt	
 
-	--states[state].update(dt)
+	MOUSE.x, MOUSE.y = love.mouse.getPosition()
+	STATE.update(dt)
+
 	
 	love.window.setTitle(love.timer.getFPS())
 
@@ -73,6 +85,7 @@ end
 
 
 function love.draw()
+	STATE.draw()
 	--[[
 	states[state].draw()	
 
@@ -124,43 +137,41 @@ function love.draw()
 	love.timer.sleep(1*(next_time - cur_time))
 end
 
---[[
-function love.keypressed(key)
-	if states[state].keypressed then
-		states[state].keypressed(key)
-	end
-	
-	if key == 'l' then
-		love.mouse.setVisible(not love.mouse.isVisible())
-	end
 
-end
+function love.keypressed(key)
+	if STATE.keypressed then
+		STATE.keypressed(key)
+	end
+	if key == 'escape' then
+		love.event.quit()
+	end
+end	
 
 function love.keyreleased(key)
-	if states[state].keyreleased then
-		states[state].keyreleased(key)
+	if STATE.keyreleased then
+		STATE.keyreleased(key)
 	end
 end
 
 function love.mousepressed(x,y,b)
-	if states[state].mousepressed then
-		states[state].mousepressed(x,y,b)
+	if STATE.mousepressed then
+		STATE.mousepressed(x,y,b)
 	end
 end
 
 function love.mousereleased(x,y,b)
-	if states[state].mousereleased then
-		states[state].mousereleased(x,y,b)
+	if STATE.mousereleased then
+		STATE.mousereleased(x,y,b)
 	end
 end
 
 function love.textinput(text)
-	if states[state].textinput then
-		states[state].textinput(text)
+	if STATE.textinput then
+		STATE.textinput(text)
 	end
-	TYPED = TYPED .. text
+	--TYPED = TYPED .. text
 end
---]]
+
 
 function love.quit()
 	--execute this on quit
