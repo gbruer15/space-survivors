@@ -7,24 +7,26 @@ function state.load()
 	state.states.playing = require("Game/States/playingStates/playing")
 	state.states.dead = require("Game/States/playingStates/dead")
 
+
+	--variables used by states
+	state.player = require("Game/Player/player").make()
+	state.camera = require("1stPartyLib/display/camera").make()
+	state.enemies = {}
+	state.enemyMissiles = {}
+
+	state.level = require("Levels/level" .. state.player.currentLevel)
+	-------------------------
+
+	state.level.load()
+
+
 	state.state = state.states.intro
 
 	for i,v in pairs(state.states) do
 		v.load()
 	end
 
-	for i,v in pairs(state.states) do
-		v.player = state.states.playing.player
-	end
-
-	state.level = require("Levels/level" .. state.state.player.currentLevel)
-	state.level.load()
-	state.level.player = state.state.player
-	state.level.enemies = state.states.playing.enemies
-
-	for i,v in pairs(state.states) do
-		v.level = state.level
-	end
+	
 
 	state.maxStarSpeed = 800
 	state.minStarSpeed = 40
@@ -37,20 +39,38 @@ function state.update(dt)
 		state.state = state.states.playing
 	end
 
-	if state.state.player.dead and state.state ~= state.states.dead then
+	if state.player.dead and state.state ~= state.states.dead then
 		state.switchToDead()
+	elseif not state.player.dead then
+		state.updateStarryBackground(dt)
 	end
-
-	state.updateStarryBackground(dt)
 end
 
 function state.draw()
 	state.drawStarryBackground()
+
+	love.graphics.setColor(255,255,255)
+	state.player:draw()
+
+	love.graphics.setColor(255,255,0)
+	for i,v in ipairs(state.enemies) do
+		v:draw()
+	end
+
+	for i,v in ipairs(state.enemyMissiles) do
+		v:draw()
+	end
+
+	love.graphics.setColor(255,0,0)
+	for i,v in ipairs(state.player.missiles) do
+		v:draw()
+	end
+
 	state.state.draw()
 
 	love.graphics.setColor(255,255,255)
-	love.graphics.print('Cash: ' .. state.state.player.cash,0,0)
-	love.graphics.print('Score: ' .. state.state.player.score,0,15)
+	love.graphics.print('Cash: ' .. state.player.cash,0,0)
+	love.graphics.print('Score: ' .. state.player.score,0,15)
 end
 
 function state.keypressed(key)
@@ -63,21 +83,16 @@ function state.mousepressed(x,y,button)
 	if state.state.mousepressed then
 		if state.state.mousepressed(x,y,button) == 'restart' then
 			state.state = state.states.playing
-			--state.state.player.dead = false
-			state.state.load()
 
-			for i,v in pairs(state.states) do
-				v.player = state.states.playing.player
-			end
+			state.enemies = {}
+			state.enemyMissiles = {}
+			state.player.dead = false
 		end
 	end
 end
 
 function state.switchToDead() 
 	state.state = state.states.dead
-	state.state.enemies = state.states.playing.enemies or {}
-	state.state.enemyMissiles = state.states.playing.enemyMissiles or {}
-	state.state.playerMissiles = state.states.playing.playerMissiles or {}
 end
 
 function state.initializeStarryBackground(n)

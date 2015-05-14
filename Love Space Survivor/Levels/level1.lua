@@ -14,6 +14,7 @@ function level.load()
 	level.enemyHealth = 1
 
 	level.enemyMissileSlowdown = 2
+	level.enemyMissileSpeed = 200
 
 	level.enemyMissileColor = {255,255,100}
 
@@ -77,7 +78,7 @@ function level.update(dt)
 	level.enemySpawnTimer = level.enemySpawnTimer - dt
 	if level.enemySpawnTimer <= 0 then
 		level.enemySpawnTimer = level.enemySpawnSlowdown
-		table.insert(level.enemies, enemy.make{
+		table.insert(STATE.enemies, enemy.make{
 									x=math.random(100,500)
 									,health = 1
 
