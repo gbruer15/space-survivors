@@ -6,6 +6,7 @@ function state.load()
 								centerx=window.width/2 
 								,centery=window.height/2
 								,titleText='Try again?'
+								,boxColor={200,0,0,100}
 
 
 							}
@@ -16,19 +17,20 @@ function state.update(dt)
 end
 
 function state.draw()
+	love.graphics.setColor(255,255,0)
 	for i,v in ipairs(state.enemyMissiles) do
 		v:draw()
 	end
 
 	for i,v in ipairs(state.enemies) do
-		v:draw()
+		v:draw(true,'line')
 	end
 
+	love.graphics.setColor(255,0,0)
 	for i,v in ipairs(state.playerMissiles) do
 		v:draw()
 	end
-
-	state.player:draw()
+	state.player:draw(true,'fill',{0,100,0,200})
 	state.boolBox:draw()
 end
 

@@ -42,14 +42,14 @@ function enemy:update(dt)
 	end
 end
 
-function enemy:draw()
+function enemy:draw(drawColBox, colBoxMode)
 	love.graphics.setColor(255,255,255)
-	--self.drawBox:draw('fill')
 	love.graphics.draw(self.Image.image,self.drawBox:getLeft(),self.drawBox:getTop(),0,self.drawBox.width/self.Image.width, self.drawBox.height/self.Image.height)
 
-	love.graphics.setColor(0,255,0,100)
-	self.collisionBox:draw('line')
-	--love.graphics.printf(self.health, self.x-self.relDrawBox.width/2, self.y, self.relDrawBox.width,'center')
+	if drawColBox then
+		love.graphics.setColor(color or {0,255,0,100})
+		self.collisionBox:draw(colBoxMode or 'line')
+	end
 end
 
 function enemy:fireMissile()

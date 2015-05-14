@@ -82,7 +82,7 @@ function state.keypressed(key)
 end
 
 function state.mousepressed(x,y,button)
-	state.player:fireMissile()
+	state.player:mousepressed(x,y,button)
 	table.insert(state.enemies, enemy.make{x=math.random(100,500),health = 1,y=-80})
 end
 
