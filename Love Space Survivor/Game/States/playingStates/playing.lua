@@ -43,6 +43,8 @@ function state.update(dt)
 		elseif v.health <= 0 then
 			state.player.cash = state.player.cash + v.loot
 			state.player.score = state.player.score + v.points
+			state.player.kills = state.player.kills + 1
+			state.level.enemiesKilled = state.level.enemiesKilled + 1
 			table.remove(state.enemies,i)
 		elseif state.player.collisionBox:collideRectangle(v.collisionBox) then
 			state.player.dead = true

@@ -24,6 +24,8 @@ function playerfunctions.make(att)
 
 	self.fullauto = false
 	self.fireDelay = 0.5
+
+	player.currentLevel = 1
 	
 	---------------------------------
 

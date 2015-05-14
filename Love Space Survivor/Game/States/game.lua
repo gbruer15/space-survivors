@@ -17,6 +17,14 @@ function state.load()
 		v.player = state.states.playing.player
 	end
 
+	state.level = require("Levels/level" .. state.state.player.currentLevel)
+	state.level.load()
+	state.level.player = state.state.player
+
+	for i,v in pairs(state.states) do
+		v.level = state.level
+	end
+
 	state.maxStarSpeed = 800
 	state.minStarSpeed = 40
 	state.initializeStarryBackground(500)
