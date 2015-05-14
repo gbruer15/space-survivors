@@ -1,11 +1,11 @@
 button = {}
 button.__index = button
-buttonpic = love.graphics.newImage("Art/Misc Pics/button.png")
+buttonpic = love.graphics.newImage(IMAGES_PATH .. "/button.png")
 buttonpicwidth = buttonpic:getWidth()
 buttonpicheight = buttonpic:getHeight()
 
-buttonoutlinepic = love.graphics.newImage("Art/Misc Pics/button outline.png")
-buttonsmalloutlinepic = love.graphics.newImage("Art/Misc Pics/button small outline.png")
+buttonoutlinepic = love.graphics.newImage(IMAGES_PATH .. "button outline.png")
+buttonsmalloutlinepic = love.graphics.newImage(IMAGES_PATH .. "button small outline.png")
 function button.make(att) --att stands for attributes
 	local b = {}
 	setmetatable(b, button)

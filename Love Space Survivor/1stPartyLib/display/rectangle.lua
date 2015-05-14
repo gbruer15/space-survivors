@@ -1,7 +1,7 @@
 rectangle = {}
 rectangle.__index = rectangle
 
-
+require("1stPartyLib/physics/collision")
 --creates a rectangle with given width and height. 
 --dx and dy are the displacement from the top left corner to the anchor, defaulted to center
 function rectangle.make(width,height, ax,ay, dx, dy)
@@ -50,5 +50,18 @@ function rectangle:draw(mode)
 	xoffset = xoffset or 0
 	yoffset = yoffset or 0
 	love.graphics.rectangle(mode or 'fill',self.anchor.x-self.dx, self.anchor.y-self.dy, self.width,self.height)
+end
 
+function rectangle:collidePoint(x,y)
+	return collision.pointRectangle(x,y,self.anchor.x-self.dx, self.anchor.y-self.dy, self.width,self.height)
+end
+
+function rectangle:collideRectangle(x,y,w,h)
+	if type(x) == 'table' then --assume it's a rectangle object
+		y = x:getTop()
+		w = x.width
+		h = x.height
+		x = x:getLeft()
+	end
+	return collision.rectangles(self.anchor.x-self.dx, self.anchor.y-self.dy, self.width,self.height, x,y,w,h)
 end

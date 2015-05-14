@@ -1,10 +1,8 @@
 local playerfunctions = {}
 require('Game/missile')
-function playerfunctions.make()
+function playerfunctions.make(att)
 	local self = {}
 	setmetatable(self, {__index = playerfunctions})
-
-	require("1stPartyLib/display/rectangle")
 
 	self.x = window.width/2
 	self.y = window.height/2
@@ -32,6 +30,8 @@ end
 function playerfunctions:fireMissile()
 	table.insert(self.missiles,missile.make(self.x,self.y-self.drawBox.height/2, 50,-math.pi/2))
 end
+
+
 
 function playerfunctions:keypressed(key)
 
