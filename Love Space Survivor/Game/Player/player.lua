@@ -6,15 +6,21 @@ function playerfunctions.make(att)
 
 	self.x = window.width/2
 	self.y = window.height/2
-	self.drawBox = rectangle.make(70,125, self)
+	self.drawBox = rectangle.make(40,125, self)
 
-	self.collisionBox = rectangle.make(40,80,self)
+	self.collisionBox = rectangle.make(20,40,self)
 
 	self.Image = images.spaceship
 	self.drawBox.height = self.drawBox.width/self.Image.width*self.Image.height
 	self.drawBox.dy = self.drawBox.height/2
 
 	self.missiles = {}
+
+
+	--these could be initialized from a save file
+	self.cash = 0
+	self.score = 0
+	self.kills = 0
 
 	return self
 end
