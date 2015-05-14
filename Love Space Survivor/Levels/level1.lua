@@ -78,7 +78,9 @@ function level.update(dt)
 	if level.enemySpawnTimer <= 0 then
 		level.enemySpawnTimer = level.enemySpawnSlowdown
 		table.insert(level.enemies, enemy.make{
-										
+									x=math.random(100,500)
+									,health = 1
+
 
 
 										})
@@ -86,8 +88,8 @@ function level.update(dt)
 
 	if level.enemyMissileFire then
 		for i,enemy in ipairs(level.enemies) do
-			self.firing = enemy.drawBox:getLeft-level.enemyMissileMotionSensor <= level.player.drawBox:getRight()
-							and enemy.drawBox:getRight+level.enemyMissileMotionSensor >= player.drawBox:getLeft() 
+			self.firing = enemy.drawBox:getLeft()-level.enemyMissileMotionSensor <= level.player.drawBox:getRight()
+							and enemy.drawBox:getRight()+level.enemyMissileMotionSensor >= player.drawBox:getLeft() 
 		end
 	end
 

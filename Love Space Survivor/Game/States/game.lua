@@ -20,6 +20,7 @@ function state.load()
 	state.level = require("Levels/level" .. state.state.player.currentLevel)
 	state.level.load()
 	state.level.player = state.state.player
+	state.level.enemies = state.states.playing.enemies
 
 	for i,v in pairs(state.states) do
 		v.level = state.level

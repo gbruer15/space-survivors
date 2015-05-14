@@ -1,6 +1,6 @@
 local state = {}
 
-local enemy = require('Game/Enemy/enemy')
+enemy = require('Game/Enemy/enemy')
 function state.load()
 	state.player = require("Game/Player/player").make()
 	state.camera = require("1stPartyLib/display/camera").make()
@@ -59,6 +59,8 @@ function state.update(dt)
 			end
 		end
 	end
+
+	state.level.update(dt)
 end
 
 function state.draw()
