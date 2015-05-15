@@ -48,13 +48,13 @@ function hud:draw()
 
 	love.graphics.printf('Level ' .. STATE.level.number, self.x,self.y,self.width,'center')
 
-	love.graphics.print('Score: ' .. STATE.player.score,self.x+15,45)
+	love.graphics.print('Score: ' .. STATE.player.levelScore,self.x+15,45)
 
-	love.graphics.print('Cash: $' .. STATE.player.cash,self.x+15,135)
+	love.graphics.print('Cash: $' .. STATE.player.levelCash,self.x+15,135)
 	
 	love.graphics.print('Lives: ' .. STATE.player.lives,self.x+15,180)
 
-	love.graphics.print('Kills Left: ' .. STATE.level.killsToWin - STATE.player.kills,self.x+15,225)
+	love.graphics.print('Kills Left: ' .. STATE.level.killsToWin - STATE.player.levelKills,self.x+15,225)
 
 	love.graphics.print('Upgrades',self.x+15,280)
 	for i,v in ipairs(STATE.upgrades) do

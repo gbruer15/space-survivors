@@ -31,13 +31,14 @@ function state.update(dt)
 			--table.remove(STATE.enemies,i)
 			v.y = STATE.camera.y-STATE.camera.height/2-100
 		elseif v.health <= 0 then
-			STATE.player.cash = STATE.player.cash + v.loot
-			STATE.player.score = STATE.player.score + v.points
-			STATE.player.kills = STATE.player.kills + 1
-			STATE.level.enemiesKilled = STATE.level.enemiesKilled + 1
+			STATE.player.levelCash = STATE.player.levelCash + v.loot
+			STATE.player.levelScore = STATE.player.levelScore + v.points
+			STATE.player.levelKills = STATE.player.levelKills + 1
+
+			STATE.player.totalKills = STATE.player.totalKills + 1
 			table.remove(STATE.enemies,i)
 		elseif STATE.player.collisionBox:collideRectangle(v.collisionBox) then
-			STATE.player.dead = true
+			STATE.player:die()
 		end
 	end
 
@@ -46,7 +47,7 @@ function state.update(dt)
 			local missile = STATE.enemyMissiles[i]
 			missile:update(dt)
 			if missile:isHittingRectangle(STATE.player.collisionBox:getRect()) then
-				STATE.player.dead = true
+				STATE.player:die()
 			elseif not missile:isHittingRectangle(STATE.camera.getRect()) then
 				table.remove(STATE.enemyMissiles,i)
 			end

@@ -4,8 +4,8 @@ function playerfunctions.make(att)
 	local self = {}
 	setmetatable(self, {__index = playerfunctions})
 
-	self.x = STATE.camera.width/2
-	self.y = STATE.camera.height/2
+	self.x = STATE.camera.x
+	self.y = STATE.camera.y
 	self.drawBox = rectangle.make(15,125, self) --40
 
 	self.collisionBox = rectangle.make(10,10,self)--20
@@ -18,15 +18,19 @@ function playerfunctions.make(att)
 
 
 	--these could be initialized from a save file
-	self.cash = 0
-	self.score = 0
-	self.kills = 0
+	self.levelCash = 0
+	self.levelScore = 0
+	self.levelKills = 0
+
+	self.totalKills = 0
+	self.totalScore = 0
+	self.totalCash = 0
 
 	self.fullauto = true
 	self.fireDelay = 0.1--0.5
 
 	self.currentLevel = 1
-	self.lives = 5
+	self.lives = 2
 
 	self.missileSpeed = 450
 	self.missileDamage = 15
@@ -119,6 +123,12 @@ function playerfunctions:mousepressed(x,y,button)
 		self:fireMissile()
 		self.fireCountdown = self.fireDelay
 	end
+end
+
+function playerfunctions:die()
+	self.dead = true
+	self.lives = self.lives - 1
+	STATE.states.dead.load()
 end
 
 return playerfunctions

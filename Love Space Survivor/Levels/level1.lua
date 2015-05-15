@@ -2,11 +2,12 @@ local level = {}
 
 local upgrade = require('Game/upgrade')
 function level.load()
-	level.number = 1
+	level.number = 1 --not reloaded
+	level.playerLives = 3 -- not reloaded
 
+	STATE.player.lives = level.playerLives
 
 	level.killThreshold = 20
-	level.enemiesKilled = 0
 
 	level.maxEnemySize = 70
 	level.minEnemySize = 20
@@ -19,7 +20,7 @@ function level.load()
 	level.enemyMissileSlowdown = 2
 	level.enemyMissileSpeed = 200
 
-	level.enemyMissileColor = {255,255,100}
+	level.enemyMissileColor = {255,255,100} --not reloaded
 
 	level.enemySpawnSlowdown = 1
 	level.enemySpawnTimer = level.enemySpawnSlowdown
@@ -29,11 +30,11 @@ function level.load()
 
 	level.enemyMissileMotionSensor = -40
 
-	level.killsToWin = 850
+	level.killsToWin = 850 -- not reloaded
 end
 
 function level.update(dt)
-	if level.enemiesKilled >= level.killThreshold then
+	if STATE.player.levelKills >= level.killThreshold then
 		--ENEMYSPAWNPOINT += 10
 	    level.enemyMissileFire = true
 	    if level.maxEnemySize > 20 then
@@ -85,7 +86,7 @@ function level.update(dt)
 	level.enemySpawnTimer = level.enemySpawnTimer - dt
 	if level.enemySpawnTimer <= 0 then
 		level.enemySpawnTimer = level.enemySpawnSlowdown
-		if #STATE.enemies + level.enemiesKilled < level.killsToWin then
+		if #STATE.enemies + STATE.player.levelKills < level.killsToWin then
 			table.insert(STATE.enemies, enemy.make{
 										x=math.random(STATE.camera.x-STATE.camera.width/2,STATE.camera.x+STATE.camera.width/2)
 										,y=-level.maxEnemySpeed*1.5
@@ -113,6 +114,31 @@ function level.draw()
 
 end
 
+function level.reload()
+	STATE.player.lives = level.playerLives
+	
+	level.killThreshold = 20
+	level.enemiesKilled = 0
+
+	level.maxEnemySize = 70
+	level.minEnemySize = 20
+
+	level.maxEnemySpeed = 120
+	level.minEnemySpeed = 40
+
+	level.enemyHealth = 1
+
+	level.enemyMissileSlowdown = 2
+	level.enemyMissileSpeed = 200
+
+	level.enemySpawnSlowdown = 1
+	level.enemySpawnTimer = level.enemySpawnSlowdown
+
+	level.enemySpawnRateSlowdown = 0.5
+	level.enemySpawnRateTimer = level.enemySpawnRateSlowdown*2
+
+	level.enemyMissileMotionSensor = -40
+end
 
 
 

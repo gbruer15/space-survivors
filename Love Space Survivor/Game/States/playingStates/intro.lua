@@ -2,7 +2,8 @@ local state = {}
 
 local enemy = require('Game/Enemy/enemy')
 function state.load()
-
+	STATE.player.x = STATE.camera.x
+	STATE.player.y = STATE.camera.y
 end
 
 function state.update(dt)
@@ -10,6 +11,7 @@ function state.update(dt)
 	if state.countdown then
 		state.countdown = state.countdown - dt*1.5
 		if state.countdown <= 0 then
+			state.countdown = nil
 			return 'start'
 		end
 		STATE.player.x, STATE.player.y = MOUSE.x, MOUSE.y

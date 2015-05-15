@@ -110,12 +110,8 @@ end
 
 function state.mousepressed(x,y,button)
 	if state.state.mousepressed then
-		if state.state.mousepressed(x,y,button) == 'restart' then
-			state.state = state.states.playing
-
-			state.enemies = {}
-			state.enemyMissiles = {}
-			state.player.dead = false
+		if state.state.mousepressed(x,y,button) == 'keep playing' then
+			
 		end
 	end
 end
