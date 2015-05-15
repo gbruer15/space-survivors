@@ -23,6 +23,8 @@ function level.load()
 
 	level.enemySpawnRateSlowdown = 0.5
 	level.enemySpawnRateTimer = level.enemySpawnRateSlowdown*2
+
+	level.enemyMissileMotionSensor = -40
 end
 
 function level.update(dt)
@@ -79,18 +81,22 @@ function level.update(dt)
 	if level.enemySpawnTimer <= 0 then
 		level.enemySpawnTimer = level.enemySpawnSlowdown
 		table.insert(STATE.enemies, enemy.make{
-									x=math.random(100,500)
+									x=math.random(STATE.camera.x-STATE.camera.width/2,STATE.camera.x+STATE.camera.width/2)
+									,y=-level.maxEnemySpeed*1.5
 									,health = 1
-
-
-
+									,missileSpeed=level.enemyMissileSpeed
+									,fireDelay=level.enemyMissileSlowdown
+									,health=level.enemyHealth
+									,width=math.random(level.minEnemySize, level.maxEnemySize)
+									,yspeed=math.random(level.minEnemySpeed, level.maxEnemySpeed)
+									,firing=level.enemyMissileFire
 										})
 	end
 
 	if level.enemyMissileFire then
-		for i,enemy in ipairs(level.enemies) do
-			self.firing = enemy.drawBox:getLeft()-level.enemyMissileMotionSensor <= level.player.drawBox:getRight()
-							and enemy.drawBox:getRight()+level.enemyMissileMotionSensor >= player.drawBox:getLeft() 
+		for i,enemy in ipairs(STATE.enemies) do
+			enemy.firing = enemy.drawBox:getLeft()-level.enemyMissileMotionSensor <= STATE.player.drawBox:getRight()
+							and enemy.drawBox:getRight()+level.enemyMissileMotionSensor >= STATE.player.drawBox:getLeft() 
 		end
 	end
 

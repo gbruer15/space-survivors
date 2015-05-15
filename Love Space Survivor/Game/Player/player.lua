@@ -70,7 +70,9 @@ function playerfunctions:keypressed(key)
 end
 
 function playerfunctions:mousepressed(x,y,button)
+	print('here')
 	if not self.fullauto and self.fireCountdown <= 0 then
+		print('here2')
 		self:fireMissile()
 		self.fireCountdown = self.fireDelay
 	end

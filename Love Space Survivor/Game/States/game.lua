@@ -10,7 +10,7 @@ function state.load()
 
 	--variables used by states
 	state.player = require("Game/Player/player").make()
-	state.camera = require("1stPartyLib/display/camera").make()
+	state.camera = require("1stPartyLib/display/camera").make{width=window.width-100, height=window.height}
 	state.enemies = {}
 	state.enemyMissiles = {}
 
@@ -52,6 +52,11 @@ function state.draw()
 	love.graphics.setColor(255,255,255)
 	state.player:draw()
 
+	love.graphics.setColor(255,0,0)
+	for i,v in ipairs(state.player.missiles) do
+		v:draw()
+	end
+
 	love.graphics.setColor(255,255,0)
 	for i,v in ipairs(state.enemies) do
 		v:draw()
@@ -59,12 +64,7 @@ function state.draw()
 
 	for i,v in ipairs(state.enemyMissiles) do
 		v:draw()
-	end
-
-	love.graphics.setColor(255,0,0)
-	for i,v in ipairs(state.player.missiles) do
-		v:draw()
-	end
+	end	
 
 	state.state.draw()
 
@@ -105,7 +105,7 @@ end
 function state.updateStarryBackground(dt)
 	for i,v in ipairs(state.stars) do
 		v.y = v.y + v.speed*dt
-		if v.y - v.radius > window.height then
+		if v.y - v.radius > state.camera.y + state.camera.height then
 			state.stars[i] = state.spawnStar()
 		end
 	end
@@ -122,7 +122,7 @@ end
 
 function state.spawnStar(y)
 	local self = {}
-	self.x = math.random(0,window.width)
+	self.x = math.random(state.camera.x-state.camera.width/2,state.camera.x + state.camera.width/2)
 	self.y = y or -10
 	self.speed = math.random(state.minStarSpeed,state.maxStarSpeed)
 	self.radius = 1
