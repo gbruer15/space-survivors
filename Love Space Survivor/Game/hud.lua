@@ -17,12 +17,23 @@ function hud.make(att)
 								,lineWidth = 5
 							}
 	self.hoveredUpgrade = STATE.upgrades[1]
+
+	self.buttons = {}
+	self.buttons.pause = button.make{
+								centerx = self.x+self.width/2
+								,centery = self.y+self.height-100
+								,text = 'P(ause)'
+							}
+
+
 	return self
 end
 
 
 function hud:update(dt)
-
+	for i,b in pairs(self.buttons) do
+		b:update(dt)
+	end
 end
 
 
@@ -51,7 +62,17 @@ function hud:draw()
 	end
 
 	love.graphics.printf(self.hoveredUpgrade.description,self.x+15,315+#STATE.upgrades*15,self.width,'center')
+
+	for i,b in pairs(self.buttons) do
+		b:draw()
+	end
 	
+end
+
+function hud:mousepressed(x,y,button)
+	if self.buttons.pause.hover then
+		STATE.paused = true
+	end
 end
 
 return hud

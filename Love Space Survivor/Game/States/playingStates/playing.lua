@@ -5,6 +5,7 @@ function state.load()
 end
 
 function state.update(dt)
+	STATE.hud:update(dt)
 	STATE.player:update(dt)
 
 	for i=#STATE.player.missiles,1,-1 do
@@ -64,7 +65,11 @@ function state.keypressed(key)
 end
 
 function state.mousepressed(x,y,button)
-	STATE.player:mousepressed(x,y,button)
+	if collision.pointRectangle(x,y,STATE.hud.x,STATE.hud.y,STATE.hud.width,STATE.hud.height) then
+		STATE.hud:mousepressed(x,y,button)
+	else
+		STATE.player:mousepressed(x,y,button)
+	end
 end
 
 return state

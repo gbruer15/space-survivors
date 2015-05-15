@@ -3,10 +3,12 @@ local state = {}
 local enemy = require('Game/Enemy/enemy')
 local upgrade = require('Game/upgrade')
 local hud = require('Game/hud')
+local button = require('1stPartyLib/display/button')
 function state.load()
 	state.states = {}
 	state.states.intro = require("Game/States/playingStates/intro")
 	state.states.playing = require("Game/States/playingStates/playing")
+	state.states.paused = require("Game/States/playingStates/paused")
 	state.states.dead = require("Game/States/playingStates/dead")
 
 
@@ -38,6 +40,8 @@ function state.load()
 	state.enemyMissiles = {}
 
 	state.level = require("Levels/level" .. state.player.currentLevel)
+
+	state.paused = false
 	-------------------------
 
 	state.level.load()
@@ -62,8 +66,11 @@ function state.update(dt)
 		state.state = state.states.playing
 	end
 
+
 	if state.player.dead and state.state ~= state.states.dead then
 		state.switchToDead()
+	elseif STATE.paused then
+		state.state = state.states.paused
 	elseif not state.player.dead then
 		state.updateStarryBackground(dt)
 	end

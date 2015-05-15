@@ -40,6 +40,12 @@ end
 function playerfunctions:update(dt)
 	self.x,self.y = MOUSE.x,MOUSE.y
 
+	if self.x < STATE.camera.x - STATE.camera.width/2 then
+		self.x = STATE.camera.x
+	elseif self.x > STATE.camera.x + STATE.camera.width/2 then
+		self.x = STATE.camera.x + STATE.camera.width/2
+	end
+
 	self.fireCountdown = self.fireCountdown - dt
 	if self.fireCountdown <= 0  then
 		if self.fullauto then

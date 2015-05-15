@@ -6,6 +6,7 @@ function state.load()
 end
 
 function state.update(dt)
+	STATE.hud:update(dt)
 	if state.countdown then
 		state.countdown = state.countdown - dt*1.5
 		if state.countdown <= 0 then
