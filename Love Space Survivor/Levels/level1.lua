@@ -1,6 +1,6 @@
 local level = {}
 
-
+local upgrade = require('Game/upgrade')
 function level.load()
 	level.number = 1
 
@@ -34,9 +34,9 @@ function level.load()
 	level.upgrades = {}
 
 	table.insert(level.upgrades,upgrade.make{
-											description = 'Upgrade missile attack power'
+											name = 'Missile Attack'
+											,description = 'Upgrade missile attack power'
 											,costFunction = function(v,c) return c+1000 end
-
 		})
 end
 

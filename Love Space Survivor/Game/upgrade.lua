@@ -5,7 +5,7 @@ function upgrade.make(att)
 	setmetatable(self, upgrade)
 
 	self.description = att.description or "This is an upgrade"
-
+	self.name = att.name or 'No name'
 	
 	self.costFunction = att.costFunction
 	

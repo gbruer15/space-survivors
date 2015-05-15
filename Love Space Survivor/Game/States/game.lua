@@ -70,6 +70,10 @@ function state.draw()
 
 	state.state.draw()
 
+
+	for i,v in ipairs(state.level.upgrades) do
+		love.graphics.print(v.name .. ': ' .. v.cost,state.camera.x+state.camera.width/2, 300+i*15)
+	end
 	love.graphics.setColor(255,255,255)
 	love.graphics.print('Cash: ' .. state.player.cash,0,0)
 	love.graphics.print('Score: ' .. state.player.score,0,15)
