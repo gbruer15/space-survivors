@@ -2,6 +2,7 @@ local state = {}
 
 local enemy = require('Game/Enemy/enemy')
 local upgrade = require('Game/upgrade')
+local hud = require('Game/hud')
 function state.load()
 	state.states = {}
 	state.states.intro = require("Game/States/playingStates/intro")
@@ -9,9 +10,30 @@ function state.load()
 	state.states.dead = require("Game/States/playingStates/dead")
 
 
-	--variables used by states
+	--variables used by states	
+	state.upgrades = {}
+
+	table.insert(state.upgrades,upgrade.make{
+											name = 'Missile Attack'
+											,description = 'Upgrade missile attack power'
+											,costFunction = function(v,c) return c+1000 end
+		})
+
+
+	state.hud = hud.make{
+						x=window.width-200
+						,y=0
+						,width = 200
+						,height=window.height
+						}
+
+	state.camera = require("1stPartyLib/display/camera").make{
+												width=window.width-state.hud.width
+												,height=window.height
+											}
+
 	state.player = require("Game/Player/player").make()
-	state.camera = require("1stPartyLib/display/camera").make{width=window.width-100, height=window.height}
+	
 	state.enemies = {}
 	state.enemyMissiles = {}
 
@@ -70,14 +92,7 @@ function state.draw()
 
 	state.state.draw()
 
-
-	for i,v in ipairs(state.level.upgrades) do
-		love.graphics.print(v.name .. ': ' .. v.cost,state.camera.x+state.camera.width/2, 300+i*15)
-	end
-	love.graphics.setColor(255,255,255)
-	love.graphics.print('Cash: ' .. state.player.cash,0,0)
-	love.graphics.print('Score: ' .. state.player.score,0,15)
-	love.graphics.print('Kills: ' .. state.player.kills,0,30)
+	state.hud:draw()
 end
 
 function state.keypressed(key)

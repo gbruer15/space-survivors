@@ -17,9 +17,9 @@ end
 
 function state.draw()
 	if state.countdown then
-		love.graphics.printf(math.ceil(state.countdown),0,80,window.width,'center')
+		love.graphics.printf(math.ceil(state.countdown),0,80,STATE.camera.width,'center')
 	else
-		love.graphics.printf('Click ship to play',0,80,window.width,'center')
+		love.graphics.printf('Click ship to play',0,80,STATE.camera.width,'center')
 	end
 end
 

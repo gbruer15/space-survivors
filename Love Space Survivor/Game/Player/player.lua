@@ -4,8 +4,8 @@ function playerfunctions.make(att)
 	local self = {}
 	setmetatable(self, {__index = playerfunctions})
 
-	self.x = window.width/2
-	self.y = window.height/2
+	self.x = STATE.camera.width/2
+	self.y = STATE.camera.height/2
 	self.drawBox = rectangle.make(15,125, self) --40
 
 	self.collisionBox = rectangle.make(10,10,self)--20
@@ -26,6 +26,7 @@ function playerfunctions.make(att)
 	self.fireDelay = 0.1--0.5
 
 	self.currentLevel = 1
+	self.lives = 5
 
 	self.missileSpeed = 450
 	self.missileDamage = 15

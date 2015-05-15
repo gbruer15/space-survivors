@@ -30,14 +30,6 @@ function level.load()
 	level.enemyMissileMotionSensor = -40
 
 	level.killsToWin = 850
-
-	level.upgrades = {}
-
-	table.insert(level.upgrades,upgrade.make{
-											name = 'Missile Attack'
-											,description = 'Upgrade missile attack power'
-											,costFunction = function(v,c) return c+1000 end
-		})
 end
 
 function level.update(dt)

@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"cI",
+				"cIWidth"
+			],
+			[
 				"k",
 				"killsToWin"
 			],
@@ -75,15 +79,32 @@
 			"file": "Game/States/game.lua",
 			"settings":
 			{
-				"buffer_size": 3257,
+				"buffer_size": 3343,
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Game/hud.lua",
+			"settings":
+			{
+				"buffer_size": 1417,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "1stPartyLib/display/outline.lua",
+			"settings":
+			{
+				"buffer_size": 1470,
+				"line_ending": "Windows",
+				"name": "local outline = {}"
 			}
 		},
 		{
 			"file": "Game/Player/player.lua",
 			"settings":
 			{
-				"buffer_size": 2728,
+				"buffer_size": 2756,
 				"line_ending": "Unix"
 			}
 		},
@@ -91,7 +112,7 @@
 			"file": "Levels/level1.lua",
 			"settings":
 			{
-				"buffer_size": 3494,
+				"buffer_size": 3272,
 				"line_ending": "Unix",
 				"name": "local level = {}"
 			}
@@ -117,7 +138,7 @@
 			"file": "Game/States/playingStates/intro.lua",
 			"settings":
 			{
-				"buffer_size": 725,
+				"buffer_size": 737,
 				"line_ending": "Unix"
 			}
 		},
@@ -152,6 +173,14 @@
 				"buffer_size": 1763,
 				"line_ending": "Unix"
 			}
+		},
+		{
+			"file": "resources.lua",
+			"settings":
+			{
+				"buffer_size": 491,
+				"line_ending": "Unix"
+			}
 		}
 	],
 	"build_system": "Linux Love2d 9.0",
@@ -178,6 +207,7 @@
 	},
 	"file_history":
 	[
+		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Love Space Survivor.sublime-project",
 		"/home/grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/Enemy/enemy.lua",
 		"/home/grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/States/playingStates/dead.lua",
 		"/home/grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/States/playingStates/playing.lua",
@@ -220,6 +250,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"SIDEPANELRECT",
+			"corner",
 			"state",
 			"enemymissileslow",
 			"movementchange",
@@ -255,7 +287,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 7,
 			"sheets":
 			[
 				{
@@ -263,15 +295,95 @@
 					"file": "Game/States/game.lua",
 					"settings":
 					{
-						"buffer_size": 3257,
+						"buffer_size": 3343,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								99,
-								60
+								948,
+								948
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 266.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "Game/hud.lua",
+					"settings":
+					{
+						"buffer_size": 1417,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1178,
+								1178
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 606.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "1stPartyLib/display/outline.lua",
+					"settings":
+					{
+						"buffer_size": 1470,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								948,
+								948
+							]
+						],
+						"settings":
+						{
+							"auto_name": "local outline = {}",
+							"syntax": "Packages/Lua/Lua.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 441.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "Game/Player/player.lua",
+					"settings":
+					{
+						"buffer_size": 2756,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								206,
+								206
 							]
 						],
 						"settings":
@@ -286,46 +398,19 @@
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "Game/Player/player.lua",
-					"settings":
-					{
-						"buffer_size": 2728,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2637,
-								2637
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Lua/Lua.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1785.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
+					"buffer": 4,
 					"file": "Levels/level1.lua",
 					"settings":
 					{
-						"buffer_size": 3494,
+						"buffer_size": 3272,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								57,
-								57
+								611,
+								621
 							]
 						],
 						"settings":
@@ -336,13 +421,13 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 361.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 5,
 					"file": "Game/upgrade.lua",
 					"settings":
 					{
@@ -353,14 +438,15 @@
 						"selection":
 						[
 							[
-								212,
-								212
+								13,
+								13
 							]
 						],
 						"settings":
 						{
 							"auto_name": "local upgrade = {}",
-							"syntax": "Packages/Lua/Lua.tmLanguage"
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -369,7 +455,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 6,
 					"file": "gamel.py",
 					"settings":
 					{
@@ -380,8 +466,8 @@
 						"selection":
 						[
 							[
-								100266,
-								100266
+								85885,
+								85898
 							]
 						],
 						"settings":
@@ -391,25 +477,25 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 38207.0,
+						"translation.y": 38717.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 7,
 					"file": "Game/States/playingStates/intro.lua",
 					"settings":
 					{
-						"buffer_size": 725,
+						"buffer_size": 737,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								315,
-								315
+								499,
+								499
 							]
 						],
 						"settings":
@@ -418,13 +504,13 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 306.0,
+						"translation.y": 21.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 8,
 					"file": "1stPartyLib/display/camera.lua",
 					"settings":
 					{
@@ -451,7 +537,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 9,
 					"file": "Game/missile.lua",
 					"settings":
 					{
@@ -478,7 +564,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 8,
+					"buffer": 10,
 					"file": "Game/States/playingStates/playing.lua",
 					"settings":
 					{
@@ -505,7 +591,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 9,
+					"buffer": 11,
 					"file": "Game/Enemy/enemy.lua",
 					"settings":
 					{
@@ -524,6 +610,32 @@
 						{
 							"syntax": "Packages/Lua/Lua.tmLanguage",
 							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "resources.lua",
+					"settings":
+					{
+						"buffer_size": 491,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								455,
+								455
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
