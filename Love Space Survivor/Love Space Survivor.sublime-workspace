@@ -4,6 +4,46 @@
 		"selected_items":
 		[
 			[
+				"enemyMiss",
+				"enemyMissileMotionSensor"
+			],
+			[
+				"fir",
+				"enemyMissileFire"
+			],
+			[
+				"max",
+				"maxEnemySize"
+			],
+			[
+				"mni",
+				"minEnemySize"
+			],
+			[
+				"slow",
+				"enemyMissileSlowdown"
+			],
+			[
+				"missile",
+				"enemyMissileSpeed"
+			],
+			[
+				"enemySpawn",
+				"enemySpawnRateSlowdown"
+			],
+			[
+				"enemySpawnR",
+				"enemySpawnRateTimer"
+			],
+			[
+				"imag",
+				"IMAGES_PATH"
+			],
+			[
+				"require",
+				"requireDirectory"
+			],
+			[
 				"x",
 				"x"
 			],
@@ -27,23 +67,7 @@
 			"file": "Game/States/game.lua",
 			"settings":
 			{
-				"buffer_size": 1994,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Game/Enemy/enemy.lua",
-			"settings":
-			{
-				"buffer_size": 1324,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "1stPartyLib/display/rectangle.lua",
-			"settings":
-			{
-				"buffer_size": 1200,
+				"buffer_size": 2957,
 				"line_ending": "Unix"
 			}
 		},
@@ -51,25 +75,41 @@
 			"file": "Game/Player/player.lua",
 			"settings":
 			{
-				"buffer_size": 912,
+				"buffer_size": 1855,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Game/Enemy/enemy.lua",
+			"settings":
+			{
+				"buffer_size": 1679,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Game/States/playingStates/playing.lua",
+			"settings":
+			{
+				"buffer_size": 1662,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Game/States/playingStates/dead.lua",
+			"settings":
+			{
+				"buffer_size": 550,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Levels/level1.lua",
+			"settings":
+			{
+				"buffer_size": 3105,
 				"line_ending": "Unix",
-				"name": "local player = {}"
-			}
-		},
-		{
-			"file": "Game/States/titlemenu.lua",
-			"settings":
-			{
-				"buffer_size": 203,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Game/missile.lua",
-			"settings":
-			{
-				"buffer_size": 834,
-				"line_ending": "Unix"
+				"name": "local level = {}"
 			}
 		},
 		{
@@ -78,6 +118,14 @@
 			{
 				"buffer_size": 174445,
 				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Game/States/playingStates/intro.lua",
+			"settings":
+			{
+				"buffer_size": 725,
+				"line_ending": "Unix"
 			}
 		}
 	],
@@ -105,11 +153,22 @@
 	},
 	"file_history":
 	[
+		"/home/grant/scm/SpaceSurvivorsRepo/Love Space Survivor/main.lua",
+		"/home/grant/scm/SpaceSurvivorsRepo/Love Space Survivor/1stPartyLib/display/rectangle.lua",
+		"/home/grant/scm/SpaceSurvivorsRepo/Love Space Survivor/resources.lua",
+		"/home/grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/missile.lua",
+		"/home/grant/scm/SpaceSurvivorsRepo/Love Space Survivor/1stPartyLib/display/button.lua",
+		"/home/grant/scm/SpaceSurvivorsRepo/Love Space Survivor/1stPartyLib/display/boolBox.lua",
+		"/home/grant/scm/SpaceSurvivorsRepo/Love Space Survivor/gamel.py",
+		"/home/grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/States/playingStates/playing.lua",
+		"/home/grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/States/playingStates/intro.lua",
+		"/home/grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/States/playingStates/dead.lua",
+		"/home/grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/Player/player.lua",
+		"/home/grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/Enemy/enemy.lua",
+		"/home/grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/States/titlemenu.lua",
 		"/home/grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/Player/missile.lua",
 		"/home/grant/scm/SpaceSurvivorsRepo/Love Space Survivor/1stPartyLib/physics/collision.lua",
 		"/home/grant/scm/SpaceSurvivorsRepo/Love Space Survivor/1stPartyLib/display/camera.lua",
-		"/home/grant/scm/SpaceSurvivorsRepo/Love Space Survivor/main.lua",
-		"/home/grant/scm/SpaceSurvivorsRepo/Love Space Survivor/1stPartyLib/display/rectangle.lua",
 		"/home/grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/States/game.lua",
 		"/home/grant/.config/sublime-text-2/Packages/Default/Default (Linux).sublime-keymap",
 		"/home/grant/.config/sublime-text-2/Packages/Default/Preferences.sublime-settings",
@@ -125,9 +184,10 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 93.0,
 		"where_history":
 		[
+			""
 		]
 	},
 	"find_state":
@@ -135,6 +195,21 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"state",
+			"enemymissileslow",
+			"movementchange",
+			"ENEMYMISSILESLOWDOWN",
+			"ENEMYCASH",
+			"maxenemysize =",
+			"maxenemysize",
+			"maxstars",
+			"maxstars=",
+			"maxstars =",
+			"maxstars",
+			"minstarspeed =",
+			"minstarspeed",
+			"stary",
+			"!=",
 			"f5",
 			"build"
 		],
@@ -144,6 +219,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"STATE"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -154,7 +230,7 @@
 	"groups":
 	[
 		{
-			"selected": 5,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -162,15 +238,15 @@
 					"file": "Game/States/game.lua",
 					"settings":
 					{
-						"buffer_size": 1994,
+						"buffer_size": 2957,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								898,
-								898
+								2751,
+								2751
 							]
 						],
 						"settings":
@@ -179,53 +255,52 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 306.0,
+						"translation.y": 1938.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "Game/Enemy/enemy.lua",
+					"file": "Game/Player/player.lua",
 					"settings":
 					{
-						"buffer_size": 1324,
+						"buffer_size": 1855,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1065,
-								1065
+								1761,
+								1761
 							]
 						],
 						"settings":
 						{
-							"spell_check": true,
 							"syntax": "Packages/Lua/Lua.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
-						"translation.x": 148.0,
-						"translation.y": 357.0,
+						"translation.x": 0.0,
+						"translation.y": 918.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "1stPartyLib/display/rectangle.lua",
+					"file": "Game/Enemy/enemy.lua",
 					"settings":
 					{
-						"buffer_size": 1200,
+						"buffer_size": 1679,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								580,
-								580
+								645,
+								645
 							]
 						],
 						"settings":
@@ -234,79 +309,52 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 408.0,
+						"translation.y": 153.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 3,
-					"file": "Game/Player/player.lua",
+					"file": "Game/States/playingStates/playing.lua",
 					"settings":
 					{
-						"buffer_size": 912,
+						"buffer_size": 1662,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								339,
-								339
+								1333,
+								1333
 							]
 						],
 						"settings":
 						{
-							"auto_name": "local player = {}",
 							"syntax": "Packages/Lua/Lua.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 102.0,
+						"translation.y": 459.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 4,
-					"file": "Game/States/titlemenu.lua",
+					"file": "Game/States/playingStates/dead.lua",
 					"settings":
 					{
-						"buffer_size": 203,
+						"buffer_size": 550,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								17,
-								17
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Lua/Lua.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "Game/missile.lua",
-					"settings":
-					{
-						"buffer_size": 834,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								289,
-								289
+								337,
+								337
 							]
 						],
 						"settings":
@@ -315,7 +363,35 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 255.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "Levels/level1.lua",
+					"settings":
+					{
+						"buffer_size": 3105,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2842,
+								2842
+							]
+						],
+						"settings":
+						{
+							"auto_name": "local level = {}",
+							"spell_check": true,
+							"syntax": "Packages/Lua/Lua.tmLanguage"
+						},
+						"translation.x": 27.0,
+						"translation.y": 1479.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -332,8 +408,8 @@
 						"selection":
 						[
 							[
-								140857,
-								140857
+								9511,
+								9511
 							]
 						],
 						"settings":
@@ -343,7 +419,34 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 50310.0,
+						"translation.y": 4280.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "Game/States/playingStates/intro.lua",
+					"settings":
+					{
+						"buffer_size": 725,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								315,
+								315
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 306.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -388,7 +491,7 @@
 	},
 	"replace":
 	{
-		"height": 0.0
+		"height": 64.0
 	},
 	"save_all_on_build": true,
 	"select_file":

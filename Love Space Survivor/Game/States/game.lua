@@ -57,11 +57,12 @@ function state.draw()
 		v:draw()
 	end
 
-	love.graphics.setColor(255,255,0)
+	love.graphics.setColor(255,255,255)
 	for i,v in ipairs(state.enemies) do
 		v:draw()
 	end
 
+	love.graphics.setColor(state.level.enemyMissileColor)
 	for i,v in ipairs(state.enemyMissiles) do
 		v:draw()
 	end	

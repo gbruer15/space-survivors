@@ -6,7 +6,7 @@ function state.load()
 								centerx=window.width/2 
 								,centery=window.height/2
 								,titleText='Try again?'
-								,boxColor={200,0,0,100}
+								,boxColor={200,0,0,155}
 
 
 							}

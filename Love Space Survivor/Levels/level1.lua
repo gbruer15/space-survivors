@@ -62,7 +62,7 @@ function level.update(dt)
 			level.enemyHealth = level.enemyHealth + 1
 		end	
 
-		level.enemiesKilled = level.enemiesKilled + 20
+		level.killThreshold = level.killThreshold + 20
 	end
 
 	level.enemySpawnRateTimer = level.enemySpawnRateTimer - dt

@@ -22,10 +22,13 @@ function playerfunctions.make(att)
 	self.score = 0
 	self.kills = 0
 
-	self.fullauto = false
-	self.fireDelay = 0.5
+	self.fullauto = true
+	self.fireDelay = 0.1--0.5
 
 	self.currentLevel = 1
+
+	self.missileSpeed = 350
+	self.missileDamage = 5
 	
 	---------------------------------
 
@@ -60,7 +63,15 @@ function playerfunctions:draw(drawColBox,colBoxMode,color)
 end
 
 function playerfunctions:fireMissile()
-	table.insert(self.missiles,missile.make(self.x,self.y-self.drawBox.height/2, 350,-math.pi/2))
+	table.insert(self.missiles,missile.make{
+											x=self.x
+											,y=self.y-self.drawBox.height/2
+											,speed=self.missileSpeed
+											,angle=-math.pi/2
+											,damage=self.missileDamage
+
+										}
+									)
 end
 
 

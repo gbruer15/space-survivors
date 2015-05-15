@@ -58,7 +58,12 @@ function enemy:draw(drawColBox, colBoxMode)
 end
 
 function enemy:fireMissile()
-	table.insert(STATE.enemyMissiles,missile.make(self.x,self.drawBox:getBottom(), self.missileSpeed,math.pi/2))
+	table.insert(STATE.enemyMissiles,missile.make{
+													x=self.x
+													,y=self.drawBox:getBottom()
+													,speed=self.missileSpeed
+													,angle=math.pi/2}
+												)
 end
 
 return enemy

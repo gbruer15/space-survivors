@@ -45,7 +45,8 @@ function state.update(dt)
 			missile:update(dt)
 			if missile:isHittingRectangle(STATE.player.collisionBox:getRect()) then
 				STATE.player.dead = true
-			elseif missile:getRect()
+			elseif not missile:isHittingRectangle(STATE.camera.getRect()) then
+				table.remove(STATE.enemyMissiles,i)
 			end
 		end
 	end
