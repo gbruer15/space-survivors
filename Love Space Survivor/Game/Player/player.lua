@@ -6,9 +6,9 @@ function playerfunctions.make(att)
 
 	self.x = window.width/2
 	self.y = window.height/2
-	self.drawBox = rectangle.make(40,125, self)
+	self.drawBox = rectangle.make(15,125, self) --40
 
-	self.collisionBox = rectangle.make(20,40,self)
+	self.collisionBox = rectangle.make(10,10,self)--20
 
 	self.Image = images.spaceship
 	self.drawBox.height = self.drawBox.width/self.Image.width*self.Image.height
@@ -27,8 +27,8 @@ function playerfunctions.make(att)
 
 	self.currentLevel = 1
 
-	self.missileSpeed = 350
-	self.missileDamage = 5
+	self.missileSpeed = 450
+	self.missileDamage = 15
 	
 	---------------------------------
 
@@ -64,10 +64,37 @@ end
 
 function playerfunctions:fireMissile()
 	table.insert(self.missiles,missile.make{
-											x=self.x
+											x=self.x-10
 											,y=self.y-self.drawBox.height/2
 											,speed=self.missileSpeed
 											,angle=-math.pi/2
+											,damage=self.missileDamage
+
+										}
+									)
+	table.insert(self.missiles,missile.make{
+											x=self.x+10
+											,y=self.y-self.drawBox.height/2
+											,speed=self.missileSpeed
+											,angle=-math.pi/2
+											,damage=self.missileDamage
+
+										}
+									)
+	table.insert(self.missiles,missile.make{
+											x=self.x
+											,y=self.y-self.drawBox.height/2
+											,speed=self.missileSpeed
+											,angle=-math.pi/4
+											,damage=self.missileDamage
+
+										}
+									)
+	table.insert(self.missiles,missile.make{
+											x=self.x
+											,y=self.y-self.drawBox.height/2
+											,speed=self.missileSpeed
+											,angle=-math.pi/4*3
 											,damage=self.missileDamage
 
 										}

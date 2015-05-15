@@ -27,7 +27,8 @@ function state.update(dt)
 		v:update(dt)
 
 		if v.drawBox:getTop() >= STATE.camera.y + STATE.camera.height/2 then
-			table.remove(STATE.enemies,i)
+			--table.remove(STATE.enemies,i)
+			v.y = STATE.camera.y-STATE.camera.height/2-100
 		elseif v.health <= 0 then
 			STATE.player.cash = STATE.player.cash + v.loot
 			STATE.player.score = STATE.player.score + v.points

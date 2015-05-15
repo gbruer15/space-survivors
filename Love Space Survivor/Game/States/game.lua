@@ -1,6 +1,7 @@
 local state = {}
 
 local enemy = require('Game/Enemy/enemy')
+local upgrade = require('Game/upgrade')
 function state.load()
 	state.states = {}
 	state.states.intro = require("Game/States/playingStates/intro")
@@ -72,6 +73,7 @@ function state.draw()
 	love.graphics.setColor(255,255,255)
 	love.graphics.print('Cash: ' .. state.player.cash,0,0)
 	love.graphics.print('Score: ' .. state.player.score,0,15)
+	love.graphics.print('Kills: ' .. state.player.kills,0,30)
 end
 
 function state.keypressed(key)

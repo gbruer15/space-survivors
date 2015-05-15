@@ -2,6 +2,9 @@ local level = {}
 
 
 function level.load()
+	level.number = 1
+
+
 	level.killThreshold = 20
 	level.enemiesKilled = 0
 
@@ -25,6 +28,16 @@ function level.load()
 	level.enemySpawnRateTimer = level.enemySpawnRateSlowdown*2
 
 	level.enemyMissileMotionSensor = -40
+
+	level.killsToWin = 850
+
+	level.upgrades = {}
+
+	table.insert(level.upgrades,upgrade.make{
+											description = 'Upgrade missile attack power'
+											,costFunction = function(v,c) return c+1000 end
+
+		})
 end
 
 function level.update(dt)
@@ -80,17 +93,19 @@ function level.update(dt)
 	level.enemySpawnTimer = level.enemySpawnTimer - dt
 	if level.enemySpawnTimer <= 0 then
 		level.enemySpawnTimer = level.enemySpawnSlowdown
-		table.insert(STATE.enemies, enemy.make{
-									x=math.random(STATE.camera.x-STATE.camera.width/2,STATE.camera.x+STATE.camera.width/2)
-									,y=-level.maxEnemySpeed*1.5
-									,health = 1
-									,missileSpeed=level.enemyMissileSpeed
-									,fireDelay=level.enemyMissileSlowdown
-									,health=level.enemyHealth
-									,width=math.random(level.minEnemySize, level.maxEnemySize)
-									,yspeed=math.random(level.minEnemySpeed, level.maxEnemySpeed)
-									,firing=level.enemyMissileFire
-										})
+		if #STATE.enemies + level.enemiesKilled < level.killsToWin then
+			table.insert(STATE.enemies, enemy.make{
+										x=math.random(STATE.camera.x-STATE.camera.width/2,STATE.camera.x+STATE.camera.width/2)
+										,y=-level.maxEnemySpeed*1.5
+										,health = 1
+										,missileSpeed=level.enemyMissileSpeed
+										,fireDelay=level.enemyMissileSlowdown
+										,health=level.enemyHealth
+										,width=math.random(level.minEnemySize, level.maxEnemySize)
+										,yspeed=math.random(level.minEnemySpeed, level.maxEnemySpeed)
+										,firing=level.enemyMissileFire
+											})
+		end
 	end
 
 	if level.enemyMissileFire then
