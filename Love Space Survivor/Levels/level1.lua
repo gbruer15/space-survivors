@@ -30,7 +30,7 @@ function level.load()
 
 	level.enemyMissileMotionSensor = -40
 
-	level.killsToWin = 850 -- not reloaded
+	level.killsToWin = 20 -- not reloaded
 end
 
 function level.update(dt)
@@ -83,6 +83,15 @@ function level.update(dt)
 		end
 	end
 
+	if STATE.player.levelKills>= level.killsToWin then
+		STATE.enemies = {}
+		STATE.enemyMissiles = {}
+		STATE.player.missiles = {}
+
+		STATE.state = STATE.states.won
+		return
+	end
+
 	level.enemySpawnTimer = level.enemySpawnTimer - dt
 	if level.enemySpawnTimer <= 0 then
 		level.enemySpawnTimer = level.enemySpawnSlowdown
@@ -116,7 +125,7 @@ end
 
 function level.reload()
 	STATE.player.lives = level.playerLives
-	
+
 	level.killThreshold = 20
 	level.enemiesKilled = 0
 

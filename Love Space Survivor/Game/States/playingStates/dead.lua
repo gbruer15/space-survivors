@@ -1,6 +1,5 @@
 local state = {}
 
-local enemy = require('Game/Enemy/enemy')
 function state.load()
 	local text
 	if STATE.player.lives > 1 then

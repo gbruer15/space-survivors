@@ -10,7 +10,7 @@ function state.load()
 	state.states.playing = require("Game/States/playingStates/playing")
 	state.states.paused = require("Game/States/playingStates/paused")
 	state.states.dead = require("Game/States/playingStates/dead")
-
+	state.states.won = require("Game/States/playingStates/won")
 
 	--variables used by states	
 	state.upgrades = {}
