@@ -9,19 +9,24 @@ function enemy.make(att)
 
 	self.x = att.x or 0
 	self.y = att.y or 0
-	self.drawBox = rectangle.make(50,60, self)
-	self.collisionBox = rectangle.make(30,60,self)
 
 	self.Image = images.enemySpaceship
+
+	local width = att.width or 50
+	local scale = (att.width or 50)/self.Image.width
+	self.drawBox = rectangle.make(width,scale*self.Image.height, self)
+	self.collisionBox = rectangle.make(scale*88,scale*205,self)
+
 	self.drawBox.height = self.drawBox.width/self.Image.width*self.Image.height
 	self.drawBox.dy = self.drawBox.height/2
 
 	self.yspeed = att.yspeed or 100
 
-	self.missiles = {}
-	self.firing = true
+	self.firing = att.firing
 	self.fireDelay = att.fireDelay or 1
 	self.fireCountdown = self.fireDelay
+
+	self.missileSpeed = att.missileSpeed or  400
 
 	self.health = att.health or 1
 
@@ -53,7 +58,12 @@ function enemy:draw(drawColBox, colBoxMode)
 end
 
 function enemy:fireMissile()
-	table.insert(self.missiles,missile.make(self.x,self.drawBox:getBottom(), 500,math.pi/2))
+	table.insert(STATE.enemyMissiles,missile.make{
+													x=self.x
+													,y=self.drawBox:getBottom()
+													,speed=self.missileSpeed
+													,angle=math.pi/2}
+												)
 end
 
 return enemy

@@ -1,20 +1,20 @@
 missile = {}
 missile.__index = missile
 
-function missile.make(x,y,speed,angle, length, width)
+function missile.make(att,x,y,speed,angle, length, width)
 	local self = {}
 	setmetatable(self,missile)
 
-	self.x = x
-	self.y = y
+	self.x = att.x or 0
+	self.y = att.y or 0
 
-	self.speed = speed
-	self.angle = angle
+	self.speed = att.speed or 10
+	self.angle = att.angle or -math.pi/2
 
-	self.damage = 1
+	self.damage = att.damage or 1
 
-	self.length = length or 10
-	self.width = width or 2
+	self.length = att.length or 10
+	self.width = att.width or 2
 
 	self.endX, self.endY = self.x+self.length*math.cos(self.angle), self.y+self.length*math.sin(self.angle)
 	return self

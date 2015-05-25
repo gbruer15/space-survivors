@@ -1,80 +1,64 @@
 local state = {}
 
-local enemy = require('Game/Enemy/enemy')
+enemy = require('Game/Enemy/enemy')
 function state.load()
-	state.player = require("Game/Player/player").make()
-	state.camera = require("1stPartyLib/display/camera").make()
-
-	state.playerMissiles = {}
-	state.enemyMissiles = {}
-	state.enemies = {}
 end
 
 function state.update(dt)
-	state.player:update(dt)
-	for i=#state.player.missiles, 1, -1 do
-		table.insert(state.playerMissiles, table.remove(state.player.missiles))
-	end
+	STATE.hud:update(dt)
+	STATE.player:update(dt)
 
-
-	for i=#state.playerMissiles,1,-1 do
-		local missile = state.playerMissiles[i]
+	for i=#STATE.player.missiles,1,-1 do
+		local missile = STATE.player.missiles[i]
 		missile:update(dt)
-		if state.camera.isOffscreen(missile.x, missile.y) and state.camera.isOffscreen(missile.endX, missile.endY) then
-			table.remove(state.playerMissiles,i)
+		if STATE.camera.isOffscreen(missile.x, missile.y) and STATE.camera.isOffscreen(missile.endX, missile.endY) then
+			table.remove(STATE.player.missiles,i)
 		else
-			for j,e in ipairs(state.enemies) do
+			for j,e in ipairs(STATE.enemies) do
 				if missile:isHittingRectangle(e.collisionBox:getRect()) then
 					e.health = e.health - missile.damage
-					table.remove(state.playerMissiles,i)
+					table.remove(STATE.player.missiles,i)
 					break
 				end
 			end
 		end
 	end
-	for i=#state.enemies,1,-1 do
-		local v = state.enemies[i]
+	for i=#STATE.enemies,1,-1 do
+		local v = STATE.enemies[i]
 		v:update(dt)
-		for j=#v.missiles, 1, -1 do
-			table.insert(state.enemyMissiles, table.remove(v.missiles))
-		end
-		if v.drawBox:getTop() >= state.camera.y + state.camera.height/2 then
-			table.remove(state.enemies,i)
+
+		if v.drawBox:getTop() >= STATE.camera.y + STATE.camera.height/2 then
+			--table.remove(STATE.enemies,i)
+			v.y = STATE.camera.y-STATE.camera.height/2-100
 		elseif v.health <= 0 then
-			state.player.cash = state.player.cash + v.loot
-			state.player.score = state.player.score + v.points
-			table.remove(state.enemies,i)
-		elseif state.player.collisionBox:collideRectangle(v.collisionBox) then
-			state.player.dead = true
+			STATE.player.levelCash = STATE.player.levelCash + v.loot
+			STATE.player.levelScore = STATE.player.levelScore + v.points
+			STATE.player.levelKills = STATE.player.levelKills + 1
+
+			STATE.player.totalKills = STATE.player.totalKills + 1
+			table.remove(STATE.enemies,i)
+		elseif STATE.player.collisionBox:collideRectangle(v.collisionBox) then
+			STATE.player:die()
 		end
 	end
 
-	if not state.player.dead then
-		for i,missile in ipairs(state.enemyMissiles) do
+	if not STATE.player.dead then
+		for i=#STATE.enemyMissiles,1,-1 do
+			local missile = STATE.enemyMissiles[i]
 			missile:update(dt)
-			if missile:isHittingRectangle(state.player.collisionBox:getRect()) then
-				state.player.dead = true
+			if missile:isHittingRectangle(STATE.player.collisionBox:getRect()) then
+				STATE.player:die()
+			elseif not missile:isHittingRectangle(STATE.camera.getRect()) then
+				table.remove(STATE.enemyMissiles,i)
 			end
 		end
 	end
+
+	STATE.level.update(dt)
 end
 
 function state.draw()
-	state.player:draw()
-
-	love.graphics.setColor(255,255,0)
-	for i,v in ipairs(state.enemyMissiles) do
-		v:draw()
-	end
-
-	for i,v in ipairs(state.enemies) do
-		v:draw()
-	end
-
-	love.graphics.setColor(255,0,0)
-	for i,v in ipairs(state.playerMissiles) do
-		v:draw()
-	end
+	
 end
 
 function state.keypressed(key)
@@ -82,8 +66,11 @@ function state.keypressed(key)
 end
 
 function state.mousepressed(x,y,button)
-	state.player:mousepressed(x,y,button)
-	table.insert(state.enemies, enemy.make{x=math.random(100,500),health = 1,y=-80})
+	if collision.pointRectangle(x,y,STATE.hud.x,STATE.hud.y,STATE.hud.width,STATE.hud.height) then
+		STATE.hud:mousepressed(x,y,button)
+	else
+		STATE.player:mousepressed(x,y,button)
+	end
 end
 
 return state
