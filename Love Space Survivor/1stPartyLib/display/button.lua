@@ -25,9 +25,13 @@ function button.make(att) --att stands for attributes
 	if att.centery then
 		b.y = att.centery-b.height/2
 	end
-	b.image = att.image or buttonpic
-	b.imagewidth = b.image:getWidth()
-	b.imageheight = b.image:getHeight()
+	b.image = (att.image==nil and buttonpic) or att.image
+	if b.image then
+		b.imagewidth = b.image:getWidth()
+		b.imageheight = b.image:getHeight()
+	end
+
+
 	b.shadow = att.shadow
 	b.imagecolor = att.imagecolor or {255,255,255}
 	
@@ -67,7 +71,11 @@ end
 function button:draw()
 	if self.shadow then 
 		love.graphics.setColor(0,0,0)
-		love.graphics.draw(self.image,self.x+self.shadow.x,self.y+self.shadow.y,0,(self.width+self.shadow.width)/self.imagewidth,(self.height+self.shadow.height)/self.imageheight)
+		if self.image then
+			love.graphics.draw(self.image,self.x+self.shadow.x,self.y+self.shadow.y,0,(self.width+self.shadow.width)/self.imagewidth,(self.height+self.shadow.height)/self.imageheight)
+		else
+			love.graphics.rectangle('fill',self.x+self.shadow.x,self.y+self.shadow.y,self.width+self.shadow.width,self.height+self.shadow.height)
+		end
 	end
 	
 	if self.selected then
@@ -77,7 +85,11 @@ function button:draw()
 	else
 		love.graphics.setColor(unpack(self.dark))
 	end
-	love.graphics.draw(self.image,self.x,self.y,0,self.width/self.imagewidth,self.height/self.imageheight)	
+	if self.image then
+		love.graphics.draw(self.image,self.x,self.y,0,self.width/self.imagewidth,self.height/self.imageheight)
+	else
+		love.graphics.rectangle('fill',self.x,self.y,self.width,self.height)
+	end	
 	
 
 	

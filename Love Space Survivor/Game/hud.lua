@@ -1,6 +1,5 @@
 local hud = {}
 hud.__index= hud
-local outline = require('1stPartyLib/display/outline')
 function hud.make(att)
 	local self = {}
 	setmetatable(self,hud)
@@ -11,11 +10,6 @@ function hud.make(att)
 	self.width = att.width or 100
 	self.height = att.height or 100
 
-	self.outline = outline.make{
-								corner = images.basicOutlineCorner.image
-								,straight = images.basicOutlineStraight.image
-								,lineWidth = 5
-							}
 	self.hoveredUpgrade = STATE.upgrades[1]
 
 	self.buttons = {}
@@ -43,7 +37,7 @@ function hud:draw()
 	love.graphics.rectangle('fill',self.x,self.y,self.width,self.height)
 
 	love.graphics.setColor(255,255,255)
-	self.outline:draw(self.x,self.y,self.width,self.height)
+	outlines.basicOutline:draw(self.x,self.y,self.width,self.height)
 
 
 	love.graphics.printf('Level ' .. STATE.level.number, self.x,self.y,self.width,'center')

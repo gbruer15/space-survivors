@@ -2,16 +2,38 @@ local state = {}
 
 function state.load()
 
-	state.buttons = {}
+	state.levelButtons = {}
 
-	state.buttons.play = button.make{
-										text='play'
-										,centerx=window.width/2
-										,y=window.height/2-50
+	local numberOfColumns = 4
+	local width = 140
+	local height = 130
+	local hspace = 15
+	local vspace = 20
+	
+	local startx = window.width/2 - ((width+hspace)*numberOfColumns-hspace)/2
+	local x = startx
+	local y = 90
+	local curCol = 1
+
+	for i=1,4 do
+		table.insert(state.levelButtons, button.make{
+										text=i
+										,x=x
+										,y=y
+										,width=width
+										,height=height
 										,image=false
 										,imagecolor={200,200,0,150}
 										,textcolor={20,20,20}
-									}
+									})
+		curCol = curCol + 1
+		x = x + width + hspace
+		if curCol > numberOfColumns then
+			y = y + height + vspace
+			x = startx
+			curCol = 1
+		end
+	end
 
 	state.maxStarSpeed = 800
 	state.minStarSpeed = 40
@@ -22,15 +44,19 @@ end
 function state.update(dt)
 	state.updateStarryBackground(dt)
 
-	for i,b in pairs(state.buttons) do
+	state.levelHover = false
+	for i,b in ipairs(state.levelButtons) do
 		b:update(dt)
+		if b.hover then
+			state.levelHover = i
+		end
 	end
 end
 
 function state.draw()
 	state.drawStarryBackground()
 
-	for i,b in pairs(state.buttons) do
+	for i,b in ipairs(state.levelButtons) do
 		b:draw()
 	end
 end
@@ -40,9 +66,9 @@ function state.keypressed(key)
 end
 
 function state.mousepressed(x,y,button)
-	if state.buttons.play.hover then
-		STATE = require("Game/States/levelselect")
-		STATE.load()
+	if state.levelHover then
+		STATE = require("Game/States/game")
+		STATE.load(state.levelHover)
 	end
 end
 

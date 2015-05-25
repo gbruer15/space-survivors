@@ -4,7 +4,7 @@ local enemy = require('Game/Enemy/enemy')
 local upgrade = require('Game/upgrade')
 local hud = require('Game/hud')
 local button = require('1stPartyLib/display/button')
-function state.load()
+function state.load(n)
 	state.states = {}
 	state.states.intro = require("Game/States/playingStates/intro")
 	state.states.playing = require("Game/States/playingStates/playing")
@@ -39,26 +39,32 @@ function state.load()
 	state.enemies = {}
 	state.enemyMissiles = {}
 
-	state.level = require("Levels/level" .. state.player.currentLevel)
+	state.loadLevel(n)--state.player.currentLevel)
 
 	state.paused = false
 	-------------------------
-
-	state.level.load()
-
-
-	state.state = state.states.intro
 
 	for i,v in pairs(state.states) do
 		v.load()
 	end
 
-	
-
 	state.maxStarSpeed = 800
 	state.minStarSpeed = 40
 	state.initializeStarryBackground(500)
+end
 
+function state.loadLevel(levelNumber)
+	state.level = require("Levels/level" .. levelNumber)
+	state.level.load()
+
+	state.player.levelKills = 0
+	state.player.levelCash = 0
+	state.player.levelScore = 0
+
+	state.player.x = state.camera.x
+	state.player.y = state.camera.y
+
+	state.state = state.states.intro
 end
 
 function state.update(dt)

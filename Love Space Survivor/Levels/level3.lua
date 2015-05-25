@@ -1,8 +1,8 @@
-local level = {}
+\local level = {}
 
 local upgrade = require('Game/upgrade')
 function level.load()
-	level.number = 1 --not reloaded
+	level.number = 3 --not reloaded
 	level.playerLives = 3 -- not reloaded
 
 	STATE.player.lives = level.playerLives
@@ -30,7 +30,7 @@ function level.load()
 
 	level.enemyMissileMotionSensor = -40
 
-	level.killsToWin = 5 -- not reloaded
+	level.killsToWin = 10 -- not reloaded
 end
 
 function level.update(dt)

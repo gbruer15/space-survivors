@@ -13,7 +13,7 @@ function outline.make(att)
 	self.sIWidth = self.straight:getWidth()
 	self.sIHeight = self.straight:getHeight()
 
-	self.lineWidth = att.lineWidth
+	self.lineWidth = att.lineWidth or 10
 
 	self.scale = self.lineWidth/self.sIHeight
 
@@ -25,32 +25,41 @@ function outline.make(att)
 end
 
 
-function outline:draw(x,y,width,height)
+function outline:draw(x,y,width,height,lineWidth)
+	local scale, cWidth
+	if lineWidth then
+		scale = lineWidth/self.sIHeight
+		cWidth = self.cIWidth*scale
+	else
+		scale = self.scale
+		cWidth = self.cWidth
+	end
 
-	local straightWidth = width - self.cWidth*2
-	local straightHeight=height - self.cWidth*2
+
+	local straightWidth = width - cWidth*2
+	local straightHeight=height - cWidth*2
 	--top left corner
-	love.graphics.draw(self.corner,x,y,0,self.cScale,self.cScale)
+	love.graphics.draw(self.corner,x,y,0,scale,scale)
 
-	love.graphics.draw(self.straight,x+self.cWidth,y,0, straightWidth/self.sIWidth,self.scale)
+	love.graphics.draw(self.straight,x+cWidth,y,0, straightWidth/self.sIWidth,scale)
 
 
 	--top right corner
-	love.graphics.draw(self.corner,x+width,y,math.pi/2,self.cScale,self.cScale)
+	love.graphics.draw(self.corner,x+width,y,math.pi/2,scale,scale)
 
-	love.graphics.draw(self.straight,x+width,y+self.cWidth,math.pi/2, straightHeight/self.sIWidth,self.scale)
+	love.graphics.draw(self.straight,x+width,y+cWidth,math.pi/2, straightHeight/self.sIWidth,scale)
 
 
 	--bottom right corner
-	love.graphics.draw(self.corner,x+width,y+height,math.pi,self.cScale,self.cScale)
+	love.graphics.draw(self.corner,x+width,y+height,math.pi,scale,scale)
 
-	love.graphics.draw(self.straight,x+width-self.cWidth,y+height,math.pi, straightWidth/self.sIWidth,self.scale)
+	love.graphics.draw(self.straight,x+width-cWidth,y+height,math.pi, straightWidth/self.sIWidth,scale)
 
 
 	--bottom left corner
-	love.graphics.draw(self.corner,x,y+height,-math.pi/2,self.cScale,self.cScale)
+	love.graphics.draw(self.corner,x,y+height,-math.pi/2,scale,scale)
 
-	love.graphics.draw(self.straight,x,y+height-self.cWidth,-math.pi/2, straightHeight/self.sIWidth,self.scale)
+	love.graphics.draw(self.straight,x,y+height-cWidth,-math.pi/2, straightHeight/self.sIWidth,scale)
 
 end
 
