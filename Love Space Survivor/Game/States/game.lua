@@ -17,8 +17,33 @@ function state.load(n)
 
 	table.insert(state.upgrades,upgrade.make{
 											name = 'Missile Attack'
+											,value = 1
 											,description = 'Upgrade missile attack power'
-											,costFunction = function(v,c) return c+1000 end
+											,costFunction = function(v,c) return v*1000+1000 end
+		})
+	table.insert(state.upgrades,upgrade.make{
+											name = 'Missile Pierce'
+											,value = 0
+											,description = 'Upgrade missile pierce ability'
+											,costFunction = function(v,c) return v*1000+1000 end
+		})
+	table.insert(state.upgrades,upgrade.make{
+											name = 'Missile Speed'
+											,value = 1
+											,description = 'Upgrade missile speed'
+											,costFunction = function(v,c) return v*1000+1000 end
+		})
+	table.insert(state.upgrades,upgrade.make{
+											name = 'Missile Fire Rate'
+											,value = 1
+											,description = 'Upgrade missile fire rate'
+											,costFunction = function(v,c) return v*1000+1000 end
+		})
+	table.insert(state.upgrades,upgrade.make{
+											name = 'Missile Speed'
+											,value = 1
+											,description = 'Upgrade missile speed'
+											,costFunction = function(v,c) return v*1000+1000 end
 		})
 
 

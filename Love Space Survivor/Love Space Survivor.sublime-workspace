@@ -84,27 +84,35 @@
 	"buffers":
 	[
 		{
-			"file": "Game/States/titlemenu.lua",
-			"settings":
-			{
-				"buffer_size": 1585,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Game/States/levelselect.lua",
-			"settings":
-			{
-				"buffer_size": 2092,
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "Game/States/game.lua",
 			"settings":
 			{
-				"buffer_size": 3726,
+				"buffer_size": 4643,
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Game/upgrade.lua",
+			"settings":
+			{
+				"buffer_size": 666,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Game/hud.lua",
+			"settings":
+			{
+				"buffer_size": 1603,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "gamel.py",
+			"settings":
+			{
+				"buffer_size": 174445,
+				"line_ending": "Windows"
 			}
 		}
 	],
@@ -132,13 +140,15 @@
 	},
 	"file_history":
 	[
+		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/States/levelselect.lua",
+		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/States/titlemenu.lua",
+		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Levels/level1.lua",
 		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Levels/level4.lua",
 		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Levels/level3.lua",
+		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Levels/level2.lua",
 		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/States/game.lua",
 		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/States/playingStates/dead.lua",
-		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Levels/level1.lua",
 		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/main.lua",
-		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Levels/level2.lua",
 		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/States/playingStates/intro.lua",
 		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/States/playingStates/won.lua",
 		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/States/playingStates/paused.lua",
@@ -196,6 +206,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"upgrade",
 			"state.camera",
 			"y",
 			"kills",
@@ -237,49 +248,50 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "Game/States/titlemenu.lua",
+					"file": "Game/States/game.lua",
 					"settings":
 					{
-						"buffer_size": 1585,
+						"buffer_size": 4643,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								772,
-								772
+								1577,
+								1564
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Lua/Lua.tmLanguage"
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 472.0,
+						"translation.y": 171.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "Game/States/levelselect.lua",
+					"file": "Game/upgrade.lua",
 					"settings":
 					{
-						"buffer_size": 2092,
+						"buffer_size": 666,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								299,
-								299
+								625,
+								625
 							]
 						],
 						"settings":
@@ -295,18 +307,18 @@
 				},
 				{
 					"buffer": 2,
-					"file": "Game/States/game.lua",
+					"file": "Game/hud.lua",
 					"settings":
 					{
-						"buffer_size": 3726,
+						"buffer_size": 1603,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1071,
-								1071
+								307,
+								307
 							]
 						],
 						"settings":
@@ -315,7 +327,35 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 456.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "gamel.py",
+					"settings":
+					{
+						"buffer_size": 174445,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								90689,
+								90689
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 40488.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
