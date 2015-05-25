@@ -1,12 +1,25 @@
 local state = {}
 
-local enemy = require('Game/Enemy/enemy')
 function state.load()
+	local text
+	if STATE.player.lives > 1 then
+		text = STATE.player.lives .. ' lives left.'
+	elseif STATE.player.lives == 1 then
+		text = STATE.player.lives .. ' life left.'
+	end
+
+	if STATE.player.lives > 0 then
+		text = text .. ' Continue?'
+	else
+		text = 'You are completely dead.\nRestart level?'
+	end
 	state.boolBox = boolBox.make{
 								centerx=window.width/2 
 								,centery=window.height/2
-								,titleText='Try again?'
-								,boxColor={200,0,0,100}
+								,titleText=text
+								,boxColor={200,0,0,155}
+								,trueText = 'Yes'
+								,falseText = 'No'
 
 
 							}
@@ -17,20 +30,6 @@ function state.update(dt)
 end
 
 function state.draw()
-	love.graphics.setColor(255,255,0)
-	for i,v in ipairs(state.enemyMissiles) do
-		v:draw()
-	end
-
-	for i,v in ipairs(state.enemies) do
-		v:draw(true,'line')
-	end
-
-	love.graphics.setColor(255,0,0)
-	for i,v in ipairs(state.playerMissiles) do
-		v:draw()
-	end
-	state.player:draw(true,'fill',{0,100,0,200})
 	state.boolBox:draw()
 end
 
@@ -40,7 +39,24 @@ end
 function state.mousepressed(x,y,button)
 	state.boolBox:mousepressed(x,y,button)
 	if state.boolBox.value then
-		return 'restart'
+		STATE.enemies = {}
+		STATE.enemyMissiles = {}
+		STATE.player.missiles = {}
+		STATE.player.dead = false
+
+		if STATE.player.lives > 0 then
+			STATE.state = STATE.states.paused
+		else
+			STATE.player.levelCash = 0
+			STATE.player.levelScore = 0
+			STATE.player.levelKills = 0
+
+			STATE.state = STATE.states.intro
+			STATE.state.load()
+			STATE.level.reload()
+		end
+	elseif state.boolBox.value == false then
+		--not implemented yet
 	end
 end
 

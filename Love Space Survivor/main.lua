@@ -56,7 +56,7 @@ function love.load()
 	MOUSE = {}
 	MOUSE.x, MOUSE.y = love.mouse.getPosition()
 
-	STATE = require("Game/States/game")
+	STATE = require('Game/States/titlemenu') --require("Game/States/game")
 	STATE.load()
 	--resources.load()
 	--music.fight.music:play()

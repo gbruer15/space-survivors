@@ -4,11 +4,11 @@ function playerfunctions.make(att)
 	local self = {}
 	setmetatable(self, {__index = playerfunctions})
 
-	self.x = window.width/2
-	self.y = window.height/2
-	self.drawBox = rectangle.make(40,125, self)
+	self.x = STATE.camera.x
+	self.y = STATE.camera.y
+	self.drawBox = rectangle.make(15,125, self) --40
 
-	self.collisionBox = rectangle.make(20,40,self)
+	self.collisionBox = rectangle.make(10,10,self)--20
 
 	self.Image = images.spaceship
 	self.drawBox.height = self.drawBox.width/self.Image.width*self.Image.height
@@ -18,12 +18,22 @@ function playerfunctions.make(att)
 
 
 	--these could be initialized from a save file
-	self.cash = 0
-	self.score = 0
-	self.kills = 0
+	self.levelCash = 0
+	self.levelScore = 0
+	self.levelKills = 0
 
-	self.fullauto = false
-	self.fireDelay = 0.5
+	self.totalKills = 0
+	self.totalScore = 0
+	self.totalCash = 0
+
+	self.fullauto = true
+	self.fireDelay = 0.1--0.5
+
+	self.currentLevel = 1
+	self.lives = 2
+
+	self.missileSpeed = 450
+	self.missileDamage = 15
 	
 	---------------------------------
 
@@ -33,6 +43,12 @@ end
 
 function playerfunctions:update(dt)
 	self.x,self.y = MOUSE.x,MOUSE.y
+
+	if self.x < STATE.camera.x - STATE.camera.width/2 then
+		self.x = STATE.camera.x
+	elseif self.x > STATE.camera.x + STATE.camera.width/2 then
+		self.x = STATE.camera.x + STATE.camera.width/2
+	end
 
 	self.fireCountdown = self.fireCountdown - dt
 	if self.fireCountdown <= 0  then
@@ -58,7 +74,42 @@ function playerfunctions:draw(drawColBox,colBoxMode,color)
 end
 
 function playerfunctions:fireMissile()
-	table.insert(self.missiles,missile.make(self.x,self.y-self.drawBox.height/2, 350,-math.pi/2))
+	table.insert(self.missiles,missile.make{
+											x=self.x-10
+											,y=self.y-self.drawBox.height/2
+											,speed=self.missileSpeed
+											,angle=-math.pi/2
+											,damage=self.missileDamage
+
+										}
+									)
+	table.insert(self.missiles,missile.make{
+											x=self.x+10
+											,y=self.y-self.drawBox.height/2
+											,speed=self.missileSpeed
+											,angle=-math.pi/2
+											,damage=self.missileDamage
+
+										}
+									)
+	table.insert(self.missiles,missile.make{
+											x=self.x
+											,y=self.y-self.drawBox.height/2
+											,speed=self.missileSpeed
+											,angle=-math.pi/4
+											,damage=self.missileDamage
+
+										}
+									)
+	table.insert(self.missiles,missile.make{
+											x=self.x
+											,y=self.y-self.drawBox.height/2
+											,speed=self.missileSpeed
+											,angle=-math.pi/4*3
+											,damage=self.missileDamage
+
+										}
+									)
 end
 
 
@@ -72,6 +123,12 @@ function playerfunctions:mousepressed(x,y,button)
 		self:fireMissile()
 		self.fireCountdown = self.fireDelay
 	end
+end
+
+function playerfunctions:die()
+	self.dead = true
+	self.lives = self.lives - 1
+	STATE.states.dead.load()
 end
 
 return playerfunctions

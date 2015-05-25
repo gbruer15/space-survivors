@@ -81,4 +81,8 @@ function camera.isOffscreen (x,y)
 	return not collision.pointRectangle(x,y, camera.x-camera.width/2, camera.y-camera.height/2, camera.width,camera.height)
 end
 
+function camera.getRect()
+	return camera.x-camera.width/2,camera.y-camera.height/2,camera.width,camera.height
+end
+
 return camera
