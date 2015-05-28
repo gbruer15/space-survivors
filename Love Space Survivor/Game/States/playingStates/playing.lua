@@ -18,6 +18,7 @@ function state.update(dt)
 				if missile:isHittingRectangle(e.collisionBox:getRect()) then
 					e.health = e.health - missile.damage
 					table.remove(STATE.player.missiles,i)
+					STATE.screenshake = STATE.screenshake+0.3
 					break
 				end
 			end

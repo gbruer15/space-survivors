@@ -51,6 +51,8 @@ function state.load(n)
 	state.maxStarSpeed = 800
 	state.minStarSpeed = 40
 	state.initializeStarryBackground(500)
+
+	state.screenshake = 0
 end
 
 function state.loadLevel(levelNumber)
@@ -80,9 +82,41 @@ function state.update(dt)
 	elseif not state.player.dead then
 		state.updateStarryBackground(dt)
 	end
+
+	state.screenshake = math.min(15,math.max(state.screenshake - dt, 0))
 end
 
 function state.draw()
+	if state.screenshake > 0 and now then
+		love.graphics.push()
+		if state.screenshake > 5 then
+			local angle = math.min(state.screenshake-5,5)
+			local x = window.width/2 + math.random(-angle,angle)
+			local y = window.height/2 + math.random(-angle,angle)
+
+			love.graphics.translate(x,y)
+			love.graphics.rotate(math.random(-angle,angle)/140)
+			love.graphics.translate(-x,-y)
+		end
+
+		love.graphics.translate(math.random(-state.screenshake,state.screenshake),math.random(-state.screenshake,state.screenshake))
+		now = false
+	elseif state.screenshake > 0 then
+		love.graphics.push()
+		local shake = state.screenshake/2
+		if shake > 5 then
+			local angle = math.min(shake-5,5)
+			local x = window.width/2 + math.random(-angle,angle)
+			local y = window.height/2 + math.random(-angle,angle)
+
+			love.graphics.translate(x,y)
+			love.graphics.rotate(math.random(-angle,angle)/140)
+			love.graphics.translate(-x,-y)
+		end
+
+		love.graphics.translate(math.random(-shake,shake),math.random(-shake,shake))
+		now = true
+ 	end
 	state.drawStarryBackground()
 
 	love.graphics.setColor(255,255,255)
@@ -106,9 +140,17 @@ function state.draw()
 	state.state.draw()
 
 	state.hud:draw()
+
+	if state.screenshake > 0 then
+		love.graphics.pop()
+ 	end
 end
 
 function state.keypressed(key)
+	if key == 'l' then
+		state.screenshake = state.screenshake + 2
+	end
+
 	if state.state.keypressed then
 		state.state.keypressed(key)
 	end
