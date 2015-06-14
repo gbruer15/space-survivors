@@ -16,13 +16,14 @@ function state.draw()
 end
 
 function state.keypressed(key)
-
 end
 
 function state.mousepressed(x,y,button)
 	if button == 'l' and STATE.player.drawBox:collidePoint(x,y) then
 		STATE.paused = false
 		STATE.state = STATE.states.playing
+	else
+		STATE.hud:mousepressed(x,y,button)
 	end
 end
 

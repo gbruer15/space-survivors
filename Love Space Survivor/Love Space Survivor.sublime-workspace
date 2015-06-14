@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"upgrades",
+				"upgradesHeight"
+			],
+			[
+				"hover",
+				"hoveredUpgrade"
+			],
+			[
 				"x",
 				"x"
 			],
@@ -103,7 +111,7 @@
 			"file": "Game/hud.lua",
 			"settings":
 			{
-				"buffer_size": 1603,
+				"buffer_size": 2365,
 				"line_ending": "Windows"
 			}
 		},
@@ -114,16 +122,48 @@
 				"buffer_size": 174445,
 				"line_ending": "Windows"
 			}
+		},
+		{
+			"file": "Game/States/playingStates/playing.lua",
+			"settings":
+			{
+				"buffer_size": 2024,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "main.lua",
+			"settings":
+			{
+				"buffer_size": 6002,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Game/States/playingStates/paused.lua",
+			"settings":
+			{
+				"buffer_size": 590,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "1stPartyLib/utilities/math.lua",
+			"settings":
+			{
+				"buffer_size": 350,
+				"line_ending": "Windows"
+			}
 		}
 	],
 	"build_system": "Linux Love2d 9.0",
 	"command_palette":
 	{
-		"height": 0.0,
+		"height": 219.0,
 		"selected_items":
 		[
 		],
-		"width": 0.0
+		"width": 392.0
 	},
 	"console":
 	{
@@ -140,12 +180,13 @@
 	},
 	"file_history":
 	[
+		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/1stPartyLib/utilities/math.lua",
+		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Levels/level1.lua",
+		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Levels/level2.lua",
+		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Levels/level3.lua",
 		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/States/levelselect.lua",
 		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/States/titlemenu.lua",
-		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Levels/level1.lua",
 		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Levels/level4.lua",
-		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Levels/level3.lua",
-		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Levels/level2.lua",
 		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/States/game.lua",
 		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/States/playingStates/dead.lua",
 		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/main.lua",
@@ -206,6 +247,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"')\n",
 			"upgrade",
 			"state.camera",
 			"y",
@@ -248,7 +290,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -263,8 +305,8 @@
 						"selection":
 						[
 							[
-								1577,
-								1564
+								337,
+								350
 							]
 						],
 						"settings":
@@ -273,7 +315,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 171.0,
+						"translation.y": 1254.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -310,15 +352,15 @@
 					"file": "Game/hud.lua",
 					"settings":
 					{
-						"buffer_size": 1603,
+						"buffer_size": 2365,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								307,
-								307
+								620,
+								620
 							]
 						],
 						"settings":
@@ -327,7 +369,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 456.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -355,7 +397,115 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 40488.0,
+						"translation.y": 2146.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "Game/States/playingStates/playing.lua",
+					"settings":
+					{
+						"buffer_size": 2024,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1921,
+								1955
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1154.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "main.lua",
+					"settings":
+					{
+						"buffer_size": 6002,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1441,
+								1441
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 513.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "Game/States/playingStates/paused.lua",
+					"settings":
+					{
+						"buffer_size": 590,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								567,
+								567
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "1stPartyLib/utilities/math.lua",
+					"settings":
+					{
+						"buffer_size": 350,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								263,
+								263
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -413,11 +563,11 @@
 	},
 	"select_project":
 	{
-		"height": 0.0,
+		"height": 500.0,
 		"selected_items":
 		[
 		],
-		"width": 0.0
+		"width": 380.0
 	},
 	"show_minimap": true,
 	"show_open_files": false,
