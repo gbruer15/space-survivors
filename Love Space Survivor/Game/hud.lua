@@ -10,7 +10,7 @@ function hud.make(att)
 	self.width = att.width or 100
 	self.height = att.height or 100
 
-	self.selectedUpgrade = false
+	self.hoveredUpgrade = false
 	self.upgradesX = self.x+15
 	self.upgradesY = self.y+315
 	self.upgradesHeight=15
@@ -21,12 +21,6 @@ function hud.make(att)
 								,centery = self.y+self.height-100
 								,text = 'P(ause)'
 							}
-
-	self.buttons.buy = button.make{
-								centerx = self.x+self.width/2
-								,centery = self.y+self.height-100
-								,text = 'Buy'
-							}
 	return self
 end
 
@@ -36,6 +30,20 @@ function hud:update(dt)
 		b:update(dt)
 	end
 
+	--check for hovering over upgrade
+	if MOUSE.x > self.x then
+		local i = math.ceil((MOUSE.y-self.upgradesY)/self.upgradesHeight)
+		if i >= 1 and i <= #STATE.upgrades then
+			self.hoveredUpgrade = STATE.upgrades[i]
+			self.selectedIndex = i
+		else
+			self.hoveredUpgrade = false
+			self.selectedIndex = false
+		end
+	else
+		self.hoveredUpgrade = false
+		self.selectedIndex = false
+	end
 end
 
 
@@ -59,16 +67,27 @@ function hud:draw()
 	love.graphics.print('Kills Left: ' .. STATE.level.killsToWin - STATE.player.levelKills,self.x+15,225)
 
 
-	if self.selectedUpgrade then
-		love.graphics.printf(self.selectedUpgrade.description,self.x+15,315+#STATE.upgrades*15,self.width,'center')
+	if self.hoveredUpgrade then
+		love.graphics.printf(self.hoveredUpgrade.description,self.x+15,315+#STATE.upgrades*15,self.width,'center')
 		love.graphics.setColor(50,50,50)
 		love.graphics.rectangle('fill',self.upgradesX, self.upgradesY+(self.selectedIndex-1)*15,self.width,self.upgradesHeight)
 	end
 
 	love.graphics.setColor(255,255,255)
 	love.graphics.print('Upgrades',self.x+15,280)
+	local x = self.upgradesX
 	for i,v in ipairs(STATE.upgrades) do
-		love.graphics.print(v.name .. ': $' .. v.cost,self.upgradesX, self.upgradesY+(i-1)*15)
+		y = self.upgradesY+(i-1)*15
+		if v:getMaxedOut() then
+			love.graphics.setColor(100,100,100)
+			love.graphics.print(v.name .. ': Maxed Out',x,y)
+		elseif STATE.player.levelCash < v.cost then
+			love.graphics.setColor(200,0,0)
+			love.graphics.print(v.name .. ': $' .. v.cost,x,y)
+		else
+			love.graphics.setColor(40,200,40)
+			love.graphics.print(v.name .. ': $' .. v.cost,x,y)
+		end		
 	end
 
 
@@ -81,14 +100,11 @@ end
 function hud:mousepressed(x,y,button)
 	if self.buttons.pause.hover then
 		STATE.paused = true
-	else --check for hovering over upgrade
-		local i = math.ceil((MOUSE.y-self.upgradesY)/self.upgradesHeight)
-		if i >= 1 and i <= #STATE.upgrades then
-			self.selectedUpgrade = STATE.upgrades[i]
-			self.selectedIndex = i
-		else
-			self.selectedUpgrade = false
-			self.selectedIndex = false
+	elseif self.hoveredUpgrade then
+		--attempt to buy upgrade
+		if not self.hoveredUpgrade:getMaxedOut() and self.hoveredUpgrade.cost < STATE.player.levelCash then
+			STATE.player.levelCash = STATE.player.levelCash - self.hoveredUpgrade.cost
+			self.hoveredUpgrade:increment(STATE.player)
 		end
 	end
 end

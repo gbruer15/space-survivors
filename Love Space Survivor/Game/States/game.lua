@@ -16,34 +16,64 @@ function state.load(n)
 	state.upgrades = {}
 
 	table.insert(state.upgrades,upgrade.make{
+											name = 'Number of Missiles'
+											,value = 1
+											,description = 'Upgrade number of missiles fired at a time'
+											,costFunction = function(v,c) return v*500+1000 end
+											,upgradeFunction = function() 
+																state.player.missileType = state.player.missileType + 1
+															end
+											,isMaxedOutFunction = function() 
+																return state.player.missileType >= #state.player.fireMissileFunctions
+															end
+		})
+	table.insert(state.upgrades,upgrade.make{
 											name = 'Missile Attack'
 											,value = 1
 											,description = 'Upgrade missile attack power'
-											,costFunction = function(v,c) return v*1000+1000 end
+											,costFunction = function(v,c) return v*500+1000 end
+											,upgradeFunction = function() 
+																state.player.missileDamage = state.player.missileDamage + 1
+															end
+											,isMaxedOutFunction = function() 
+																return state.player.missileDamage >= state.level.enemyHealth
+															end
 		})
 	table.insert(state.upgrades,upgrade.make{
 											name = 'Missile Pierce'
 											,value = 0
 											,description = 'Upgrade missile pierce ability'
-											,costFunction = function(v,c) return v*1000+1000 end
+											,costFunction = function(v,c) return v*500+1000 end
+											,upgradeFunction = function() 
+																state.player.missilePierce = state.player.missilePierce + 1
+															end
+											,isMaxedOutFunction = function() 
+																return state.player.missilePierce >= 4
+															end
 		})
 	table.insert(state.upgrades,upgrade.make{
 											name = 'Missile Speed'
 											,value = 1
 											,description = 'Upgrade missile speed'
 											,costFunction = function(v,c) return v*1000+1000 end
+											,upgradeFunction = function() 
+																state.player.missileSpeed = state.player.missileSpeed + 40
+															end
+											,isMaxedOutFunction = function() 
+																return state.player.missileSpeed >= 600
+															end
 		})
 	table.insert(state.upgrades,upgrade.make{
 											name = 'Missile Fire Rate'
 											,value = 1
 											,description = 'Upgrade missile fire rate'
-											,costFunction = function(v,c) return v*1000+1000 end
-		})
-	table.insert(state.upgrades,upgrade.make{
-											name = 'Missile Speed'
-											,value = 1
-											,description = 'Upgrade missile speed'
-											,costFunction = function(v,c) return v*1000+1000 end
+											,costFunction = function(v,c) return v*500+1000 end
+											,upgradeFunction = function() 
+																state.player.fireDelay = math.max(state.player.fireDelay-0.1,state.player.fireDelay/1.5,0.05)
+															end
+											,isMaxedOutFunction = function()
+																return state.player.fireDelay <= 0.05
+															end
 		})
 
 
