@@ -16,6 +16,9 @@ images.basicOutline90 = getImage('outline1-90.png')
 images.basicOutlineCorner = getImage('outline1-corner.png')
 images.basicOutlineStraight = getImage('outline1-straight.png')
 
+images.moveLeftAnimation = getImage('moveLeftSprites.png')
+images.moveLeftAnimation.spriteWidth = 168
+images.moveLeftAnimation.spriteHeight = images.moveLeftAnimation.height
 
 local outline = require('1stPartyLib/display/outline')
 outlines = {}

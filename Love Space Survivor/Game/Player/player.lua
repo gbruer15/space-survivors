@@ -1,21 +1,30 @@
 local playerfunctions = {}
 require('Game/missile')
+require('1stPartyLib/display/animation')
 function playerfunctions.make(att)
 	local self = {}
 	setmetatable(self, {__index = playerfunctions})
 
 	self.x = STATE.camera.x
 	self.y = STATE.camera.y
-	self.drawBox = rectangle.make(15,125, self) --40
 
-	self.collisionBox = rectangle.make(10,10,self)--20
+	self.maxXSpeed = 300
+	self.maxYSpeed = 300
+	self.drawBox = rectangle.make(15,125, self) --15
 
-	self.Image = images.spaceship
-	self.drawBox.height = self.drawBox.width/self.Image.width*self.Image.height
+	self.collisionBox = rectangle.make(10,10,self)--10
+
+	self.Image = images.moveLeftAnimation
+	self.quad = love.graphics.newQuad(0,0,self.Image.spriteWidth,self.Image.spriteHeight, self.Image.width,self.Image.height)
+
+	self.drawBox.height = self.drawBox.width/self.Image.spriteWidth*self.Image.spriteHeight
 	self.drawBox.dy = self.drawBox.height/2
 
 	self.missiles = {}
 
+	self.moveAnimation = 0
+	self.moveAnimationTime = 0.3
+	self.numberOfFrames = self.Image.width/self.Image.spriteWidth
 
 	--these could be initialized from a save file
 	self.levelCash = 0
@@ -43,10 +52,9 @@ function playerfunctions.make(att)
 end
 
 function playerfunctions:update(dt)
-	self.x,self.y = MOUSE.x,MOUSE.y
-
+	self:move(dt)
 	if self.x < STATE.camera.x - STATE.camera.width/2 then
-		self.x = STATE.camera.x
+		self.x = STATE.camera.x - STATE.camera.width/2
 	elseif self.x > STATE.camera.x + STATE.camera.width/2 then
 		self.x = STATE.camera.x + STATE.camera.width/2
 	end
@@ -61,12 +69,30 @@ function playerfunctions:update(dt)
 		end
 	end
 
+	if love.keyboard.isDown('a') or love.keyboard.isDown('left') then
+		self.moveAnimation = math.constrain(self.moveAnimation - dt*self.numberOfFrames/self.moveAnimationTime,-self.numberOfFrames,self.numberOfFrames)
+	elseif love.keyboard.isDown('d') or love.keyboard.isDown('right') then
+		self.moveAnimation = math.constrain(self.moveAnimation + dt*self.numberOfFrames/self.moveAnimationTime,-self.numberOfFrames,self.numberOfFrames)
+	elseif self.moveAnimation > 0 then
+		self.moveAnimation = math.max(self.moveAnimation-dt*self.numberOfFrames/self.moveAnimationTime,0)
+	else
+		self.moveAnimation = math.min(self.moveAnimation+dt*self.numberOfFrames/self.moveAnimationTime,0)
+	end
+
+	self.quad:setViewport(math.floor(math.abs(self.moveAnimation))*self.Image.spriteWidth,0,self.Image.spriteWidth,self.Image.spriteHeight)
+
 end
 
 function playerfunctions:draw(drawColBox,colBoxMode,color)
 	love.graphics.setColor(255,255,255)
-	--self.drawBox:draw('fill',self.x,self.y)
-	love.graphics.draw(self.Image.image,self.drawBox:getLeft(),self.drawBox:getTop(),0,self.drawBox.width/self.Image.width, self.drawBox.height/self.Image.height)
+	--self.drawBox:draw('line')
+
+	if self.moveAnimation > 0 then
+		love.graphics.draw(self.Image.image,self.quad,self.drawBox:getLeft()+self.drawBox.width,self.drawBox:getTop(),0,-self.drawBox.width/self.Image.spriteWidth, self.drawBox.height/self.Image.spriteHeight)
+	else
+		love.graphics.draw(self.Image.image,self.quad,self.drawBox:getLeft(),self.drawBox:getTop(),0,self.drawBox.width/self.Image.spriteWidth, self.drawBox.height/self.Image.spriteHeight)
+	end
+	--love.graphics.draw(self.Image.image,self.drawBox:getLeft(),self.drawBox:getTop(),0,self.drawBox.width/self.Image.width, self.drawBox.height/self.Image.height)
 
 	if drawColBox then
 		love.graphics.setColor(color or {0,255,0,100})
@@ -183,13 +209,33 @@ playerfunctions.fireMissileFunctions[4] = function(self)
 end
 
 function playerfunctions:keypressed(key)
-
 end
 
 function playerfunctions:mousepressed(x,y,button)
 	if not self.fullauto and self.fireCountdown <= 0 then
 		self:fireMissile()
 		self.fireCountdown = self.fireDelay
+	end
+end
+
+function playerfunctions:move(dt)
+	if self.mouseControl then
+		self.x,self.y = MOUSE.x,MOUSE.y
+	else
+		self.xspeed,self.yspeed = 0,0
+		if love.keyboard.isDown('a') or love.keyboard.isDown('left') then
+			self.xspeed = -self.maxXSpeed
+		elseif love.keyboard.isDown('d') or love.keyboard.isDown('right') then
+			self.xspeed = self.maxXSpeed
+		end
+		if love.keyboard.isDown('w') or love.keyboard.isDown('up') then
+			self.yspeed = -self.maxYSpeed
+		elseif love.keyboard.isDown('s') or love.keyboard.isDown('down') then
+			self.yspeed = self.maxYSpeed
+		end
+
+		self.x = self.x + self.xspeed*dt
+		self.y = self.y + self.yspeed*dt
 	end
 end
 

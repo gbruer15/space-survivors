@@ -16,6 +16,10 @@ function state.draw()
 end
 
 function state.keypressed(key)
+	if not STATE.player.mouseControl and key == 'p' then
+		STATE.paused = false
+		STATE.state = STATE.states.playing
+	end
 end
 
 function state.mousepressed(x,y,button)

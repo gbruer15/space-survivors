@@ -46,6 +46,9 @@ function state.mousepressed(x,y,button)
 
 		if STATE.player.lives > 0 then
 			STATE.state = STATE.states.paused
+			if STATE.level.onDeath then
+				STATE.level.onDeath()
+			end
 		else
 			STATE.player.levelCash = 0
 			STATE.player.levelScore = 0

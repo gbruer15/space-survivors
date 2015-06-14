@@ -121,6 +121,18 @@ function level.update(dt)
 
 end
 
+function level.onDeath()
+	level.enemyMissileMotionSensor	= math.max(level.enemyMissileMotionSensor-4,-40)
+	level.enemyMissileSpeed 		= math.max(level.enemyMissileSpeed-40,200)
+	level.enemyMissileSlowdown		= math.min(level.enemyMissileSlowdown+0.05,2)
+	level.enemySpawnSlowdown 		= math.min(level.enemySpawnSlowdown+0.025, 0.5)
+	level.maxEnemySpeed 			= math.max(level.maxEnemySpeed-20,120)
+	level.minEnemySpeed 			= math.max(level.minEnemySpeed-20,40)
+    level.enemyHealth 				= math.max(level.enemyHealth-1,1)
+       
+    STATE.player.levelCash 			= math.max(STATE.player.levelCash-5000,0)  
+end
+
 function level.draw()
 
 end
@@ -150,8 +162,6 @@ function level.reload()
 
 	level.enemyMissileMotionSensor = -40
 end
-
-
 
 
 return level

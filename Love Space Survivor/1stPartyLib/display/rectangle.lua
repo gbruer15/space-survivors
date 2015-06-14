@@ -47,8 +47,6 @@ end
 
 
 function rectangle:draw(mode)
-	xoffset = xoffset or 0
-	yoffset = yoffset or 0
 	love.graphics.rectangle(mode or 'fill',self.anchor.x-self.dx, self.anchor.y-self.dy, self.width,self.height)
 end
 

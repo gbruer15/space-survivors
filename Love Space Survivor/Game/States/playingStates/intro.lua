@@ -14,7 +14,8 @@ function state.update(dt)
 			state.countdown = nil
 			return 'start'
 		end
-		STATE.player.x, STATE.player.y = MOUSE.x, MOUSE.y
+			STATE.player:move(dt)
+		else
 	end
 end
 
@@ -22,12 +23,18 @@ function state.draw()
 	if state.countdown then
 		love.graphics.printf(math.ceil(state.countdown),0,80,STATE.camera.width,'center')
 	else
-		love.graphics.printf('Click ship to play',0,80,STATE.camera.width,'center')
+		if STATE.player.mouseControl then
+			love.graphics.printf('Click ship to play',0,80,STATE.camera.width,'center')
+		else
+			love.graphics.printf('Unpause to start',0,80,STATE.camera.width,'center')
+		end
 	end
 end
 
 function state.keypressed(key)
-
+	if not STATE.player.mouseControl and key == 'p' and not state.countdown then
+		STATE.paused = false
+	end
 end
 
 function state.mousepressed(x,y,button)
