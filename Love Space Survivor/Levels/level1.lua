@@ -30,7 +30,7 @@ function level.load()
 
 	level.enemyMissileMotionSensor = -40
 
-	level.killsToWin = 80 -- not reloaded
+	level.killsToWin = 500 -- not reloaded
 end
 
 function level.update(dt)

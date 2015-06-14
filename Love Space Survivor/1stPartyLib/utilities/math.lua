@@ -19,3 +19,10 @@ function math.round(x,n)
 	end
 	return n*a + n
 end
+
+function math.constrain(n,min,max)
+	if max < min then
+		max,min = min,max
+	end
+	return math.min(max,math.max(n,min))
+end

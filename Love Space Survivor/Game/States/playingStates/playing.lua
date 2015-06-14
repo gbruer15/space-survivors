@@ -63,7 +63,9 @@ function state.draw()
 end
 
 function state.keypressed(key)
-
+	if key == 'p' then
+		STATE.paused = true
+	end
 end
 
 function state.mousepressed(x,y,button)

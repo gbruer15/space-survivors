@@ -43,6 +43,7 @@ function love.load()
 	lovefunctions = {'keypressed','keyreleased','mousepressed','mousereleased'}
 	require('1stPartyLib/physics/collision')
 	require('resources')
+	require('1stPartyLib/utilities/math')
 	requireDirectory('1stPartyLib/display')
 	
 	window = {}

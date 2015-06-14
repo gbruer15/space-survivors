@@ -27,14 +27,15 @@ function playerfunctions.make(att)
 	self.totalCash = 0
 
 	self.fullauto = true
-	self.fireDelay = 0.1--0.5
+	self.fireDelay = 0.5
 
 	self.currentLevel = 1
 	self.lives = 2
 
-	self.missileSpeed = 450
-	self.missileDamage = 15
-	
+	self.missileType = 1
+	self.missileSpeed = 320
+	self.missileDamage = 1
+	self.missilePierce = 1
 	---------------------------------
 
 	self.fireCountdown = self.fireDelay
@@ -74,6 +75,75 @@ function playerfunctions:draw(drawColBox,colBoxMode,color)
 end
 
 function playerfunctions:fireMissile()
+	self.fireMissileFunctions[self.missileType](self)
+end
+
+playerfunctions.fireMissileFunctions = {}
+
+playerfunctions.fireMissileFunctions[1] = function(self)
+	table.insert(self.missiles,missile.make{
+											x=self.x
+											,y=self.y-self.drawBox.height/2
+											,speed=self.missileSpeed
+											,angle=-math.pi/2
+											,damage=self.missileDamage
+
+										}
+									)
+end
+
+playerfunctions.fireMissileFunctions[2] = function(self)
+	table.insert(self.missiles,missile.make{
+											x=self.x-10
+											,y=self.y-self.drawBox.height/2
+											,speed=self.missileSpeed
+											,angle=-math.pi/2
+											,damage=self.missileDamage
+
+										}
+									)
+	table.insert(self.missiles,missile.make{
+											x=self.x+10
+											,y=self.y-self.drawBox.height/2
+											,speed=self.missileSpeed
+											,angle=-math.pi/2
+											,damage=self.missileDamage
+
+										}
+									)
+end
+
+playerfunctions.fireMissileFunctions[3] = function(self)
+	table.insert(self.missiles,missile.make{
+											x=self.x
+											,y=self.y-self.drawBox.height/2
+											,speed=self.missileSpeed
+											,angle=-math.pi/2
+											,damage=self.missileDamage
+
+										}
+									)
+	table.insert(self.missiles,missile.make{
+											x=self.x
+											,y=self.y-self.drawBox.height/2
+											,speed=self.missileSpeed
+											,angle=-math.pi/4
+											,damage=self.missileDamage
+
+										}
+									)
+	table.insert(self.missiles,missile.make{
+											x=self.x
+											,y=self.y-self.drawBox.height/2
+											,speed=self.missileSpeed
+											,angle=-math.pi/4*3
+											,damage=self.missileDamage
+
+										}
+									)
+end
+
+playerfunctions.fireMissileFunctions[4] = function(self)
 	table.insert(self.missiles,missile.make{
 											x=self.x-10
 											,y=self.y-self.drawBox.height/2
@@ -111,8 +181,6 @@ function playerfunctions:fireMissile()
 										}
 									)
 end
-
-
 
 function playerfunctions:keypressed(key)
 

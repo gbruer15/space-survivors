@@ -12,6 +12,7 @@ function missile.make(att,x,y,speed,angle, length, width)
 	self.angle = att.angle or -math.pi/2
 
 	self.damage = att.damage or 1
+	self.pierce = att.pierce or 1
 
 	self.length = att.length or 10
 	self.width = att.width or 2
