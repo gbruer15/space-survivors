@@ -1,6 +1,7 @@
 local state = {}
 
 enemy = require('Game/Enemy/enemy')
+local tempText = require('1stPartyLib/display/tempText')
 function state.load()
 end
 
@@ -30,6 +31,14 @@ function state.update(dt)
 
 		if v.drawBox:getTop() >= STATE.camera.y + STATE.camera.height/2 then
 			--table.remove(STATE.enemies,i)
+			STATE.player.levelCash = math.max(STATE.player.levelCash - 50,0)
+			table.insert(STATE.tempTexts,tempText.make{	 x = v.x
+														,y = STATE.camera.y + STATE.camera.height/2 + math.random(-10,10)
+														,yspeed = -40
+														,life = 1
+														,text = '-$50'
+														,color={255,0,0}
+							})
 			v.y = STATE.camera.y-STATE.camera.height/2-100
 		elseif v.health <= 0 then
 			STATE.player.levelCash = STATE.player.levelCash + v.loot
@@ -38,6 +47,13 @@ function state.update(dt)
 
 			STATE.player.totalKills = STATE.player.totalKills + 1
 			table.remove(STATE.enemies,i)
+			table.insert(STATE.tempTexts,tempText.make{	 x = v.x
+														,y = v.y
+														,yspeed = -40
+														,life = 1
+														,text = '+$' .. v.loot
+														,color={0,255,0}
+							})
 		elseif STATE.player.collisionBox:collideRectangle(v.collisionBox) then
 			STATE.player:die()
 		end

@@ -4,6 +4,7 @@ local enemy = require('Game/Enemy/enemy')
 local upgrade = require('Game/upgrade')
 local hud = require('Game/hud')
 local button = require('1stPartyLib/display/button')
+local tempText = require('1stPartyLib/display/tempText')
 function state.load(n)
 	state.states = {}
 	state.states.intro = require("Game/States/playingStates/intro")
@@ -19,7 +20,8 @@ function state.load(n)
 											name = 'Number of Missiles'
 											,value = 1
 											,description = 'Upgrade number of missiles fired at a time'
-											,costFunction = function(v,c) return v*500+1000 end
+											,costFunction = function(v,c) return v==1 and 5000 or v==2 and 10000
+																		  or v == 3 and 25000 or 50000 end--v*500+5000 end
 											,upgradeFunction = function() 
 																state.player.missileType = state.player.missileType + 1
 															end
@@ -43,7 +45,7 @@ function state.load(n)
 											name = 'Missile Pierce'
 											,value = 0
 											,description = 'Upgrade missile pierce ability'
-											,costFunction = function(v,c) return v*500+1000 end
+											,costFunction = function(v,c) return v*500+3000 end
 											,upgradeFunction = function() 
 																state.player.missilePierce = state.player.missilePierce + 1
 															end
@@ -55,7 +57,7 @@ function state.load(n)
 											name = 'Missile Speed'
 											,value = 1
 											,description = 'Upgrade missile speed'
-											,costFunction = function(v,c) return v*1000+1000 end
+											,costFunction = function(v,c) return v*1000+5000 end
 											,upgradeFunction = function() 
 																state.player.missileSpeed = state.player.missileSpeed + 40
 															end
@@ -97,6 +99,8 @@ function state.load(n)
 	state.loadLevel(n)--state.player.currentLevel)
 
 	state.paused = false
+
+	state.tempTexts = {}
 	-------------------------
 
 	for i,v in pairs(state.states) do
@@ -138,40 +142,50 @@ function state.update(dt)
 		state.updateStarryBackground(dt)
 	end
 
+	for i =#STATE.tempTexts,1,-1 do
+		local v = STATE.tempTexts[i]
+		v:update(dt)
+		if v.destroy then
+			table.remove(STATE.tempTexts,i)
+		end
+	end
+
 	state.screenshake = math.min(15,math.max(state.screenshake - dt, 0))
 end
 
 function state.draw()
-	if state.screenshake > 0 and now then
-		love.graphics.push()
-		if state.screenshake > 5 then
-			local angle = math.min(state.screenshake-5,5)
-			local x = window.width/2 + math.random(-angle,angle)
-			local y = window.height/2 + math.random(-angle,angle)
+	if state.screenshakeFlag then
+		if state.screenshake > 0 and now then
+			love.graphics.push()
+			if state.screenshake > 5 then
+				local angle = math.min(state.screenshake-5,5)
+				local x = window.width/2 + math.random(-angle,angle)
+				local y = window.height/2 + math.random(-angle,angle)
 
-			love.graphics.translate(x,y)
-			love.graphics.rotate(math.random(-angle,angle)/140)
-			love.graphics.translate(-x,-y)
-		end
+				love.graphics.translate(x,y)
+				love.graphics.rotate(math.random(-angle,angle)/140)
+				love.graphics.translate(-x,-y)
+			end
 
-		love.graphics.translate(math.random(-state.screenshake,state.screenshake),math.random(-state.screenshake,state.screenshake))
-		now = false
-	elseif state.screenshake > 0 then
-		love.graphics.push()
-		local shake = state.screenshake/2
-		if shake > 5 then
-			local angle = math.min(shake-5,5)
-			local x = window.width/2 + math.random(-angle,angle)
-			local y = window.height/2 + math.random(-angle,angle)
+			love.graphics.translate(math.random(-state.screenshake,state.screenshake),math.random(-state.screenshake,state.screenshake))
+			now = false
+		elseif state.screenshake > 0 then
+			love.graphics.push()
+			local shake = state.screenshake/2
+			if shake > 5 then
+				local angle = math.min(shake-5,5)
+				local x = window.width/2 + math.random(-angle,angle)
+				local y = window.height/2 + math.random(-angle,angle)
 
-			love.graphics.translate(x,y)
-			love.graphics.rotate(math.random(-angle,angle)/140)
-			love.graphics.translate(-x,-y)
-		end
+				love.graphics.translate(x,y)
+				love.graphics.rotate(math.random(-angle,angle)/140)
+				love.graphics.translate(-x,-y)
+			end
 
-		love.graphics.translate(math.random(-shake,shake),math.random(-shake,shake))
-		now = true
- 	end
+			love.graphics.translate(math.random(-shake,shake),math.random(-shake,shake))
+			now = true
+	 	end
+	end
 	state.drawStarryBackground()
 
 	love.graphics.setColor(255,255,255)
@@ -196,7 +210,11 @@ function state.draw()
 
 	state.hud:draw()
 
-	if state.screenshake > 0 then
+	for i,v in ipairs(state.tempTexts) do
+		v:draw()
+	end
+
+	if state.screenshakeFlag and state.screenshake > 0 then
 		love.graphics.pop()
  	end
 end
@@ -204,6 +222,8 @@ end
 function state.keypressed(key)
 	if key == 'l' then
 		state.screenshake = state.screenshake + 2
+	elseif key == 'i' then
+		state.screenshakeFlag = not state.screenshakeFlag
 	end
 
 	if state.state.keypressed then

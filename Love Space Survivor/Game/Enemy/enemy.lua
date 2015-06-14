@@ -13,7 +13,7 @@ function enemy.make(att)
 	self.Image = images.enemySpaceship
 
 	local width = att.width or 50
-	local scale = (att.width or 50)/self.Image.width
+	local scale = width/self.Image.width
 	self.drawBox = rectangle.make(width,scale*self.Image.height, self)
 	self.collisionBox = rectangle.make(scale*88,scale*205,self)
 
@@ -30,7 +30,7 @@ function enemy.make(att)
 
 	self.health = att.health or 1
 
-	self.loot = math.ceil(self.drawBox.width * (math.random() + 0.5))
+	self.loot = att.loot or math.ceil(self.drawBox.width * (math.random() + 0.5))
 	self.points = math.ceil(self.loot * 1.4)
 	
 

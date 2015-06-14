@@ -107,6 +107,8 @@ function level.update(dt)
 										,yspeed=math.random(level.minEnemySpeed, level.maxEnemySpeed)
 										,firing=level.enemyMissileFire
 											})
+			local v = STATE.enemies[#STATE.enemies]
+			v.loot = math.ceil((level.maxEnemySize+50 - v.drawBox.width + v.yspeed*2))+175
 		end
 	end
 
