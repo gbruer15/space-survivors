@@ -12,7 +12,7 @@ function state.update(dt)
 	for i=#STATE.player.missiles,1,-1 do
 		local missile = STATE.player.missiles[i]
 		missile:update(dt)
-		if STATE.camera.isOffscreen(missile.x, missile.y) and STATE.camera.isOffscreen(missile.endX, missile.endY) then
+		if not missile:isHittingRectangle(STATE.camera:getRect()) then
 			table.remove(STATE.player.missiles,i)
 		else
 			for j,e in ipairs(STATE.enemies) do

@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"spr",
+				"spriteWidth"
+			],
+			[
+				"anim",
+				"moveAnimation"
+			],
+			[
+				"fire",
+				"fireDelay"
+			],
+			[
 				"upgrades",
 				"upgradesHeight"
 			],
@@ -95,31 +107,47 @@
 			"file": "Game/States/game.lua",
 			"settings":
 			{
-				"buffer_size": 4643,
+				"buffer_size": 8253,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Game/upgrade.lua",
+			"file": "resources.lua",
 			"settings":
 			{
-				"buffer_size": 666,
+				"buffer_size": 954,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Game/hud.lua",
+			"file": "Game/Player/player.lua",
 			"settings":
 			{
-				"buffer_size": 2365,
-				"line_ending": "Windows"
+				"buffer_size": 5697,
+				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "gamel.py",
+			"file": "Game/missile.lua",
 			"settings":
 			{
-				"buffer_size": 174445,
+				"buffer_size": 1043,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Game/projectile.lua",
+			"settings":
+			{
+				"buffer_size": 1780,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "1stPartyLib/display/camera.lua",
+			"settings":
+			{
+				"buffer_size": 2446,
 				"line_ending": "Windows"
 			}
 		},
@@ -127,31 +155,15 @@
 			"file": "Game/States/playingStates/playing.lua",
 			"settings":
 			{
-				"buffer_size": 2024,
+				"buffer_size": 2614,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "main.lua",
+			"file": "Game/hud.lua",
 			"settings":
 			{
-				"buffer_size": 6002,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Game/States/playingStates/paused.lua",
-			"settings":
-			{
-				"buffer_size": 590,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "1stPartyLib/utilities/math.lua",
-			"settings":
-			{
-				"buffer_size": 350,
+				"buffer_size": 2924,
 				"line_ending": "Windows"
 			}
 		}
@@ -159,7 +171,7 @@
 	"build_system": "Linux Love2d 9.0",
 	"command_palette":
 	{
-		"height": 219.0,
+		"height": 392.0,
 		"selected_items":
 		[
 		],
@@ -180,27 +192,28 @@
 	},
 	"file_history":
 	[
-		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/1stPartyLib/utilities/math.lua",
+		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/States/playingStates/dead.lua",
+		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/States/playingStates/intro.lua",
+		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/Enemy/enemy.lua",
 		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Levels/level1.lua",
+		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/States/playingStates/paused.lua",
+		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/main.lua",
+		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/States/playingStates/playing.lua",
+		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/hud.lua",
+		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/1stPartyLib/display/tempText.lua",
+		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/1stPartyLib/utilities/math.lua",
 		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Levels/level2.lua",
 		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Levels/level3.lua",
 		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/States/levelselect.lua",
 		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/States/titlemenu.lua",
 		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Levels/level4.lua",
 		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/States/game.lua",
-		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/States/playingStates/dead.lua",
-		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/main.lua",
-		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/States/playingStates/intro.lua",
 		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/States/playingStates/won.lua",
-		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/States/playingStates/paused.lua",
 		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/1stPartyLib/display/button.lua",
-		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/States/playingStates/playing.lua",
 		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/1stPartyLib/display/outline.lua",
 		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/resources.lua",
 		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/gamel.py",
-		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/hud.lua",
 		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/Player/player.lua",
-		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/Enemy/enemy.lua",
 		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/missile.lua",
 		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/1stPartyLib/display/camera.lua",
 		"/C/Users/Grant/scm/SpaceSurvivorsRepo/Love Space Survivor/Game/upgrade.lua",
@@ -247,6 +260,13 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			":",
+			"()\n",
+			"levelcash",
+			"missileslowdown",
+			"missileslowdown =",
+			"missileslowdown",
+			"selectedUpgrade",
 			"')\n",
 			"upgrade",
 			"state.camera",
@@ -278,6 +298,8 @@
 		"regex": false,
 		"replace_history":
 		[
+			" then",
+			"hoveredUpgrade",
 			"window",
 			"STATE"
 		],
@@ -290,7 +312,7 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 4,
 			"sheets":
 			[
 				{
@@ -298,15 +320,15 @@
 					"file": "Game/States/game.lua",
 					"settings":
 					{
-						"buffer_size": 4643,
+						"buffer_size": 8253,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								337,
-								350
+								1009,
+								1009
 							]
 						],
 						"settings":
@@ -315,31 +337,30 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1254.0,
+						"translation.y": 171.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "Game/upgrade.lua",
+					"file": "resources.lua",
 					"settings":
 					{
-						"buffer_size": 666,
+						"buffer_size": 954,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								625,
-								625
+								714,
+								714
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Lua/Lua.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/Lua/Lua.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -349,18 +370,18 @@
 				},
 				{
 					"buffer": 2,
-					"file": "Game/hud.lua",
+					"file": "Game/Player/player.lua",
 					"settings":
 					{
-						"buffer_size": 2365,
+						"buffer_size": 5697,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								620,
-								620
+								4491,
+								4491
 							]
 						],
 						"settings":
@@ -369,53 +390,52 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2320.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 3,
-					"file": "gamel.py",
+					"file": "Game/missile.lua",
 					"settings":
 					{
-						"buffer_size": 174445,
+						"buffer_size": 1043,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								90689,
-								90689
+								143,
+								143
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2146.0,
+						"translation.y": 399.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 4,
-					"file": "Game/States/playingStates/playing.lua",
+					"file": "Game/projectile.lua",
 					"settings":
 					{
-						"buffer_size": 2024,
+						"buffer_size": 1780,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1921,
-								1955
+								474,
+								472
 							]
 						],
 						"settings":
@@ -424,25 +444,25 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1154.0,
+						"translation.y": 285.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 5,
-					"file": "main.lua",
+					"file": "1stPartyLib/display/camera.lua",
 					"settings":
 					{
-						"buffer_size": 6002,
+						"buffer_size": 2446,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1441,
-								1441
+								2226,
+								2226
 							]
 						],
 						"settings":
@@ -451,25 +471,25 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 513.0,
+						"translation.y": 1140.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 6,
-					"file": "Game/States/playingStates/paused.lua",
+					"file": "Game/States/playingStates/playing.lua",
 					"settings":
 					{
-						"buffer_size": 590,
+						"buffer_size": 2614,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								567,
-								567
+								372,
+								372
 							]
 						],
 						"settings":
@@ -485,18 +505,18 @@
 				},
 				{
 					"buffer": 7,
-					"file": "1stPartyLib/utilities/math.lua",
+					"file": "Game/hud.lua",
 					"settings":
 					{
-						"buffer_size": 350,
+						"buffer_size": 2924,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								263,
-								263
+								823,
+								823
 							]
 						],
 						"settings":
@@ -505,7 +525,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 912.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -546,7 +566,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 154.0
+		"height": 162.0
 	},
 	"replace":
 	{
@@ -558,6 +578,18 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"intro",
+				"Game/States/playingStates/intro.lua"
+			],
+			[
+				"paused",
+				"Game/States/playingStates/paused.lua"
+			],
+			[
+				"player",
+				"Game/Player/player.lua"
+			]
 		],
 		"width": 0.0
 	},
@@ -573,6 +605,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 150.0,
+	"side_bar_width": 207.0,
 	"status_bar_visible": true
 }

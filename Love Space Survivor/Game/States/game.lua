@@ -17,6 +17,18 @@ function state.load(n)
 	state.upgrades = {}
 
 	table.insert(state.upgrades,upgrade.make{
+											name = 'Switch weapon types'
+											,value = 1
+											,description = 'Crazy swirls or rectangles?'
+											,costFunction = function(v,c) return v*500+2000 end
+											,upgradeFunction = function() 
+																state.player.fireSwirls = not state.player.fireSwirls
+															end
+											,isMaxedOutFunction = function() 
+																return false
+															end
+		})
+	table.insert(state.upgrades,upgrade.make{
 											name = 'Number of Missiles'
 											,value = 1
 											,description = 'Upgrade number of missiles fired at a time'

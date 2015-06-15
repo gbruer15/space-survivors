@@ -20,6 +20,8 @@ images.moveLeftAnimation = getImage('moveLeftSprites.png')
 images.moveLeftAnimation.spriteWidth = 168
 images.moveLeftAnimation.spriteHeight = images.moveLeftAnimation.height
 
+images.tinySpiral = getImage('tinySpiral.png')
+
 local outline = require('1stPartyLib/display/outline')
 outlines = {}
 outlines.basicOutline = outline.make{

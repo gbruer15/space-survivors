@@ -1,6 +1,7 @@
 local playerfunctions = {}
 require('Game/missile')
 require('1stPartyLib/display/animation')
+require('Game/projectile')
 function playerfunctions.make(att)
 	local self = {}
 	setmetatable(self, {__index = playerfunctions})
@@ -107,107 +108,48 @@ end
 playerfunctions.fireMissileFunctions = {}
 
 playerfunctions.fireMissileFunctions[1] = function(self)
-	table.insert(self.missiles,missile.make{
-											x=self.x
-											,y=self.y-self.drawBox.height/2
-											,speed=self.missileSpeed
-											,angle=-math.pi/2
-											,damage=self.missileDamage
-
-										}
-									)
+	self:makeMissile()
 end
 
 playerfunctions.fireMissileFunctions[2] = function(self)
-	table.insert(self.missiles,missile.make{
-											x=self.x-10
-											,y=self.y-self.drawBox.height/2
-											,speed=self.missileSpeed
-											,angle=-math.pi/2
-											,damage=self.missileDamage
-
-										}
-									)
-	table.insert(self.missiles,missile.make{
-											x=self.x+10
-											,y=self.y-self.drawBox.height/2
-											,speed=self.missileSpeed
-											,angle=-math.pi/2
-											,damage=self.missileDamage
-
-										}
-									)
+	self:makeMissile(self.x-10)
+	self:makeMissile(self.x+10)
 end
 
 playerfunctions.fireMissileFunctions[3] = function(self)
-	table.insert(self.missiles,missile.make{
-											x=self.x
-											,y=self.y-self.drawBox.height/2
-											,speed=self.missileSpeed
-											,angle=-math.pi/2
-											,damage=self.missileDamage
-
-										}
-									)
-	table.insert(self.missiles,missile.make{
-											x=self.x
-											,y=self.y-self.drawBox.height/2
-											,speed=self.missileSpeed
-											,angle=-math.pi/4
-											,damage=self.missileDamage
-
-										}
-									)
-	table.insert(self.missiles,missile.make{
-											x=self.x
-											,y=self.y-self.drawBox.height/2
-											,speed=self.missileSpeed
-											,angle=-math.pi/4*3
-											,damage=self.missileDamage
-
-										}
-									)
+	self:makeMissile()
+	self:makeMissile(nil,-math.pi/4)
+	self:makeMissile(nil,-math.pi*3/4)
 end
 
 playerfunctions.fireMissileFunctions[4] = function(self)
-	table.insert(self.missiles,missile.make{
-											x=self.x-10
-											,y=self.y-self.drawBox.height/2
-											,speed=self.missileSpeed
-											,angle=-math.pi/2
-											,damage=self.missileDamage
-
-										}
-									)
-	table.insert(self.missiles,missile.make{
-											x=self.x+10
-											,y=self.y-self.drawBox.height/2
-											,speed=self.missileSpeed
-											,angle=-math.pi/2
-											,damage=self.missileDamage
-
-										}
-									)
-	table.insert(self.missiles,missile.make{
-											x=self.x
-											,y=self.y-self.drawBox.height/2
-											,speed=self.missileSpeed
-											,angle=-math.pi/4
-											,damage=self.missileDamage
-
-										}
-									)
-	table.insert(self.missiles,missile.make{
-											x=self.x
-											,y=self.y-self.drawBox.height/2
-											,speed=self.missileSpeed
-											,angle=-math.pi/4*3
-											,damage=self.missileDamage
-
-										}
-									)
+	self:makeMissile(self.x-10)
+	self:makeMissile(self.x+10)
+	self:makeMissile(nil,-math.pi/4)
+	self:makeMissile(nil,-math.pi*3/4)
 end
 
+function playerfunctions:makeMissile(x,angle)
+	if self.fireSwirls then
+		table.insert(self.missiles,projectile.make{
+											x= x or self.x
+											,y=self.y-self.drawBox.height/2
+											,speed=self.missileSpeed
+											,angle=angle or -math.pi/2
+											,damage=self.missileDamage
+										}
+									)
+	else
+		table.insert(self.missiles,missile.make{
+											x= x or self.x
+											,y=self.y-self.drawBox.height/2
+											,speed=self.missileSpeed
+											,angle=angle or -math.pi/2
+											,damage=self.missileDamage
+										}
+									)
+	end
+end
 function playerfunctions:keypressed(key)
 end
 
