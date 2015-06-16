@@ -15,23 +15,32 @@ function state.load()
 	local y = 90
 	local curCol = 1
 
-	for i=1,4 do
-		table.insert(state.levelButtons, button.make{
-										text=i
-										,x=x
-										,y=y
+
+	local levelFiles = love.filesystem.getDirectoryItems('Levels')
+	for i,file in pairs(levelFiles) do
+		if file:sub(1,5) == 'level' and file:sub(-4) == '.lua' then
+			local n = tonumber(file:sub(6,-5))
+			if n then
+				if n == math.floor(n) then
+					state.levelButtons[n] = button.make{
+										text=n
+										,x=startx+(width+hspace)*((n-1)%numberOfColumns)
+										,y=90 + (height+vspace)*math.floor((n-1)/numberOfColumns)
 										,width=width
 										,height=height
 										,image=false
 										,imagecolor={200,200,0,150}
 										,textcolor={20,20,20}
-									})
-		curCol = curCol + 1
-		x = x + width + hspace
-		if curCol > numberOfColumns then
-			y = y + height + vspace
-			x = startx
-			curCol = 1
+									}
+				else
+					print('Level ' .. n .. " skipped because it's not an integer.")
+				end
+
+			else
+				print('Level not recognized: ' .. file .. ' because "' .. file:sub(6,-5) .. '" is not a level number')
+			end
+		else
+			print('"' .. file:sub(1,5) .. '" ~= "level" or "' .. file:sub(-4) .. ' ~= ".lua"')
 		end
 	end
 
@@ -45,7 +54,7 @@ function state.update(dt)
 	state.updateStarryBackground(dt)
 
 	state.levelHover = false
-	for i,b in ipairs(state.levelButtons) do
+	for i,b in pairs(state.levelButtons) do
 		b:update(dt)
 		if b.hover then
 			state.levelHover = i
@@ -56,7 +65,7 @@ end
 function state.draw()
 	state.drawStarryBackground()
 
-	for i,b in ipairs(state.levelButtons) do
+	for i,b in pairs(state.levelButtons) do
 		b:draw()
 	end
 end
