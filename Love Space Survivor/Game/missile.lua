@@ -14,6 +14,10 @@ function missile.make(att,x,y,speed,angle, length, width)
 	self.damage = att.damage or 1
 	self.pierce = att.pierce or 1
 
+	if self.pierce > 1 then
+		self.piercedList = {}
+	end
+
 	self.length = att.length or 10
 	self.width = att.width or 2
 

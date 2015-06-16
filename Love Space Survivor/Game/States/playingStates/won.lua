@@ -6,8 +6,10 @@ function state.load()
 	state.countdown = 4
 
 	state.buttons = {}
-
-	state.buttons.nextLevel = button.make{
+	print('a' .. STATE.player.currentLevel)
+	state.nextLevelExists = love.filesystem.exists('Levels/level' .. STATE.player.currentLevel+1 .. '.lua')
+	if state.nextLevelExists then
+		state.buttons.nextLevel = button.make{
 										text='Next Level!'
 										,x=STATE.camera.x-100
 										,y=STATE.camera.y+150
@@ -15,6 +17,16 @@ function state.load()
 										,imagecolor={0,200,0,150}
 										,textcolor={20,20,20}
 									}
+	else
+		state.buttons.nextLevel = button.make{
+										text='No Level!'
+										,x=STATE.camera.x-100
+										,y=STATE.camera.y+150
+										,image=false
+										,imagecolor={0,0,0}
+										,textcolor={200,200,200}
+									}
+	end
 	state.buttons.levelScreen = button.make{
 										text='levelScreen'
 										,x=STATE.camera.x+100
@@ -68,7 +80,7 @@ end
 
 function state.mousepressed(x,y,button)
 	if not state.countdown then
-		if state.buttons.nextLevel.hover then
+		if state.buttons.nextLevel.hover and state.nextLevelExists then
 			STATE.player.currentLevel = STATE.player.currentLevel+1
 			STATE.loadLevel(STATE.player.currentLevel)
 		elseif state.buttons.levelScreen.hover then

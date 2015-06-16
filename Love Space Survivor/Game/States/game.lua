@@ -137,6 +137,8 @@ function state.loadLevel(levelNumber)
 	state.player.x = state.camera.x
 	state.player.y = state.camera.y
 
+	state.player.currentLevel = levelNumber
+
 	state.state = state.states.intro
 end
 
@@ -229,11 +231,24 @@ function state.draw()
 	if state.screenshakeFlag and state.screenshake > 0 then
 		love.graphics.pop()
  	end
+
 end
 
 function state.keypressed(key)
 	if key == 'l' then
 		state.screenshake = state.screenshake + 2
+	elseif key == 'j' then
+		state.player.levelCash = state.player.levelCash + 500000
+
+		state.player.fullauto = true
+		state.player.fireDelay = 0.05
+
+		state.player.missileType = #state.player.fireMissileFunctions
+		state.player.missileSpeed = 600
+		state.player.missileDamage = 1
+		state.player.missilePierce = 4
+
+		state.player.fireSwirls = true
 	elseif key == 'i' then
 		state.screenshakeFlag = not state.screenshakeFlag
 	end

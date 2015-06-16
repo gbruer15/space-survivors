@@ -46,6 +46,8 @@ function playerfunctions.make(att)
 	self.missileSpeed = 320
 	self.missileDamage = 1
 	self.missilePierce = 1
+
+	self.fireSwirls = true
 	---------------------------------
 
 	self.fireCountdown = self.fireDelay
@@ -137,6 +139,7 @@ function playerfunctions:makeMissile(x,angle)
 											,speed=self.missileSpeed
 											,angle=angle or -math.pi/2
 											,damage=self.missileDamage
+											,pierce=self.missilePierce
 										}
 									)
 	else
@@ -146,6 +149,7 @@ function playerfunctions:makeMissile(x,angle)
 											,speed=self.missileSpeed
 											,angle=angle or -math.pi/2
 											,damage=self.missileDamage
+											,pierce=self.missilePierce
 										}
 									)
 	end

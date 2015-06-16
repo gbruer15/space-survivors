@@ -20,7 +20,7 @@ function projectile.make(att)
 		end
 	end
 
-	self.drawBox = rectangle.make(att.width or 15, att.height or 15, self)
+	self.drawBox = rectangle.make(att.width or 50, att.height or 50, self)
 	self.drawAngle = math.random()*math.pi
 	self.angleSpeed = att.angleSpeed or math.random()*40 + 0.1
 
@@ -29,6 +29,9 @@ function projectile.make(att)
 
 	self.damage = att.damage or 1
 	self.pierce = att.pierce or 1
+	if self.pierce > 1 then
+		self.piercedList = {}
+	end
 
 	return self
 end
@@ -50,9 +53,10 @@ function projectile:draw()
 
 	love.graphics.setColor(255,255,255)
 	love.graphics.draw(self.Image.image,self.drawBox:getLeft(),self.drawBox:getTop(),0,self.drawBox.width/self.Image.width,self.drawBox.height/self.Image.height)
-	--love.graphics.rectangle('line',self.drawBox:getRect())
 
 	love.graphics.pop()
+	--love.graphics.rectangle('line',self.drawBox:getRect())
+	--love.graphics.circle('line',self.x,self.y,self.drawBox.width/2)
 end
 
 function projectile:isHittingRectangle(x,y,w,h)

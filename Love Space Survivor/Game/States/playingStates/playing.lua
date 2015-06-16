@@ -17,10 +17,26 @@ function state.update(dt)
 		else
 			for j,e in ipairs(STATE.enemies) do
 				if missile:isHittingRectangle(e.collisionBox:getRect()) then
-					e.health = e.health - missile.damage
-					table.remove(STATE.player.missiles,i)
-					STATE.screenshake = STATE.screenshake+0.3
-					break
+					local found
+					if missile.piercedList then
+						for a,f in ipairs(missile.piercedList) do
+							if e == f then
+								found = true
+								break
+							end
+						end
+					end
+					if not found then
+						e.health = e.health - missile.damage
+						missile.pierce = missile.pierce - 1
+						STATE.screenshake = STATE.screenshake+0.3
+						if missile.pierce > 0 then
+							table.insert(missile.piercedList,e)
+						else
+							table.remove(STATE.player.missiles,i)
+							break
+						end
+					end
 				end
 			end
 		end
