@@ -49,10 +49,6 @@ function love.load()
 	window = {}
 	window.width, window.height = love.graphics.getDimensions()
 	window.fullscreen = false
-	
-	-- FPS cap
-	min_dt = 1/60
-	next_time = love.timer.getTime()
 
 	MOUSE = {}
 	MOUSE.x, MOUSE.y = love.mouse.getPosition()
@@ -71,8 +67,7 @@ function love.load()
 end
 
 function love.update(dt)
-	--  FPS cap
-	next_time = next_time + min_dt	
+	
 
 	MOUSE.x, MOUSE.y = love.mouse.getPosition()
 	STATE.update(dt)
@@ -130,13 +125,7 @@ function love.draw()
 	--]]
 	
 	
-	-- FPS cap
-	local cur_time = love.timer.getTime()
-	if next_time <= cur_time then
-		next_time = cur_time
-		return
-	end
-	love.timer.sleep(1*(next_time - cur_time))
+	
 end
 
 
@@ -203,22 +192,42 @@ function love.run()
 
     if love.load then love.load(arg) end
 
+    -- FPS cap
+	min_dt = 1/60
+	next_time = love.timer.getTime()
+
     local dt = 0
+    local lastDt = dt
+    local maxDt = 1/60
     -- Main loop time.
     while not QUIT do	
+    	--  FPS cap
+		next_time = next_time + min_dt	
+
         love.processEvents()
 
         -- Update dt, as we'll be passing it to update
         love.timer.step()
-        dt = love.timer.getDelta()
-
+        dt,lastDt = love.timer.getDelta(),dt
+        print(dt/maxDt)
         -- Call update and draw
-		love.update(dt)
-		
-		love.graphics.clear()
-		love.draw()
+        if dt < maxDt or dt/lastDt < 1.5 then
+			love.update(dt)
 			
-		love.graphics.present()
+			love.graphics.clear()
+			love.draw()
+				
+			love.graphics.present()
+		else
+			print('hat')
+		end
+
+		-- FPS cap
+		local cur_time = love.timer.getTime()
+		if next_time <= cur_time then
+			next_time = cur_time
+		end
+		love.timer.sleep(1*(next_time - cur_time))
     end
 end
 
@@ -240,6 +249,209 @@ function love.filesystem.removeDirectory(directory)
 	end
 
 	return love.filesystem.remove(directory)
+end
 
+local function error_printer(msg, layer)
+	print((debug.traceback("Error: " .. tostring(msg), 1+(layer or 1)):gsub("\n[^\n]+$", "")))
+end
+ 
+ 
+function love.errhand(msg)
+	local success,err = pcall(love.customErrorHandler,msg)
 
+	if not success then 
+		print('\nLove Error Handler error: ' .. tostring(err)) 
+		return
+	end
+end
+
+function love.customErrorHandler(msg)
+	msg = tostring(msg)
+ 	
+	error_printer(msg, 2)
+ 	
+	if not love.window or not love.graphics or not love.event then
+		return
+	end
+ 
+	if not love.graphics.isCreated() or not love.window.isCreated() then
+		local success, status = pcall(love.window.setMode, 800, 600)
+		if not success or not status then
+			return
+		end
+	end
+
+	-- Reset state.
+	if love.mouse then
+		love.mouse.setVisible(true)
+		love.mouse.setGrabbed(false)
+	end
+	if love.joystick then
+		-- Stop all joystick vibrations.
+		for i,v in ipairs(love.joystick.getJoysticks()) do
+			v:setVibration()
+		end
+	end
+	if love.audio then love.audio.stop() end
+	love.graphics.reset()
+
+	local font = love.graphics.setNewFont(14)--math.floor(love.window.toPixels(14)))
+
+	local sRGB = select(3, love.window.getMode()).srgb
+	if sRGB and love.math then
+		love.graphics.setBackgroundColor(love.math.gammaToLinear(89, 157, 220))
+	else
+		love.graphics.setBackgroundColor(89, 157, 220)
+	end
+
+	love.graphics.setColor(255, 255, 255, 255)
+ 
+	local trace = debug.traceback()
+
+	love.graphics.clear()
+	love.graphics.origin()
+ 
+	local err = {}
+ 
+	table.insert(err, "Error\n")
+	table.insert(err, msg.."\n\n")
+ 
+	for l in string.gmatch(trace, "(.-)\n") do
+		if not string.match(l, "boot.lua") then
+			l = string.gsub(l, "stack traceback:", "Traceback\n")
+			table.insert(err, l)
+		end
+	end
+ 
+	local p = table.concat(err, "\n")
+ 
+	p = string.gsub(p, "\t", "")
+	p = string.gsub(p, "%[string \"(.-)\"%]", "%1")
+ 
+ 	local state = createErrorHandlerState()
+
+	state.load()
+	state.errorMessage = p
+	love.graphics.setBackgroundColor(0,0,0)
+	if not love.timer then
+		while not quit do
+			love.event.pump()
+	 
+			for e, a, b, c in love.event.poll() do
+				if e == "quit" then
+					return
+				end
+				if e == "keypressed" and a == "escape" then
+					return
+				end
+			end
+
+	 		state.update(1/60)
+
+	 		love.graphics.clear()
+
+			state.draw()
+
+	 		love.graphics.present()
+		end 
+	else ---Really nice looking loop with time
+		-- FPS cap
+		min_dt = 1/60
+		next_time = love.timer.getTime()
+
+	    local dt = 0
+	    local lastDt = dt
+	    local maxDt = 1/60
+		while not quit do
+			love.event.pump()
+	 
+			for e, a, b, c in love.event.poll() do
+				if e == "quit" then
+					return
+				end
+				if e == "keypressed" and a == "escape" then
+					return
+				end
+			end
+
+	 		love.timer.step()
+	        dt,lastDt = love.timer.getDelta(),dt
+	        -- Call update and draw
+	        print(dt/maxDt)
+	        if dt < maxDt or dt/lastDt < 1.5 then
+				state.update(dt)
+
+		 		love.graphics.clear()
+
+				state.draw()
+
+		 		love.graphics.present()
+			else
+				print('hat')
+			end		
+
+			-- FPS cap
+			local cur_time = love.timer.getTime()
+			if next_time <= cur_time then
+				next_time = cur_time
+			end
+			love.timer.sleep(1*(next_time - cur_time))
+		end 
+	end
+end
+--]]
+
+function createErrorHandlerState()
+	local state = {}
+
+	function state.load()
+		state.maxStarSpeed = 800
+		state.minStarSpeed = 40
+		state.initializeStarryBackground(500)
+	end
+ 	function state.update(dt)
+ 		state.updateStarryBackground(dt)
+ 	end
+
+ 	function state.draw()
+ 		state.drawStarryBackground()
+
+		local pos = 70--love.window.toPixels(70)
+		love.graphics.setColor(255,255,255)
+		love.graphics.printf(state.errorMessage, pos, pos, love.graphics.getWidth() - pos)
+ 	end
+
+	function state.initializeStarryBackground(n)
+		state.stars = {}
+		for i=1,n do
+			table.insert(state.stars, state.spawnStar( math.floor(i/n*window.height) ))
+		end
+	end
+
+	function state.updateStarryBackground(dt)
+		for i,v in ipairs(state.stars) do
+			v.y = v.y + v.speed*dt
+			if v.y - v.radius > window.height then
+				state.stars[i] = state.spawnStar()
+			end
+		end
+	end
+
+	function state.drawStarryBackground()		
+		for i,v in ipairs(state.stars) do
+			local n = 255*v.speed/state.maxStarSpeed
+			love.graphics.setColor(n,n,n)
+			love.graphics.circle('fill',v.x,v.y,v.radius)
+		end
+	end
+
+	function state.spawnStar(y)
+		local self = {}
+		self.x = math.random(0,window.width)
+		self.y = y or -10
+		self.speed = math.random(state.minStarSpeed,state.maxStarSpeed)
+		self.radius = 1
+		return self
+	end	
+	return state
 end
