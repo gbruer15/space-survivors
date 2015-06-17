@@ -20,8 +20,6 @@ function state.load()
 								,boxColor={200,0,0,155}
 								,trueText = 'Yes'
 								,falseText = 'No'
-
-
 							}
 end
 
@@ -59,7 +57,8 @@ function state.mousepressed(x,y,button)
 			STATE.level.reload()
 		end
 	elseif state.boolBox.value == false then
-		--not implemented yet
+		STATE = require('Game/States/levelselect')
+		STATE.load()
 	end
 end
 

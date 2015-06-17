@@ -21,11 +21,19 @@ function hud.make(att)
 								,centery = self.y+self.height-100
 								,text = 'P(ause)'
 							}
+	self.buttons.returnToLevelSelect = button.make{
+								centerx = self.x+self.width/2
+								,centery = self.y+self.height-50
+								,text = 'Level Select'
+							}
 	return self
 end
 
 
 function hud:update(dt)
+	if self.boolBox then
+		self.boolBox:update(dt)
+	end
 	for i,b in pairs(self.buttons) do
 		b:update(dt)
 	end
@@ -94,12 +102,35 @@ function hud:draw()
 	for i,b in pairs(self.buttons) do
 		b:draw()
 	end
+
+	if self.boolBox then
+		self.boolBox:draw()
+	end
 	
 end
 
 function hud:mousepressed(x,y,button)
+	if self.boolBox then
+		self.boolBox:mousepressed(x,y,button)
+		if self.boolBox.value then
+			STATE = require('Game/States/levelselect')
+			STATE.load()
+		elseif self.boolBox.value == false then
+			self.boolBox = nil
+		end
+	end
 	if self.buttons.pause.hover then
 		STATE.paused = true
+	elseif self.buttons.returnToLevelSelect.hover then
+		STATE.paused = true
+		self.boolBox = boolBox.make{
+								centerx=window.width/2 
+								,centery=window.height/2
+								,titleText='Quit and return to level select?'
+								,boxColor={200,0,0,155}
+								,trueText = 'Yes'
+								,falseText = 'No'
+							}
 	elseif self.hoveredUpgrade then
 		--attempt to buy upgrade
 		if not self.hoveredUpgrade:getMaxedOut() and self.hoveredUpgrade.cost < STATE.player.levelCash then

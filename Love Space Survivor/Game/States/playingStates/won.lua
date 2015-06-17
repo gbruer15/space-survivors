@@ -84,7 +84,8 @@ function state.mousepressed(x,y,button)
 			STATE.player.currentLevel = STATE.player.currentLevel+1
 			STATE.loadLevel(STATE.player.currentLevel)
 		elseif state.buttons.levelScreen.hover then
-
+			STATE = require('Game/States/levelselect')
+			STATE.load()
 		end
 	end
 end

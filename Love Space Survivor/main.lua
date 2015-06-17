@@ -209,7 +209,7 @@ function love.run()
         -- Update dt, as we'll be passing it to update
         love.timer.step()
         dt,lastDt = love.timer.getDelta(),dt
-        print(dt/maxDt)
+
         -- Call update and draw
         if dt < maxDt or dt/lastDt < 1.5 then
 			love.update(dt)
@@ -218,8 +218,6 @@ function love.run()
 			love.draw()
 				
 			love.graphics.present()
-		else
-			print('hat')
 		end
 
 		-- FPS cap
@@ -377,7 +375,7 @@ function love.customErrorHandler(msg)
 	 		love.timer.step()
 	        dt,lastDt = love.timer.getDelta(),dt
 	        -- Call update and draw
-	        print(dt/maxDt)
+
 	        if dt < maxDt or dt/lastDt < 1.5 then
 				state.update(dt)
 
@@ -386,8 +384,6 @@ function love.customErrorHandler(msg)
 				state.draw()
 
 		 		love.graphics.present()
-			else
-				print('hat')
 			end		
 
 			-- FPS cap
