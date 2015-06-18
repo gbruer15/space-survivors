@@ -9,6 +9,7 @@ end
 
 images.spaceship = getImage('spaceship.png')
 images.enemySpaceship = getImage('enemyspaceship.png')
+images.boss = getImage('big boss.png')
 
 images.basicOutline = getImage('outline1.png')
 images.basicOutline90 = getImage('outline1-90.png')

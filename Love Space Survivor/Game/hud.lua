@@ -72,8 +72,12 @@ function hud:draw()
 	
 	love.graphics.print('Lives: ' .. STATE.player.lives,self.x+15,180)
 
-	love.graphics.print('Kills Left: ' .. STATE.level.killsToWin - STATE.player.levelKills,self.x+15,225)
-
+	if false then
+		love.graphics.print('Kills Left: ' .. STATE.level.killsToWin - STATE.player.levelKills,self.x+15,225)
+	end
+	if STATE.level.drawToHud then
+		STATE.level.drawToHud(self.x+15,225,self.width-30,20)
+	end
 
 	if self.hoveredUpgrade then
 		love.graphics.printf(self.hoveredUpgrade.description,self.x+15,315+#STATE.upgrades*15,self.width,'center')

@@ -77,7 +77,7 @@ function state.spawnStar(y)
 	self.x = math.random(0,window.width)
 	self.y = y or -10
 	self.speed = math.random(state.minStarSpeed,state.maxStarSpeed)
-	self.radius = 1
+	self.radius = 1--math.ceil( (self.speed-state.minStarSpeed)/(state.maxStarSpeed-state.minStarSpeed) *2 )
 	return self
 end
 

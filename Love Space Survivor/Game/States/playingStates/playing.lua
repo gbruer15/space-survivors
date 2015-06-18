@@ -28,6 +28,16 @@ function state.update(dt)
 					end
 					if not found then
 						e.health = e.health - missile.damage
+						if e.hurtLoot then
+							STATE.player.levelCash = STATE.player.levelCash + e.hurtLoot
+							table.insert(STATE.tempTexts,tempText.make{	 x = missile.x
+																		,y = missile.y
+																		,yspeed = -40
+																		,life = 1
+																		,text = '+$' .. e.hurtLoot
+																		,color={0,255,0}
+							})
+						end
 						missile.pierce = missile.pierce - 1
 						STATE.screenshake = STATE.screenshake+0.3
 						if missile.pierce > 0 then
@@ -46,7 +56,6 @@ function state.update(dt)
 		v:update(dt)
 
 		if v.drawBox:getTop() >= STATE.camera.y + STATE.camera.height/2 then
-			--table.remove(STATE.enemies,i)
 			STATE.player.levelCash = math.max(STATE.player.levelCash - 50,0)
 			table.insert(STATE.tempTexts,tempText.make{	 x = v.x
 														,y = STATE.camera.y + STATE.camera.height/2 + math.random(-10,10)
@@ -55,7 +64,11 @@ function state.update(dt)
 														,text = '-$50'
 														,color={255,0,0}
 							})
-			v.y = STATE.camera.y-STATE.camera.height/2-100
+			if STATE.level.cycleEnemies then
+				v.y = STATE.camera.y-STATE.camera.height/2-100
+			else
+				table.remove(STATE.enemies,i)
+			end
 		elseif v.health <= 0 then
 			STATE.player.levelCash = STATE.player.levelCash + v.loot
 			STATE.player.levelScore = STATE.player.levelScore + v.points

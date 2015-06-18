@@ -3255,7 +3255,7 @@ while True :
                                 boss.center = (GAMEWIDTH/2, -30)
                                 bossspeedslowdown = 150
                                 bosshorizontalspeed = 0
-                                bossverticalspeed = 160
+                                bossverticalspeed = 10
                                 bossenemyspawnrate = 60
                                 bossmissilefirerate = 100
                                 

@@ -359,7 +359,7 @@ function love.customErrorHandler(msg)
 
 	    local dt = 0
 	    local lastDt = dt
-	    local maxDt = 1/60
+	    local maxDt = 1/30
 		while not quit do
 			love.event.pump()
 	 

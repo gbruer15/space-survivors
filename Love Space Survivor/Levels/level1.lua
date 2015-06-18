@@ -3,8 +3,9 @@ local level = {}
 local upgrade = require('Game/upgrade')
 function level.load()
 	level.number = 1 --not reloaded
-	level.playerLives = 3 -- not reloaded
-
+	level.playerLives = 5 -- not reloaded
+	level.cycleEnemies = true
+	
 	STATE.player.lives = level.playerLives
 
 	level.killThreshold = 20
