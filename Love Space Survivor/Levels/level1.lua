@@ -5,7 +5,7 @@ function level.load()
 	level.number = 1 --not reloaded
 	level.playerLives = 5 -- not reloaded
 	level.cycleEnemies = true
-	
+
 	STATE.player.lives = level.playerLives
 
 	level.killThreshold = 20
@@ -21,7 +21,7 @@ function level.load()
 	level.enemyMissileSlowdown = 2
 	level.enemyMissileSpeed = 200
 
-	level.enemyMissileColor = {255,255,100} --not reloaded
+	level.enemyMissileColor = {254, 35,40}--{255,255,100} --not reloaded
 
 	level.enemySpawnSlowdown = 1
 	level.enemySpawnTimer = level.enemySpawnSlowdown
@@ -135,7 +135,12 @@ function level.onDeath()
 end
 
 function level.draw()
+end
 
+
+function level.drawToHud(x,y,width,height)
+	love.graphics.setColor(255,255,255)
+	love.graphics.print('Kills Left: ' .. STATE.level.killsToWin - STATE.player.levelKills,x,y)
 end
 
 function level.reload()

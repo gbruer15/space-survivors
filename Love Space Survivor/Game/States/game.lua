@@ -164,6 +164,12 @@ function state.update(dt)
 		end
 	end
 
+	--(254, 35,40)
+	--[[local t = love.timer.getTime()
+	state.level.enemyMissileColor[1] = (254-180)*math.sin(t)^2 + 180
+	state.level.enemyMissileColor[2] = (35-0)*math.sin(t)^2 + 0
+	state.level.enemyMissileColor[3] = (40-0)*math.sin(t)^2 + 0
+--]]
 	state.screenshake = math.min(15,math.max(state.screenshake - dt, 0))
 end
 
@@ -249,6 +255,8 @@ function state.keypressed(key)
 		state.player.missilePierce = 4
 
 		state.player.fireSwirls = true
+	elseif key == 'm' then
+		state.player.mouseControl = not state.player.mouseControl
 	elseif key == 'i' then
 		state.screenshakeFlag = not state.screenshakeFlag
 	end

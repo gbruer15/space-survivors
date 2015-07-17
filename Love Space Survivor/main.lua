@@ -198,7 +198,7 @@ function love.run()
 
     local dt = 0
     local lastDt = dt
-    local maxDt = 1/60
+    local maxDt = 1/30
     -- Main loop time.
     while not QUIT do	
     	--  FPS cap
@@ -210,6 +210,7 @@ function love.run()
         love.timer.step()
         dt,lastDt = love.timer.getDelta(),dt
 
+        print(dt/maxDt)
         -- Call update and draw
         if dt < maxDt or dt/lastDt < 1.5 then
 			love.update(dt)
@@ -218,6 +219,9 @@ function love.run()
 			love.draw()
 				
 			love.graphics.present()
+		else
+			dt = lastDt
+			print('skip')
 		end
 
 		-- FPS cap

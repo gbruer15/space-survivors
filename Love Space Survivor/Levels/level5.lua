@@ -8,7 +8,7 @@ function level.load()
 
 	level.cycleEnemies = false
 
-	level.enemyMissileColor = {255,255,100}
+	level.enemyMissileColor = {254, 35,40}--{255,255,100}
 
 	level.enemyMissileMotionSensor = 400
 	level.enemyMissileFire = true
