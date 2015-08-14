@@ -8,7 +8,7 @@ function playerfunctions.make(att)
 
 	self.x = STATE.camera.x
 	self.y = STATE.camera.y
-
+--hi
 	self.maxXSpeed = 300
 	self.maxYSpeed = 300
 	self.drawBox = rectangle.make(40,125, self) --15
