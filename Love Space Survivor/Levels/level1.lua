@@ -1,5 +1,5 @@
-local level = {}
-
+--local level = {}
+localsd 
 local upgrade = require('Game/upgrade')
 function level.load()
 	level.number = 1 --not reloaded
