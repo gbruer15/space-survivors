@@ -7,7 +7,7 @@ local function getImage(name)
 end
 
 
-images.spaceship = getImage('spaceship.png')
+images.spaceship = getImage('spaceship for realz.png')
 images.enemySpaceship = getImage('enemyspaceship.png')
 images.boss = getImage('big boss.png')
 

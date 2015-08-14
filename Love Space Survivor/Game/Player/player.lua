@@ -11,19 +11,23 @@ function playerfunctions.make(att)
 
 	self.maxXSpeed = 300
 	self.maxYSpeed = 300
-	self.drawBox = rectangle.make(15,125, self) --15
+	self.drawBox = rectangle.make(40,125, self) --15
 
-	self.collisionBox = rectangle.make(10,10,self)--10
+	self.collisionBox = rectangle.make(20,10,self)--10
 
-	self.Image = images.moveLeftAnimation
+	self.Image = images.spaceship--images.moveLeftAnimation
+
+	self.Image.spriteWidth = self.Image.width
+	self.Image.spriteHeight = self.Image.height
+
 	self.quad = love.graphics.newQuad(0,0,self.Image.spriteWidth,self.Image.spriteHeight, self.Image.width,self.Image.height)
-
+	
 	self.drawBox.height = self.drawBox.width/self.Image.spriteWidth*self.Image.spriteHeight
 	self.drawBox.dy = self.drawBox.height/2
 
 	self.missiles = {}
 
-	self.moveAnimation = 0
+	self.moveAnimation = false --0
 	self.moveAnimationTime = 0.3
 	self.numberOfFrames = self.Image.width/self.Image.spriteWidth
 
@@ -72,30 +76,34 @@ function playerfunctions:update(dt)
 		end
 	end
 
-	if love.keyboard.isDown('a') or love.keyboard.isDown('left') then
-		self.moveAnimation = math.constrain(self.moveAnimation - dt*self.numberOfFrames/self.moveAnimationTime,-self.numberOfFrames,self.numberOfFrames)
-	elseif love.keyboard.isDown('d') or love.keyboard.isDown('right') then
-		self.moveAnimation = math.constrain(self.moveAnimation + dt*self.numberOfFrames/self.moveAnimationTime,-self.numberOfFrames,self.numberOfFrames)
-	elseif self.moveAnimation > 0 then
-		self.moveAnimation = math.max(self.moveAnimation-dt*self.numberOfFrames/self.moveAnimationTime,0)
-	else
-		self.moveAnimation = math.min(self.moveAnimation+dt*self.numberOfFrames/self.moveAnimationTime,0)
+	if self.moveAnimation then
+		if love.keyboard.isDown('a') or love.keyboard.isDown('left') then
+			self.moveAnimation = math.constrain(self.moveAnimation - dt*self.numberOfFrames/self.moveAnimationTime,-self.numberOfFrames,self.numberOfFrames)
+		elseif love.keyboard.isDown('d') or love.keyboard.isDown('right') then
+			self.moveAnimation = math.constrain(self.moveAnimation + dt*self.numberOfFrames/self.moveAnimationTime,-self.numberOfFrames,self.numberOfFrames)
+		elseif self.moveAnimation > 0 then
+			self.moveAnimation = math.max(self.moveAnimation-dt*self.numberOfFrames/self.moveAnimationTime,0)
+		else
+			self.moveAnimation = math.min(self.moveAnimation+dt*self.numberOfFrames/self.moveAnimationTime,0)
+		end
+		self.quad:setViewport(math.floor(math.abs(self.moveAnimation))*self.Image.spriteWidth,0,self.Image.spriteWidth,self.Image.spriteHeight)
 	end
-
-	self.quad:setViewport(math.floor(math.abs(self.moveAnimation))*self.Image.spriteWidth,0,self.Image.spriteWidth,self.Image.spriteHeight)
-
+	
 end
 
 function playerfunctions:draw(drawColBox,colBoxMode,color)
 	love.graphics.setColor(255,255,255)
 	--self.drawBox:draw('line')
 
-	if self.moveAnimation > 0 then
-		love.graphics.draw(self.Image.image,self.quad,self.drawBox:getLeft()+self.drawBox.width,self.drawBox:getTop(),0,-self.drawBox.width/self.Image.spriteWidth, self.drawBox.height/self.Image.spriteHeight)
+	if self.moveAnimation then
+		if self.moveAnimation > 0 then
+			love.graphics.draw(self.Image.image,self.quad,self.drawBox:getLeft()+self.drawBox.width,self.drawBox:getTop(),0,-self.drawBox.width/self.Image.spriteWidth, self.drawBox.height/self.Image.spriteHeight)
+		else
+			love.graphics.draw(self.Image.image,self.quad,self.drawBox:getLeft(),self.drawBox:getTop(),0,self.drawBox.width/self.Image.spriteWidth, self.drawBox.height/self.Image.spriteHeight)
+		end
 	else
-		love.graphics.draw(self.Image.image,self.quad,self.drawBox:getLeft(),self.drawBox:getTop(),0,self.drawBox.width/self.Image.spriteWidth, self.drawBox.height/self.Image.spriteHeight)
+		love.graphics.draw(self.Image.image,self.drawBox:getLeft(),self.drawBox:getTop(),0,self.drawBox.width/self.Image.width, self.drawBox.height/self.Image.height)
 	end
-	--love.graphics.draw(self.Image.image,self.drawBox:getLeft(),self.drawBox:getTop(),0,self.drawBox.width/self.Image.width, self.drawBox.height/self.Image.height)
 
 	if drawColBox then
 		love.graphics.setColor(color or {0,255,0,100})

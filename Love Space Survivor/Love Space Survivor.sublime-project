@@ -9,7 +9,17 @@
 			],
 			"shell": true,
 			"name": "Linux Love2d 9.0"
+		},
+		{
+			"cmd":
+			[
+				"D:\\LOVE\\love.exe",
+				"$project_path"
+			],
+			"shell": false,
+			"name": "Jacob Love2d 9.0"
 		}
+
 	],
 	"folders":
 	[
