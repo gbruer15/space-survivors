@@ -1,4 +1,4 @@
-
+fullscreen = false
 love.graphics.setBackgroundColor(0,0,0)
 
 love.graphics.clear()
@@ -135,6 +135,9 @@ function love.keypressed(key)
 	end
 	if key == 'escape' then
 		love.event.quit()
+	elseif key == 'f' then
+		fullscreen = not fullscreen
+		love.window.setFullScreen(fullscreen)
 	end
 end	
 
