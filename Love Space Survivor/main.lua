@@ -1,4 +1,5 @@
-fullscreen = false
+love.window.setFullscreen(true,'desktop')
+
 love.graphics.setBackgroundColor(0,0,0)
 
 love.graphics.clear()
@@ -10,7 +11,7 @@ love.graphics.setColor(0,0,0)
 love.graphics.printf("Loading Space Survivors",25,26,100,'center')
 	
 love.graphics.present()
-	
+
 
 io.stdout:setvbuf("no")
 
@@ -137,8 +138,10 @@ function love.keypressed(key)
 	if key == 'escape' then
 		love.event.quit()
 	elseif key == 'f' then
-		fullscreen = not fullscreen
-		love.window.setFullScreen(fullscreen)
+		if love.window.setFullscreen(not window.fullscreen,'desktop') then
+			window.width, window.height = love.graphics.getDimensions()
+			window.fullscreen = not window.fullscreen
+		end
 	end
 end	
 
