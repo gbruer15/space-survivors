@@ -214,7 +214,7 @@ function love.run()
         love.timer.step()
         dt,lastDt = love.timer.getDelta(),dt
 
-        print(dt/maxDt)
+        --print(dt/maxDt)
         -- Call update and draw
         if dt < maxDt or dt/lastDt < 1.5 then
 			love.update(dt)

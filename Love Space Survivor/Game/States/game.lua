@@ -119,8 +119,8 @@ function state.load(n)
 		v.load()
 	end
 
-	state.maxStarSpeed = 800
-	state.minStarSpeed = 40
+	state.maxStarSpeed = 40--800
+	state.minStarSpeed = 5--40
 	state.initializeStarryBackground(500)
 
 	state.screenshake = 0
@@ -306,7 +306,7 @@ end
 function state.spawnStar(y)
 	local self = {}
 	self.x = math.random(state.camera.x-state.camera.width/2,state.camera.x + state.camera.width/2)
-	self.y = y or -10
+	self.y = y or -2
 	self.speed = math.random(state.minStarSpeed,state.maxStarSpeed)
 	self.radius = 1
 	return self

@@ -36,7 +36,10 @@ function state.draw()
 end
 
 function state.keypressed(key)
-
+	if key == ' ' then
+		STATE = require("Game/States/levelselect")
+		STATE.load()
+	end
 end
 
 function state.mousepressed(x,y,button)

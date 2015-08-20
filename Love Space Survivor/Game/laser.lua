@@ -18,8 +18,25 @@ function laser.make(att)
 		self.piercedList = {}
 	end
 
-	self.length = att.length or 10
-	self.width = att.width or 2
+	if not att.Image then
+		if att.image then
+			self.Image = {}
+			self.Image.image = att.image
+			self.Image.width = att.image:getWidth()
+			self.Image.height = att.image:getHeight()
+		else
+			self.Image = images.redLaser
+		end
+	else
+		self.Image = att.Image
+	end
+
+	self.width = att.width or 8
+	self.length = att.length or self.width * self.Image.height/self.Image.width
+	
+	self.imageAngle = math.pi/2
+
+	self.drawBox = rectangle.make(att.drawWidth or self.width, att.drawHeight or self.length, self)
 
 	self.endX, self.endY = self.x+self.length*math.cos(self.angle), self.y+self.length*math.sin(self.angle)
 	return self
@@ -34,9 +51,18 @@ function laser:update(dt)
 end
 
 function laser:draw()
-	love.graphics.setLineWidth(self.width)
+	love.graphics.push()
+	love.graphics.translate(self.x,self.y)
+	love.graphics.rotate(self.angle+self.imageAngle)
+	love.graphics.translate(-self.x,-self.y)
 
-	love.graphics.line(self.x, self.y, self.endX, self.endY)
+	love.graphics.setColor(255,255,255)
+	love.graphics.draw(self.Image.image,self.drawBox:getLeft(),self.drawBox:getTop(),0,self.drawBox.width/self.Image.width,self.drawBox.height/self.Image.height)
+
+	love.graphics.pop()
+
+	love.graphics.setLineWidth(1)
+	--love.graphics.line(self.x, self.y, self.endX, self.endY)
 end
 
 function laser:isHittingRectangle(x,y,w,h)
