@@ -3,12 +3,20 @@ images = {}
 local function getImage(name)
 	local i = love.graphics.newImage(IMAGES_PATH .. name)
 	return {image = i, width=i:getWidth(), height=i:getHeight()}
+end
 
+local function getGoodImage(name)
+	local i = love.graphics.newImage(GOOD_IMAGES_PATH .. name)
+	return {image = i, width=i:getWidth(), height=i:getHeight()}
 end
 
 
-images.spaceship = getImage('spaceship for realz.png')
+images.spaceship = getGoodImage('playerSpaceship.png')
 images.enemySpaceship = getImage('enemyspaceship.png')
+
+images.greenLaser = getGoodImage('laserGreen.png')
+images.redLaser = getGoodImage('laserRed.png')
+
 images.boss = getImage('big boss.png')
 
 images.basicOutline = getImage('outline1.png')

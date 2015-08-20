@@ -40,6 +40,7 @@ LUA_PATH, path = path, LUA_PATH
 
 function love.load()
 	IMAGES_PATH = 'Assets/Images/'
+	GOOD_IMAGES_PATH = 'Assets/GoodImages/'
 	lovefunctions = {'keypressed','keyreleased','mousepressed','mousereleased'}
 	require('1stPartyLib/physics/collision')
 	require('resources')
