@@ -65,7 +65,10 @@ function collision.lineRectangle(ax,ay,bx,by, left,top,width,height)
 	end
 	 
 	if bx == ax then
-		return (ay < top and by > top+height) or (ay> top+height and by<top),ax,top,"vertical line"
+		--we've already tested if the either point is in the rectangle 
+		--so this checks to see if the line is horizontally positioned correctly
+		--and if the line starts above the rectangle and ends below it.
+		return (ax>left and ax < left+width) and ((ay < top and by > top+height) or (ay> top+height and by<top)) ,ax,top,"vertical linex"
 	else
 		local m = (ay-by)/(ax-bx)
 		local b = ay - m*ax

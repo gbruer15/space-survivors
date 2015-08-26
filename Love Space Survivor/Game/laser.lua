@@ -39,6 +39,13 @@ function laser.make(att)
 	self.drawBox = rectangle.make(att.drawWidth or self.width, att.drawHeight or self.length, self)
 
 	self.endX, self.endY = self.x+self.length*math.cos(self.angle), self.y+self.length*math.sin(self.angle)
+	
+	self.points = {}
+	self.points[1] = {}
+	self.points[2] = {}
+	self.points[3] = {}
+	self.points[4] = {}
+
 	return self
 end
 
@@ -46,7 +53,33 @@ function laser:update(dt)
 	self.x = self.x + self.speed*math.cos(self.angle)*dt
 	self.y = self.y + self.speed*math.sin(self.angle)*dt
 
-	self.endX, self.endY = self.x+self.length*math.cos(self.angle), self.y+self.length*math.sin(self.angle)
+	self.startX,self.startY = self.x-self.length/2*math.cos(self.angle), self.y-self.length/2*math.sin(self.angle)
+
+	self.endX, self.endY = self.x+self.length/2*math.cos(self.angle), self.y+self.length/2*math.sin(self.angle)
+
+
+	self.points[1].x = self.startX 
+	self.points[1].y = self.startY
+
+	self.points[4].x = self.endX 
+	self.points[4].y = self.endY
+
+	self.bx = self.x+self.width/2 * math.cos(self.angle)
+	self.by = self.x+self.width/2 * math.sin(self.angle)
+
+	self.fx = self.bx + self.length*0.8*math.cos(self.angle)
+	self.fy = self.by + self.length*0.8*math.sin(self.angle)
+
+	self.gx = self.bx - self.length*0.8*math.cos(self.angle)
+	self.gy = self.by - self.length*0.8*math.sin(self.an
+
+	self.points[2].x = self.startX
+	self.points[2].y = self.startX 
+
+	self.points[3].x = self.startX 
+	self.points[3].y = self.startX 
+
+	
 
 end
 
@@ -61,10 +94,14 @@ function laser:draw()
 
 	love.graphics.pop()
 
+	love.graphics.setColor(0,0,255)
 	love.graphics.setLineWidth(1)
-	--love.graphics.line(self.x, self.y, self.endX, self.endY)
+	love.graphics.line(self.startX, self.startY, self.endX, self.endY)
+
+
+	love.graphics.line(self.fx,self.fx, self.gx,self.gy)
 end
 
 function laser:isHittingRectangle(x,y,w,h)
-	return collision.pointRectangle(self.x,self.y, x,y,w,h) or collision.pointRectangle(self.endX,self.endY, x,y,w,h)
+	return collision.lineRectangle(self.startX,self.startY,self.endX,self.endY, x,y,w,h)--collision.pointRectangle(self.x,self.y, x,y,w,h) or collision.pointRectangle(self.endX,self.endY, x,y,w,h)
 end

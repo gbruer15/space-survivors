@@ -48,7 +48,7 @@ function playerfunctions.make(att)
 	self.lives = 2
 
 	self.missileType = 1
-	self.missileSpeed = 320
+	self.missileSpeed = 500--320
 	self.missileDamage = 1
 	self.missilePierce = 1
 
