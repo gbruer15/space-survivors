@@ -32,7 +32,7 @@ function state.draw()
 end
 
 function state.keypressed(key)
-	if not STATE.player.mouseControl and key == 'p' and not state.countdown then
+	if not STATE.player.mouseControl and (key == 'p' or key == ' ') and not state.countdown then
 		STATE.paused = false
 	end
 end

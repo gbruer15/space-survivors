@@ -1,6 +1,6 @@
 local enemy = {}
 enemy.__index = enemy
-require('Game/missile')
+require('Game/laser')
 function enemy.make(att)
 	local self = {}
 	setmetatable(self, enemy)
@@ -61,12 +61,13 @@ function enemy:draw(drawColBox, colBoxMode)
 end
 
 function enemy:fireMissile()
-	table.insert(STATE.enemyMissiles,missile.make{
+	table.insert(STATE.enemyMissiles,laser.make{
 													x=self.x
 													,y=self.drawBox:getBottom()
 													,speed=self.missileSpeed
-													,angle=math.pi/2}
-												)
+													,angle=math.pi/2
+												}
+											)
 end
 
 return enemy

@@ -2,6 +2,7 @@ local playerfunctions = {}
 require('Game/missile')
 require('1stPartyLib/display/animation')
 require('Game/projectile')
+require('Game/laser')
 function playerfunctions.make(att)
 	local self = {}
 	setmetatable(self, {__index = playerfunctions})
@@ -47,7 +48,7 @@ function playerfunctions.make(att)
 	self.lives = 2
 
 	self.missileType = 1
-	self.missileSpeed = 320
+	self.missileSpeed = 500--320
 	self.missileDamage = 1
 	self.missilePierce = 1
 
@@ -141,7 +142,17 @@ end
 
 function playerfunctions:makeMissile(x,angle)
 	if self.fireSwirls then
-		table.insert(self.missiles,projectile.make{
+		table.insert(self.missiles,laser.make{
+											x= x or self.x
+											,y=self.y-self.drawBox.height/2
+											,speed=self.missileSpeed
+											,angle=angle or -math.pi/2
+											,damage=self.missileDamage
+											,pierce=self.missilePierce
+											,Image=images.greenLaser
+										}
+									)
+		--[[table.insert(self.missiles,projectile.make{
 											x= x or self.x
 											,y=self.y-self.drawBox.height/2
 											,speed=self.missileSpeed
@@ -149,7 +160,7 @@ function playerfunctions:makeMissile(x,angle)
 											,damage=self.missileDamage
 											,pierce=self.missilePierce
 										}
-									)
+									)]]
 	else
 		table.insert(self.missiles,missile.make{
 											x= x or self.x
