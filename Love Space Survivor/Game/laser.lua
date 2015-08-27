@@ -45,6 +45,8 @@ function laser.make(att)
 	self.points[2] = {}
 	self.points[3] = {}
 	self.points[4] = {}
+	self.points[5] = {}
+	self.points[6] = {}
 
 	return self
 end
@@ -64,21 +66,24 @@ function laser:update(dt)
 	self.points[4].x = self.endX 
 	self.points[4].y = self.endY
 
-	self.bx = self.x+self.width/2 * math.cos(self.angle)
-	self.by = self.x+self.width/2 * math.sin(self.angle)
+	self.bx = self.x+self.width/2 * math.sin(self.angle)
+	self.by = self.y-self.width/2 * math.cos(self.angle)
 
-	self.fx = self.bx + self.length*0.8*math.cos(self.angle)
-	self.fy = self.by + self.length*0.8*math.sin(self.angle)
+	self.points[2].x = self.bx + self.length*0.35*math.cos(self.angle)
+	self.points[2].y = self.by + self.length*0.35*math.sin(self.angle)
 
-	self.gx = self.bx - self.length*0.8*math.cos(self.angle)
-	self.gy = self.by - self.length*0.8*math.sin(self.an
+	self.points[3].x = self.bx - self.length*0.35*math.cos(self.angle)
+	self.points[3].y = self.by - self.length*0.35*math.sin(self.angle)
 
-	self.points[2].x = self.startX
-	self.points[2].y = self.startX 
+	
+	self.cx = self.x-self.width/2 * math.sin(self.angle)
+	self.cy = self.y+self.width/2 * math.cos(self.angle)
 
-	self.points[3].x = self.startX 
-	self.points[3].y = self.startX 
+	self.points[5].x = self.cx + self.length*0.35*math.cos(self.angle)
+	self.points[5].y = self.cy + self.length*0.35*math.sin(self.angle)
 
+	self.points[6].x = self.cx - self.length*0.35*math.cos(self.angle)
+	self.points[6].y = self.cy - self.length*0.35*math.sin(self.angle)
 	
 
 end
@@ -94,14 +99,20 @@ function laser:draw()
 
 	love.graphics.pop()
 
+	--Collision lines
+	--[[
 	love.graphics.setColor(0,0,255)
 	love.graphics.setLineWidth(1)
-	love.graphics.line(self.startX, self.startY, self.endX, self.endY)
+	love.graphics.line(self.points[1].x, self.points[1].y, self.points[4].x, self.points[4].y)
 
-
-	love.graphics.line(self.fx,self.fx, self.gx,self.gy)
+	love.graphics.line(self.points[2].x,self.points[2].y,self.points[3].x,self.points[3].y)
+	love.graphics.line(self.points[5].x,self.points[5].y,self.points[6].x,self.points[6].y)
+	]]
 end
 
 function laser:isHittingRectangle(x,y,w,h)
-	return collision.lineRectangle(self.startX,self.startY,self.endX,self.endY, x,y,w,h)--collision.pointRectangle(self.x,self.y, x,y,w,h) or collision.pointRectangle(self.endX,self.endY, x,y,w,h)
+	return collision.lineRectangle(self.points[1].x,self.points[1].y,self.points[4].x,self.points[4].y, x,y,w,h)--collision.pointRectangle(self.x,self.y, x,y,w,h) or collision.pointRectangle(self.endX,self.endY, x,y,w,h)
+		or collision.lineRectangle(self.points[2].x,self.points[2].y,self.points[3].x,self.points[3].y, x,y,w,h)
+		or collision.lineRectangle(self.points[5].x,self.points[5].y,self.points[6].x,self.points[6].y, x,y,w,h)
+
 end
