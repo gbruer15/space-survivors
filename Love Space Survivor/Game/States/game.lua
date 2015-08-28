@@ -71,10 +71,10 @@ function state.load(n)
 											,description = 'Upgrade missile speed'
 											,costFunction = function(v,c) return v*1000+5000 end
 											,upgradeFunction = function() 
-																state.player.missileSpeed = state.player.missileSpeed + 40
+																state.player.missileSpeed = state.player.missileSpeed + 80
 															end
 											,isMaxedOutFunction = function() 
-																return state.player.missileSpeed >= 600
+																return state.player.missileSpeed >= 2400
 															end
 		})
 	table.insert(state.upgrades,upgrade.make{
@@ -89,7 +89,18 @@ function state.load(n)
 																return state.player.fireDelay <= 0.05
 															end
 		})
-
+	table.insert(state.upgrades,upgrade.make{
+											name = 'Missile Size'
+											,value = 1
+											,description = 'Upgrade missile size'
+											,costFunction = function(v,c) return v*500+1000 end
+											,upgradeFunction = function() 
+																state.player.missileWidth = state.player.missileWidth + 1
+															end
+											,isMaxedOutFunction = function()
+																return state.player.missileWidth > 10
+															end
+		})
 
 	state.hud = hud.make{
 						x=window.width-200
@@ -246,6 +257,7 @@ function state.keypressed(key)
 	elseif key == 'j' then
 		state.player.levelCash = state.player.levelCash + 500000
 
+		--[[
 		state.player.fullauto = true
 		state.player.fireDelay = 0.05
 
@@ -255,6 +267,7 @@ function state.keypressed(key)
 		state.player.missilePierce = 4
 
 		state.player.fireSwirls = true
+		--]]
 	elseif key == 'm' then
 		state.player.mouseControl = not state.player.mouseControl
 	elseif key == 'i' then

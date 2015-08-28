@@ -345,6 +345,18 @@ function collision.polygons(array1,array2)
 		
 		i = i + 4
 	end
+
+	for i=1,#array1-3,2 do
+		if collision.pointPolygon(array1[i],array1[i+1], array2) then
+			return true
+		end
+	end
+
+	for i=1,#array2-3,2 do
+		if collision.pointPolygon(array2[i],array2[i+1], array1) then
+			return true
+		end
+	end
 	
 	return false
 end

@@ -51,6 +51,7 @@ function playerfunctions.make(att)
 	self.missileSpeed = 500--320
 	self.missileDamage = 1
 	self.missilePierce = 1
+	self.missileWidth = 3
 
 	self.fireSwirls = true
 	---------------------------------
@@ -150,6 +151,7 @@ function playerfunctions:makeMissile(x,angle)
 											,damage=self.missileDamage
 											,pierce=self.missilePierce
 											,Image=images.greenLaser
+											,width = self.missileWidth
 										}
 									)
 		--[[table.insert(self.missiles,projectile.make{
