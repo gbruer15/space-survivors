@@ -240,8 +240,37 @@ function collision.pointRectangle(x,y,  left,top,width,height)
 end
 
 function collision.pointCircle(x,y, centerx,centery,radius)
-	return (  ( ((x-centerx)^2) + ((y-centery)^2) ) < radius )
+	return    (x-centerx)^2 + (y-centery)^2 < radius*radius 
 end
+
+
+--ax,ay,bx,by define a line, while ox, oy,px,py define a line segment
+function collision.lineLineSegment(ax,ay,bx,by,  ox,oy,px,py)
+	local abslope = (ay-by)/(ax-bx)
+	local abyinter = ay - abslope*ax
+	
+	local opslope = (oy-py)/(ox-px)
+	local opyinter = oy - opslope*ox
+	
+	if abslope == opslope then
+		return abyinter == opyinter
+		
+	else
+		--  abslope * x + abyinter = opslope * x + opyinter
+		local solux = (opyinter-abyinter)/(abslope-opslope)
+		local soluy = abslope * solux + abyinter
+		return ((solux >= ox and solux <= px) or (solux >= px and solux <= ox)), solux, soluy
+	end
+end
+
+--ax,ay,bx,by define a ray starting at ax,ay and passing through bx,by. ox,oy,px,py define line segment
+function collision.rayLineSegment(ax,ay,bx,by,  ox,oy,px,py)
+	local col, solux, soluy = collision.lineLineSegment(ax,ay,bx,by,  ox,oy,px,py)
+
+	--return false if solux is not in direction of bx
+	return col and math.getSign(solux-ax) == math.getSign(bx-ax)
+end
+
 
 function collision.lineSegments(ax,ay,bx,by, ox,oy,px,py)
 	if (ax > ox and ax > px and bx > ox and bx > px) or (ax < ox and ax < px and bx < ox and bx < px) or (ay > oy and ay > py and by > oy and by > py) or (ay < oy and ay < py and by < oy and by < py) then
@@ -258,7 +287,6 @@ function collision.lineSegments(ax,ay,bx,by, ox,oy,px,py)
 		
 		return aabove ~= babove, aabove,babove, aprop, bprop
 	else
-	
 		-- y = mx + b
 		-- b = y - mx
 		local abslope = (ay-by)/(ax-bx)
@@ -274,7 +302,7 @@ function collision.lineSegments(ax,ay,bx,by, ox,oy,px,py)
 			--  abslope * x + abyinter = opslope * x + opyinter
 			local solux = (opyinter-abyinter)/(abslope-opslope)
 			local soluy = abslope * solux + abyinter
-			return ((solux > ox and solux < px) or (solux > px and solux < ox)) and ((solux > ax and solux < bx) or (solux < ax and solux > bx)), solux, soluy
+			return ((solux >= ox and solux <= px) or (solux >= px and solux <= ox)) and ((solux >= ax and solux <= bx) or (solux <= ax and solux >= bx)), solux, soluy
 		end
 		
 	end
@@ -344,4 +372,33 @@ function collision.getBoundingBox(array)
 	end
 	
 	return left, top, right-left, bottom-top
+end
+
+function collision.pointArc(x,y,a,b,r,a1,a2)
+	if not collision.pointCircle(x,y,a,b,r) then
+		return false
+	end
+	local angle = math.atan2(y-b,x-a)
+	return angle > a1 and angle < a2, angle
+end
+
+function collision.pointPolygon(x,y,points)
+
+	--count the number of polygon edge collisions with an arbitrary ray
+	local count = 0
+
+	for i=3,#points-1,2 do
+		if collision.rayLineSegment(x,y,0,0, points[i-2],points[i-1], points[i],points[i+1]) then
+			count = count + 1
+		end
+	end
+
+	local n = #points
+	if collision.rayLineSegment(x,y, 0,0 , points[1],points[2], points[n-1],points[n]) then
+		count = count + 1
+	end
+
+	--the # of intersections will be odd if it's inside the polygon
+	print(count)
+	return count%2 ~= 0
 end

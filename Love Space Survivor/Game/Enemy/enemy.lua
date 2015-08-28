@@ -66,6 +66,7 @@ function enemy:fireMissile()
 													,y=self.drawBox:getBottom()
 													,speed=self.missileSpeed
 													,angle=math.pi/2
+													,width=5
 												}
 											)
 end

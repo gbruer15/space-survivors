@@ -280,7 +280,7 @@ end
 
 function state.initializeStarryBackground(n)
 	state.stars = {}
-	for i=1,n do
+	for i=0,n do
 		table.insert(state.stars, state.spawnStar( math.floor(i/n*window.height) ))
 	end
 end
@@ -306,7 +306,7 @@ end
 function state.spawnStar(y)
 	local self = {}
 	self.x = math.random(state.camera.x-state.camera.width/2,state.camera.x + state.camera.width/2)
-	self.y = y or -2
+	self.y = y or -1
 	self.speed = math.random(state.minStarSpeed,state.maxStarSpeed)
 	self.radius = 1
 	return self

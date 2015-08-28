@@ -28,7 +28,7 @@ function level.load()
 		local left = self.drawBox:getLeft()
 		local spacing = self.drawBox.width/4
 		for i = 1,3 do
-			table.insert(STATE.enemyMissiles,missile.make{
+			table.insert(STATE.enemyMissiles,laser.make{
 											x=left+spacing*i
 											,y=self.drawBox:getBottom() - 3
 											,speed=level.enemyMissileSpeed

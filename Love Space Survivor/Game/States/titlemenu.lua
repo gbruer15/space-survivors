@@ -33,6 +33,36 @@ function state.draw()
 	for i,b in pairs(state.buttons) do
 		b:draw()
 	end
+
+	love.graphics.setColor(0,0,255)
+
+
+	local points = {}
+	points[1] = -100
+	points[2] = -200
+
+	points[3] = 200
+	points[4] = 150
+
+	points[5] = 220
+	points[6] = 250
+
+	points[7] = 110
+	points[8] = 500
+
+	love.graphics.polygon('fill',points)
+	--arc = {25,300,100,-math.pi/2,math.pi/2}
+	--love.graphics.arc('fill',unpack(arc))
+
+
+	love.graphics.setColor(255,255,255)
+
+	love.graphics.print(tostring(collision.pointPolygon(MOUSE.x,MOUSE.y,points)),10,10)
+
+	--love.graphics.print(tostring(collision.lineLineSegment(0,0,MOUSE.x,MOUSE.y,points[1],points[2],points[3],points[4])),10,25)
+	--local b, angle = collision.pointArc(MOUSE.x,MOUSE.y,unpack(arc))
+	--love.graphics.print(tostring(b) .. '\n'.. tostring(angle and angle/math.pi*180),10,10)
+	--love.graphics.print(MOUSE.x .. ' ' .. MOUSE.y, 10,50)
 end
 
 function state.keypressed(key)
