@@ -22,7 +22,10 @@ function enemy.make(att)
 	self.drawBox.dy = self.drawBox.height/2
 
 	self.yspeed = att.yspeed or 100
-	self.xspeed = att.xspeed or 0
+	self.xspeed = att.xspeed or math.random(-10,10)*5
+	if self.xspeed*self.xspeed <= 400 then
+		self.xspeed = 0
+	end
 
 	self.firing = att.firing
 	self.fireDelay = att.fireDelay or 1
@@ -52,11 +55,13 @@ end
 
 function enemy:draw(drawColBox, colBoxMode)
 	love.graphics.setColor(255,255,255)
-	love.graphics.draw(self.Image.image,self.drawBox:getLeft(),self.drawBox:getTop(),0,self.drawBox.width/self.Image.width, self.drawBox.height/self.Image.height)
+	--love.graphics.draw(self.Image.image,self.drawBox:getLeft(),self.drawBox:getTop(),0,self.drawBox.width/self.Image.width, self.drawBox.height/self.Image.height)
 
 	if drawColBox or true then
-		love.graphics.setColor(color or {0,255,0,100})
-		self.collisionBox:draw(colBoxMode or 'line')
+		love.graphics.setColor(color or {0,255,0,255})
+		--self.collisionBox:draw(colBoxMode or 'line')
+		local p = self:getPolygon()
+		love.graphics.polygon('line',p)
 	end
 end
 
@@ -71,4 +76,23 @@ function enemy:fireMissile()
 											)
 end
 
+function enemy:getPolygon()
+	local p = {}
+
+	local l,t, w,h = self.collisionBox:getRect()
+
+	p[1] = l
+	p[2] = t
+
+	p[3] = l+w
+	p[4] = t
+
+	p[5] = l+w
+	p[6] = t+h
+
+	p[7] = l
+	p[8] = t+h
+
+	return p
+end
 return enemy

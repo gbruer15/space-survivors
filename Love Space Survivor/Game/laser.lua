@@ -95,20 +95,16 @@ function laser:draw()
 	love.graphics.translate(-self.x,-self.y)
 
 	love.graphics.setColor(255,255,255)
-	love.graphics.draw(self.Image.image,self.drawBox:getLeft(),self.drawBox:getTop(),0,self.drawBox.width/self.Image.width,self.drawBox.height/self.Image.height)
+	--love.graphics.draw(self.Image.image,self.drawBox:getLeft(),self.drawBox:getTop(),0,self.drawBox.width/self.Image.width,self.drawBox.height/self.Image.height)
 
 	love.graphics.pop()
 
-	local vertices = {}
-	for i,v in ipairs(self.points) do 
-		table.insert(vertices,v.x)
-		table.insert(vertices,v.y)
-	end 
+	local vertices = self:getPolygon()
 	--table.insert(vertices,self.points[1].x)
 	--table.insert(vertices,self.points[1].y)
 
 	love.graphics.setColor(0,0,255)
-	--love.graphics.polygon('fill',vertices)
+	love.graphics.polygon('fill',vertices)
 	--Collision lines
 	--[[]
 	love.graphics.setColor(0,255,255)
@@ -124,5 +120,14 @@ function laser:isHittingRectangle(x,y,w,h)
 	return collision.lineRectangle(self.points[1].x,self.points[1].y,self.points[4].x,self.points[4].y, x,y,w,h)--collision.pointRectangle(self.x,self.y, x,y,w,h) or collision.pointRectangle(self.endX,self.endY, x,y,w,h)
 		or collision.lineRectangle(self.points[2].x,self.points[2].y,self.points[3].x,self.points[3].y, x,y,w,h)
 		or collision.lineRectangle(self.points[5].x,self.points[5].y,self.points[6].x,self.points[6].y, x,y,w,h)
+end
 
+function laser:getPolygon()
+	local p = {}
+	for i,v in ipairs(self.points) do 
+		table.insert(p,v.x)
+		table.insert(p,v.y)
+	end 
+
+	return p
 end

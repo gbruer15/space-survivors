@@ -10,8 +10,12 @@ local function getGoodImage(name)
 	return {image = i, width=i:getWidth(), height=i:getHeight()}
 end
 
-
+local function getGoodImagePoints(name)
+	return require(GOOD_IMAGES_PATH..name)
+end
 images.spaceship = getGoodImage('playerSpaceship.png')
+images.spaceshipPoints = getGoodImagePoints('playerSpaceshipPoints')
+
 images.enemySpaceship = getImage('enemyspaceship.png')
 
 images.greenLaser = getGoodImage('laserGreen.png')

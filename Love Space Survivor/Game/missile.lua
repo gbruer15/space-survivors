@@ -42,3 +42,15 @@ end
 function missile:isHittingRectangle(x,y,w,h)
 	return collision.pointRectangle(self.x,self.y, x,y,w,h) or collision.pointRectangle(self.endX,self.endY, x,y,w,h)
 end
+
+function missile:getPolygon()
+	local p = {}
+
+	p[1] = self.x
+	p[2] = self.y
+
+	p[3] = self.endX
+	p[4] = self.endY
+
+	return p
+end

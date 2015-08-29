@@ -26,6 +26,17 @@ function playerfunctions.make(att)
 	self.drawBox.height = self.drawBox.width/self.Image.spriteWidth*self.Image.spriteHeight
 	self.drawBox.dy = self.drawBox.height/2
 
+	
+	local xscale = self.drawBox.width/self.Image.width
+	local yscale = self.drawBox.height/self.Image.height
+
+	self.imagePoints = {}
+	for i=1,#images.spaceshipPoints-1,2 do
+		self.imagePoints[i] = images.spaceshipPoints[i]*xscale
+		self.imagePoints[i+1] = images.spaceshipPoints[i+1]*yscale
+	end
+
+
 	self.missiles = {}
 
 	self.moveAnimation = false --0
@@ -104,8 +115,16 @@ function playerfunctions:draw(drawColBox,colBoxMode,color)
 			love.graphics.draw(self.Image.image,self.quad,self.drawBox:getLeft(),self.drawBox:getTop(),0,self.drawBox.width/self.Image.spriteWidth, self.drawBox.height/self.Image.spriteHeight)
 		end
 	else
-		love.graphics.draw(self.Image.image,self.drawBox:getLeft(),self.drawBox:getTop(),0,self.drawBox.width/self.Image.width, self.drawBox.height/self.Image.height)
+		--love.graphics.draw(self.Image.image,self.drawBox:getLeft(),self.drawBox:getTop(),0,self.drawBox.width/self.Image.width, self.drawBox.height/self.Image.height)
 	end
+
+	love.graphics.push()
+	love.graphics.translate(self.x,self.y)
+
+	love.graphics.setColor(0,0,255)
+	love.graphics.polygon('line',self.imagePoints)
+
+	love.graphics.pop()
 
 	if drawColBox then
 		love.graphics.setColor(color or {0,255,0,100})
@@ -210,6 +229,15 @@ function playerfunctions:die()
 	self.dead = true
 	self.lives = self.lives - 1
 	STATE.states.dead.load()
+end
+
+function playerfunctions:getPolygon()
+	local p = {}
+	for i=1,#self.imagePoints-1,2 do
+		p[i] = self.imagePoints[i]+self.x
+		p[i+1] = self.imagePoints[i+1] + self.y
+	end
+	return p
 end
 
 return playerfunctions

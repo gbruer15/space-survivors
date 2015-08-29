@@ -1,4 +1,4 @@
-love.window.setFullscreen(true,'desktop')
+--love.window.setFullscreen(true,'desktop')
 
 love.graphics.setBackgroundColor(0,0,0)
 
@@ -219,7 +219,7 @@ function love.run()
 
         --print(dt/maxDt)
         -- Call update and draw
-        if dt < maxDt or dt/lastDt < 1.5 then
+        if dt < maxDt or dt/lastDt < 1.5 or true then
 			love.update(dt)
 			
 			love.graphics.clear()
