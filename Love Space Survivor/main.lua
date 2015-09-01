@@ -1,4 +1,4 @@
---love.window.setFullscreen(true,'desktop')
+love.window.setFullscreen(true,'desktop')
 
 love.graphics.setBackgroundColor(0,0,0)
 
