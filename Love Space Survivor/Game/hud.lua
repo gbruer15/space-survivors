@@ -104,6 +104,9 @@ function hud:draw()
 		b:draw()
 	end
 
+	love.graphics.setColor(255,255,255)
+	love.graphics.print('FPS: ' .. love.timer.getFPS(),self.x + 4, self.y + self.height - 35)
+
 	if self.boolBox then
 		self.boolBox:draw()
 	end

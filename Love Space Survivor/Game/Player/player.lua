@@ -115,20 +115,20 @@ function playerfunctions:draw(drawColBox,colBoxMode,color)
 			love.graphics.draw(self.Image.image,self.quad,self.drawBox:getLeft(),self.drawBox:getTop(),0,self.drawBox.width/self.Image.spriteWidth, self.drawBox.height/self.Image.spriteHeight)
 		end
 	else
-		--love.graphics.draw(self.Image.image,self.drawBox:getLeft(),self.drawBox:getTop(),0,self.drawBox.width/self.Image.width, self.drawBox.height/self.Image.height)
+		love.graphics.draw(self.Image.image,self.drawBox:getLeft(),self.drawBox:getTop(),0,self.drawBox.width/self.Image.width, self.drawBox.height/self.Image.height)
 	end
 
 	love.graphics.push()
 	love.graphics.translate(self.x,self.y)
 
 	love.graphics.setColor(0,0,255)
-	love.graphics.polygon('line',self.imagePoints)
+	--love.graphics.polygon('line',self.imagePoints)
 
 	love.graphics.pop()
 
 	if drawColBox then
 		love.graphics.setColor(color or {0,255,0,100})
-		self.collisionBox:draw(colBoxMode or 'line')
+		--self.collisionBox:draw(colBoxMode or 'line')
 	end
 end
 

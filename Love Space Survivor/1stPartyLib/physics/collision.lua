@@ -250,23 +250,34 @@ function collision.lineLineSegment(ax,ay,bx,by,  ox,oy,px,py)
 		local abslope = (ay-by)/(ax-bx)
 		local abyinter = ay - abslope*ax
 		
-		local opslope = (oy-py)/(ox-px)
-		local opyinter = oy - opslope*ox
-		
-		if abslope == opslope then
-			return abyinter == opyinter
+		if ox ~= px then
+			--both are non-vertical
+			local opslope = (oy-py)/(ox-px)
+			local opyinter = oy - opslope*ox
 			
+			if abslope == opslope then
+				if abyinter == opyinter then print('here6') end
+				return abyinter == opyinter,bx
+				
+			else
+				--  abslope * x + abyinter = opslope * x + opyinter
+				local solux = (opyinter-abyinter)/(abslope-opslope)
+				local soluy = abslope * solux + abyinter
+
+				if ((solux >= ox and solux <= px) or (solux >= px and solux <= ox)) then print('here7') end
+				return ((solux >= ox and solux <= px) or (solux >= px and solux <= ox)), solux, soluy
+			end
 		else
-			--  abslope * x + abyinter = opslope * x + opyinter
-			local solux = (opyinter-abyinter)/(abslope-opslope)
-			local soluy = abslope * solux + abyinter
-			return ((solux >= ox and solux <= px) or (solux >= px and solux <= ox)), solux, soluy
+			-- line segment is vertical, need to solve for y solution of intersection
+			-- line is in form of y = mx + b
+			-- segment is in form x = c, so solution is simply y = m*c + b
+			local soluy = abslope*ox + abyinter
+			if (soluy >= oy and soluy <= py) or (soluy >= py and soluy <= oy) then print('here7') end
+			return (soluy >= oy and soluy <= py) or (soluy >= py and soluy <= oy), ox, soluy
 		end
 	else
 		--line is a vertical line given by x = ax (= bx)
-		print('here3')
 		if ox ~= px then
-			print('here')
 			--line segment is y = mx+b
 			--intersection is solution to equation y = m*ax+b
 			local opslope = (oy-py)/(ox-px)
@@ -274,10 +285,12 @@ function collision.lineLineSegment(ax,ay,bx,by,  ox,oy,px,py)
 
 			local soluy = opslope*ax + opyinter
 
-			return (soluy >= oy and soluy <= py) or (soluy >= py and soluy <= oy) 
+			if (soluy >= oy and soluy <= py) or (soluy >= py and soluy <= oy) then print('here5') end
+			return (soluy >= oy and soluy <= py) or (soluy >= py and soluy <= oy), bx, soluy
 		else
 			--both are vertical
-			return ax == bx
+			if ax == ox then print('here3') end
+			return ax == ox,bx
 		end
 	end
 end
@@ -433,6 +446,12 @@ function collision.pointPolygon(x,y,points)
 
 	--count the number of polygon edge collisions with an arbitrary ray
 	local count = 0
+	if not STATE.paused then
+		--print('\ncounting')
+	end
+	if #points % 2 ~= 0 then
+		error('missing half a point')
+	end
 
 	for i=3,#points-1,2 do
 		if collision.rayLineSegment(x,y,0,0, points[i-2],points[i-1], points[i],points[i+1]) then
@@ -446,5 +465,9 @@ function collision.pointPolygon(x,y,points)
 	end
 
 	--the # of intersections will be odd if it's inside the polygon
+	--print(count)
+	if count%2 ~= 0 then
+		--print(count .. ' here4')
+	end
 	return count%2 ~= 0
 end

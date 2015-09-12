@@ -8,7 +8,12 @@
 				"$project_path"
 			],
 			"shell": false,
-			"name": "Linux Love2d 9.0"
+			"name": "Love2d 9.0",
+
+			"windows":
+		    {
+		        "shell": true
+		    }
 		},
 		{
 			"cmd":

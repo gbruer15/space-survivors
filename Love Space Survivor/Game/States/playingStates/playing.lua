@@ -26,9 +26,13 @@ function state.update(dt)
 							end
 						end
 					end
+					--print('collide')
+						--e.HELP = true
+					--	missile.help = true
+					--	STATE.paused = true
 					if not found then
 						e.health = e.health - missile.damage
-						print('collide')
+						
 						if e.hurtLoot then
 							STATE.player.levelCash = STATE.player.levelCash + e.hurtLoot
 							table.insert(STATE.tempTexts,tempText.make{	 x = missile.x
@@ -48,6 +52,9 @@ function state.update(dt)
 							break
 						end
 					end
+				else
+				--	e.HELP = nil
+				--	missile.help = nil
 				end
 			end
 		end
@@ -121,6 +128,10 @@ function state.keypressed(key)
 end
 
 function state.mousepressed(x,y,button)
+	if button == 'r' then
+		STATE.paused = true
+		return
+	end
 	if collision.pointRectangle(x,y,STATE.hud.x,STATE.hud.y,STATE.hud.width,STATE.hud.height) then
 		STATE.hud:mousepressed(x,y,button)
 	else
