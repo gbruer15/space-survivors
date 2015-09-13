@@ -83,7 +83,7 @@ function state.load(n)
 											,description = 'Upgrade missile fire rate'
 											,costFunction = function(v,c) return v*500+1000 end
 											,upgradeFunction = function() 
-																state.player.fireDelay = math.max(state.player.fireDelay-0.1,state.player.fireDelay/1.5,0.05)
+																state.player.fireDelay = math.max(state.player.fireDelay-0.07,state.player.fireDelay/1.2,0.05)
 															end
 											,isMaxedOutFunction = function()
 																return state.player.fireDelay <= 0.05
@@ -130,6 +130,7 @@ function state.load(n)
 		v.load()
 	end
 
+	state.starfieldSpeedMultiplier = 1
 	state.maxStarSpeed = 40--800
 	state.minStarSpeed = 5--40
 	state.initializeStarryBackground(500)
@@ -154,6 +155,12 @@ function state.loadLevel(levelNumber)
 end
 
 function state.update(dt)
+	if love.keyboard.isDown('9') then
+		state.starfieldSpeedMultiplier = state.starfieldSpeedMultiplier + 0.5*state.starfieldSpeedMultiplier*dt
+	elseif love.keyboard.isDown('0') then
+		state.starfieldSpeedMultiplier = state.starfieldSpeedMultiplier - 0.5*state.starfieldSpeedMultiplier*dt
+		--state.starfieldSpeedMultiplier = math.max(state.starfieldSpeedMultiplier,10)
+	end
 	if state.state.update(dt) == 'start' then
 		state.state = state.states.playing
 	end
@@ -249,6 +256,9 @@ function state.draw()
 		love.graphics.pop()
  	end
 
+ 	love.graphics.setColor(255,255,255)
+ 	love.graphics.print(tostring(state.starfieldSpeedMultiplier),500,600)
+
 end
 
 function state.keypressed(key)
@@ -272,6 +282,8 @@ function state.keypressed(key)
 		state.player.mouseControl = not state.player.mouseControl
 	elseif key == 'i' then
 		state.screenshakeFlag = not state.screenshakeFlag
+	elseif key == 'o' then
+		die = not die
 	end
 
 	if state.state.keypressed then
@@ -293,15 +305,15 @@ end
 
 function state.initializeStarryBackground(n)
 	state.stars = {}
-	for i=0,n do
+	for i=-1,n do
 		table.insert(state.stars, state.spawnStar( math.floor(i/n*window.height) ))
 	end
 end
 
 function state.updateStarryBackground(dt)
 	for i,v in ipairs(state.stars) do
-		v.y = v.y + v.speed*dt
-		if v.y - v.radius > state.camera.y + state.camera.height then
+		v.y = v.y + v.speed*dt*state.starfieldSpeedMultiplier
+		if v.y - v.radius - 1 > state.camera.y + state.camera.height/2 then
 			state.stars[i] = state.spawnStar()
 		end
 	end
@@ -319,7 +331,7 @@ end
 function state.spawnStar(y)
 	local self = {}
 	self.x = math.random(state.camera.x-state.camera.width/2,state.camera.x + state.camera.width/2)
-	self.y = y or -1
+	self.y = y or -2
 	self.speed = math.random(state.minStarSpeed,state.maxStarSpeed)
 	self.radius = 1
 	return self

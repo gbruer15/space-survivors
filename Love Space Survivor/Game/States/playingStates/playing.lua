@@ -63,6 +63,7 @@ function state.update(dt)
 		local v = STATE.enemies[i]
 		v:update(dt)
 
+			v.HELP = false
 		if v.drawBox:getTop() >= STATE.camera.y + STATE.camera.height/2 then
 			STATE.player.levelCash = math.max(STATE.player.levelCash - 50,0)
 			table.insert(STATE.tempTexts,tempText.make{	 x = v.x
@@ -92,7 +93,15 @@ function state.update(dt)
 														,color={0,255,0}
 							})
 		elseif collision.polygons(STATE.player:getPolygon(),v:getPolygon()) then--STATE.player.collisionBox:collideRectangle(v.collisionBox) then
-			STATE.player:die()
+			v.HELP = true
+			print('enemy')
+			if not STATE.player.isCloaked then
+				if die then
+					STATE.player:die()
+				else
+					STATE.paused = true
+				end
+			end
 		elseif v.drawBox:getLeft() > STATE.camera.x+STATE.camera.width/2 then
 			v.x = STATE.camera.x-STATE.camera.width/2 - v.drawBox.width/2
 			v.xspeed = math.abs(v.xspeed)
@@ -106,8 +115,17 @@ function state.update(dt)
 		for i=#STATE.enemyMissiles,1,-1 do
 			local missile = STATE.enemyMissiles[i]
 			missile:update(dt)
+			missile.HELP = false
 			if collision.polygons(STATE.player:getPolygon(),missile:getPolygon()) then--missile:isHittingRectangle(STATE.player.collisionBox:getRect()) then
-				STATE.player:die()
+				missile.HELP = true
+				print('missile')
+				if not STATE.player.isCloaked then
+					if die then
+						STATE.player:die()
+					else
+						STATE.paused = true
+					end
+				end
 			elseif not missile:isHittingRectangle(STATE.camera.getRect()) then
 				table.remove(STATE.enemyMissiles,i)
 			end
@@ -124,6 +142,8 @@ end
 function state.keypressed(key)
 	if key == 'p' then
 		STATE.paused = true
+	elseif key == 'e' then
+		STATE.player.isCloaked = not STATE.player.isCloaked
 	end
 end
 

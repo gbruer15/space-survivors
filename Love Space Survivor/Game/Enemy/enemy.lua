@@ -55,6 +55,9 @@ end
 
 function enemy:draw(drawColBox, colBoxMode)
 	love.graphics.setColor(255,255,255)
+	if self.HELP then
+		love.graphics.setColor(255,255,0)
+	end
 	love.graphics.draw(self.Image.image,self.drawBox:getLeft(),self.drawBox:getTop(),0,self.drawBox.width/self.Image.width, self.drawBox.height/self.Image.height)
 
 	if drawColBox or true then
@@ -74,7 +77,7 @@ function enemy:fireMissile()
 													,y=self.drawBox:getBottom()
 													,speed=self.missileSpeed
 													,angle=math.pi/2
-													,width=5
+													,width=5 * self.drawBox.width / 60
 												}
 											)
 end

@@ -256,7 +256,9 @@ function collision.lineLineSegment(ax,ay,bx,by,  ox,oy,px,py)
 			local opyinter = oy - opslope*ox
 			
 			if abslope == opslope then
-				if abyinter == opyinter then print('here6') end
+				if abyinter == opyinter then 
+					--print('here6') 
+				end
 				return abyinter == opyinter,bx
 				
 			else
@@ -264,7 +266,9 @@ function collision.lineLineSegment(ax,ay,bx,by,  ox,oy,px,py)
 				local solux = (opyinter-abyinter)/(abslope-opslope)
 				local soluy = abslope * solux + abyinter
 
-				if ((solux >= ox and solux <= px) or (solux >= px and solux <= ox)) then print('here7') end
+				if ((solux >= ox and solux <= px) or (solux >= px and solux <= ox)) then 
+					--print('here7')
+				end
 				return ((solux >= ox and solux <= px) or (solux >= px and solux <= ox)), solux, soluy
 			end
 		else
@@ -272,7 +276,9 @@ function collision.lineLineSegment(ax,ay,bx,by,  ox,oy,px,py)
 			-- line is in form of y = mx + b
 			-- segment is in form x = c, so solution is simply y = m*c + b
 			local soluy = abslope*ox + abyinter
-			if (soluy >= oy and soluy <= py) or (soluy >= py and soluy <= oy) then print('here7') end
+			if (soluy >= oy and soluy <= py) or (soluy >= py and soluy <= oy) then 
+				--print('here8') 
+			end
 			return (soluy >= oy and soluy <= py) or (soluy >= py and soluy <= oy), ox, soluy
 		end
 	else
@@ -285,11 +291,15 @@ function collision.lineLineSegment(ax,ay,bx,by,  ox,oy,px,py)
 
 			local soluy = opslope*ax + opyinter
 
-			if (soluy >= oy and soluy <= py) or (soluy >= py and soluy <= oy) then print('here5') end
+			if (soluy >= oy and soluy <= py) or (soluy >= py and soluy <= oy) then 
+				--print('here5')
+			end
 			return (soluy >= oy and soluy <= py) or (soluy >= py and soluy <= oy), bx, soluy
 		else
 			--both are vertical
-			if ax == ox then print('here3') end
+			if ax == ox then 
+				--print('here3') 
+			end
 			return ax == ox,bx
 		end
 	end
@@ -368,14 +378,14 @@ function collision.polygons(array1,array2)
 	for i=1,#array1-3,2 do
 		for n=1,#array2-3,2  do
 			if collision.lineSegments(array1[i],array1[i+1],array1[i+2], array1[i+3], array2[n],array2[n+1],array2[n+2], array2[n+3]) then
-				print(array1[i]..'a,'..array1[i+1]..','..array1[i+2]..','.. array1[i+3]..','.. array2[n]..','..array2[n+1]..','..array2[n+2]..','.. array2[n+3])
+				--print(array1[i]..'a,'..array1[i+1]..','..array1[i+2]..','.. array1[i+3]..','.. array2[n]..','..array2[n+1]..','..array2[n+2]..','.. array2[n+3])
 				return true
 			end
 		end
 
 		--check line from first point to last point
 		if collision.lineSegments(array1[i],array1[i+1],array1[i+2], array1[i+3], array2[1],array2[2],array2[#array2-1], array2[#array2]) then
-			print(array1[i]..'b,'..array1[i+1]..','..array1[i+2]..','.. array1[i+3]..','.. array2[1]..','..array2[2]..','..array2[#array2-1]..','.. array2[#array2])
+			--print(array1[i]..'b,'..array1[i+1]..','..array1[i+2]..','.. array1[i+3]..','.. array2[1]..','..array2[2]..','..array2[#array2-1]..','.. array2[#array2])
 			return true
 		end
 	end
@@ -383,7 +393,7 @@ function collision.polygons(array1,array2)
 	--check line from first point to last point
 	for n=1,#array2-3,2  do
 		if collision.lineSegments(array1[1],array1[2],array1[#array1-1], array1[#array1], array2[n],array2[n+1],array2[n+2], array2[n+3]) then
-			print(array1[1]..'c,'..array1[2]..','..array1[#array1-1]..','.. array1[#array1]..','.. array2[n]..','..array2[n+1]..','..array2[n+2]..','.. array2[n+3])
+			--print(array1[1]..'c,'..array1[2]..','..array1[#array1-1]..','.. array1[#array1]..','.. array2[n]..','..array2[n+1]..','..array2[n+2]..','.. array2[n+3])
 			return true
 		end
 	end
@@ -392,16 +402,16 @@ function collision.polygons(array1,array2)
 
 	for i=1,#array1-1,2 do
 		if collision.pointPolygon(array1[i],array1[i+1], array2) then
-			print('here')
-			print(array1[i] ..','..array1[i+1])
-			print(table.concat(array2,','))
+			--print('here')
+			--print(array1[i] ..','..array1[i+1])
+			--print(table.concat(array2,','))
 			return true
 		end
 	end
 
 	for i=1,#array2-1,2 do
 		if collision.pointPolygon(array2[i],array2[i+1], array1) then
-			print('here2')
+			--print('here2')
 			return true
 		end
 	end
@@ -447,7 +457,7 @@ function collision.pointPolygon(x,y,points)
 	--count the number of polygon edge collisions with an arbitrary ray
 	local count = 0
 	if not STATE.paused then
-		--print('\ncounting')
+		----print('\ncounting')
 	end
 	if #points % 2 ~= 0 then
 		error('missing half a point')
@@ -459,15 +469,16 @@ function collision.pointPolygon(x,y,points)
 		end
 	end
 
+	--print('checking this part')
 	local n = #points
 	if collision.rayLineSegment(x,y, 0,0 , points[1],points[2], points[n-1],points[n]) then
 		count = count + 1
 	end
 
 	--the # of intersections will be odd if it's inside the polygon
-	--print(count)
+	----print(count)
 	if count%2 ~= 0 then
-		--print(count .. ' here4')
+		----print(count .. ' here4')
 	end
 	return count%2 ~= 0
 end

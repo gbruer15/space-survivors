@@ -105,8 +105,11 @@ function hud:draw()
 	end
 
 	love.graphics.setColor(255,255,255)
-	love.graphics.print('FPS: ' .. love.timer.getFPS(),self.x + 4, self.y + self.height - 35)
+	love.graphics.print('FPS: ' .. love.timer.getFPS(),self.x + 4, self.y + self.height - 55)
 
+	if not die then
+		love.graphics.print('Collision debug on\n(turn off with o)',self.x + 4, self.y + self.height - 35)
+	end
 	if self.boolBox then
 		self.boolBox:draw()
 	end

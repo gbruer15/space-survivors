@@ -115,16 +115,20 @@ function playerfunctions:draw(drawColBox,colBoxMode,color)
 			love.graphics.draw(self.Image.image,self.quad,self.drawBox:getLeft(),self.drawBox:getTop(),0,self.drawBox.width/self.Image.spriteWidth, self.drawBox.height/self.Image.spriteHeight)
 		end
 	else
-		love.graphics.draw(self.Image.image,self.drawBox:getLeft(),self.drawBox:getTop(),0,self.drawBox.width/self.Image.width, self.drawBox.height/self.Image.height)
+		if not STATE.player.isCloaked then
+			love.graphics.draw(self.Image.image,self.drawBox:getLeft(),self.drawBox:getTop(),0,self.drawBox.width/self.Image.width, self.drawBox.height/self.Image.height)
+		else --draw player polygon
+			love.graphics.push()
+			love.graphics.translate(self.x,self.y)
+
+			love.graphics.setColor(0,0,255,200)
+			love.graphics.polygon('line',self.imagePoints)
+
+			love.graphics.pop()
+		end
 	end
 
-	love.graphics.push()
-	love.graphics.translate(self.x,self.y)
-
-	love.graphics.setColor(0,0,255)
-	--love.graphics.polygon('line',self.imagePoints)
-
-	love.graphics.pop()
+	
 
 	if drawColBox then
 		love.graphics.setColor(color or {0,255,0,100})

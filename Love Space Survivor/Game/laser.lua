@@ -95,6 +95,7 @@ function laser:draw()
 	love.graphics.translate(-self.x,-self.y)
 
 	love.graphics.setColor(255,255,255)
+	if self.HELP then love.graphics.setColor(255,0,255) end
 	love.graphics.draw(self.Image.image,self.drawBox:getLeft(),self.drawBox:getTop(),0,self.drawBox.width/self.Image.width,self.drawBox.height/self.Image.height)
 
 	love.graphics.pop()
@@ -102,7 +103,7 @@ function laser:draw()
 	--local vertices = self:getPolygon()
 
 	love.graphics.setColor(0,0,255)
-	if self.help then love.graphics.setColor(255,0,255) end
+	
 	--love.graphics.polygon('fill',vertices)
 	--Collision lines
 	--[[]
