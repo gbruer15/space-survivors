@@ -64,6 +64,8 @@ function playerfunctions.make(att)
 	self.missilePierce = 1
 	self.missileWidth = 3
 
+	self.actualMissileType = 'double break'
+
 	self.fireSwirls = true
 	---------------------------------
 
@@ -175,6 +177,7 @@ function playerfunctions:makeMissile(x,angle)
 											,pierce=self.missilePierce
 											,Image=images.greenLaser
 											,width = self.missileWidth
+											,type = self.actualMissileType
 										}
 									)
 		--[[table.insert(self.missiles,projectile.make{

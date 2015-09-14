@@ -45,11 +45,48 @@ function state.update(dt)
 						end
 						missile.pierce = missile.pierce - 1
 						STATE.screenshake = STATE.screenshake+0.3
-						if missile.pierce > 0 then
-							table.insert(missile.piercedList,e)
-						else
-							table.remove(STATE.player.missiles,i)
-							break
+						if missile.type == 'basic' then
+							if missile.pierce > 0 then
+								table.insert(missile.piercedList,e)
+							else
+								table.remove(STATE.player.missiles,i)
+								break
+							end
+						elseif missile.type == 'double break' then--crazy missile don't have piercing yet
+							if missile.pierce + 1 > 0 then
+								table.insert(STATE.player.missiles,laser.make{
+												x= missile.x
+												,y=missile.y
+												,speed=missile.speed
+												,angle=missile.angle + math.pi/2
+												,damage=missile.damage
+												,pierce=missile.pierce
+												,Image=images.greenLaser
+												,width = missile.width
+												,type = 'double break'
+												,piercedList = {e}
+											}
+										)
+								table.insert(STATE.player.missiles,laser.make{
+												x= missile.x
+												,y=missile.y
+												,speed=missile.speed
+												,angle=missile.angle - math.pi/2
+												,damage=missile.damage
+												,pierce=missile.pierce
+												,Image=images.greenLaser
+												,width = missile.width
+												,type = 'double break'
+												,piercedList = {e}
+											}
+										)
+							end
+							if missile.pierce > 0 then
+								table.insert(missile.piercedList,e)
+							else
+								table.remove(STATE.player.missiles,i)
+								break
+							end
 						end
 					end
 				else

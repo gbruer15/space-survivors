@@ -224,7 +224,7 @@ function love.run()
 			
 			love.graphics.clear()
 			love.draw()
-				
+			
 			love.graphics.present()
 		else
 			dt = lastDt

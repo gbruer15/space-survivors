@@ -14,8 +14,10 @@ function laser.make(att)
 	self.damage = att.damage or 1
 	self.pierce = att.pierce or 1
 
+	self.type = att.type or 'basic'
+
 	if self.pierce > 1 then
-		self.piercedList = {}
+		self.piercedList = att.piercedList or {}
 	end
 
 	if not att.Image then
