@@ -4,7 +4,6 @@ local upgrade = require('Game/upgrade')
 function level.load()
 	level.number = 5 
 	level.playerLives = 5
-	STATE.player.lives = level.playerLives
 
 	level.cycleEnemies = false
 
@@ -16,9 +15,6 @@ function level.load()
 	level.maxBossHealth = 1000
 	level.maxBossSpeed = 400
 
-	level.bossSpeedChangeSlowdown = 0.25
-	level.bossSpeedChangeTimer = 7.5
-
 	level.boss = enemy.make{
 							Image=images.boss
 							,width= STATE.camera.width/3
@@ -26,11 +22,11 @@ function level.load()
 								}
 	function level.boss:fireMissile()
 		local left = self.drawBox:getLeft()
-		local spacing = self.drawBox.width/4
+		local spacing = self.drawBox.width/4 + 20
 		for i = 1,3 do
 			table.insert(STATE.enemyMissiles,laser.make{
-											x=left+spacing*i
-											,y=self.drawBox:getBottom() - 3
+											x=left+spacing*i - 60
+											,y=self.drawBox:getBottom() - 8
 											,speed=level.enemyMissileSpeed
 											,angle=math.pi/2
 										})
@@ -38,12 +34,12 @@ function level.load()
 	end
 
 	level.reload()
-
-	level.onDeath()
 end
 
 
 function level.reload()
+	STATE.player.lives = level.playerLives
+
 	level.enemyHealth = 1
 	level.killThreshold = 20
 	level.enemyMissileSlowdown = 0.5
@@ -55,15 +51,22 @@ function level.reload()
 
 	level.bossMissileFireSlowdown = 0.5
 
+	level.bossSpeedChangeSlowdown = 0.25
+	level.bossSpeedChangeTimer = 7.5
+
 	level.boss.health = level.maxBossHealth
 	level.boss.y = -150
 	level.boss.x = STATE.camera.width/2
 	level.boss.yspeed = 40
+	level.boss.xspeed = 0
 	level.boss.fireDelay = 2.5
 	level.boss.fireCountdown = 10
+
+	level.onDeath()
 end
 
 function level.onDeath()
+	--put boss back into enemy list
 	table.insert(STATE.enemies,level.boss)
 end
 

@@ -2,10 +2,19 @@ local level = {}
 
 local upgrade = require('Game/upgrade')
 function level.load()
-	level.number = 1 --not reloaded
-	level.playerLives = 5 -- not reloaded
+	level.number = 1
+	level.playerLives = 5
 	level.cycleEnemies = true
 
+	level.enemyMissileColor = {254, 35,40}
+
+	level.killsToWin = 500
+
+	level.reload()
+end
+
+
+function level.reload()
 	STATE.player.lives = level.playerLives
 
 	level.killThreshold = 20
@@ -21,8 +30,6 @@ function level.load()
 	level.enemyMissileSlowdown = 2
 	level.enemyMissileSpeed = 200
 
-	level.enemyMissileColor = {254, 35,40}--{255,255,100} --not reloaded
-
 	level.enemySpawnSlowdown = 1
 	level.enemySpawnTimer = level.enemySpawnSlowdown
 
@@ -30,8 +37,6 @@ function level.load()
 	level.enemySpawnRateTimer = level.enemySpawnRateSlowdown*2
 
 	level.enemyMissileMotionSensor = -40
-
-	level.killsToWin = 500 -- not reloaded
 end
 
 function level.update(dt)
@@ -141,32 +146,6 @@ end
 function level.drawToHud(x,y,width,height)
 	love.graphics.setColor(255,255,255)
 	love.graphics.print('Kills Left: ' .. STATE.level.killsToWin - STATE.player.levelKills,x,y)
-end
-
-function level.reload()
-	STATE.player.lives = level.playerLives
-
-	level.killThreshold = 20
-	level.enemiesKilled = 0
-
-	level.maxEnemySize = 70
-	level.minEnemySize = 20
-
-	level.maxEnemySpeed = 120
-	level.minEnemySpeed = 40
-
-	level.enemyHealth = 1
-
-	level.enemyMissileSlowdown = 2
-	level.enemyMissileSpeed = 200
-
-	level.enemySpawnSlowdown = 1
-	level.enemySpawnTimer = level.enemySpawnSlowdown
-
-	level.enemySpawnRateSlowdown = 0.5
-	level.enemySpawnRateTimer = level.enemySpawnRateSlowdown*2
-
-	level.enemyMissileMotionSensor = -40
 end
 
 
