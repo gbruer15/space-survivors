@@ -52,7 +52,7 @@ function playerfunctions.make(att)
 	self.totalScore = 0
 	self.totalCash = 0
 
-	self.fullauto = true
+	self.fullauto = false
 	self.fireDelay = 0.5
 
 	self.currentLevel = 1
@@ -64,7 +64,7 @@ function playerfunctions.make(att)
 	self.missilePierce = 1
 	self.missileWidth = 3
 
-	self.actualMissileType = 'double break'
+	self.actualMissileType = 'split'
 
 	self.fireSwirls = true
 	---------------------------------
@@ -202,6 +202,11 @@ function playerfunctions:makeMissile(x,angle)
 	end
 end
 function playerfunctions:keypressed(key)
+	if key == 'q' then
+		self:fireMegaLaser()
+	elseif key == 'e' then
+		self.isCloaked = not self.isCloaked
+	end
 end
 
 function playerfunctions:mousepressed(x,y,button)
@@ -236,6 +241,20 @@ function playerfunctions:die()
 	self.dead = true
 	self.lives = self.lives - 1
 	STATE.states.dead.load()
+end
+
+function playerfunctions:fireMegaLaser()
+	table.insert(self.missiles,laser.make{
+											x= self.x
+											,y=self.y-self.drawBox.height/2
+											,speed=180
+											,angle= -math.pi/2
+											,pierce=self.missilePierce
+											,Image=images.greenLaser
+											,width = self.drawBox.width*2
+											,type = 'mega'
+										}
+									)
 end
 
 function playerfunctions:getPolygon()

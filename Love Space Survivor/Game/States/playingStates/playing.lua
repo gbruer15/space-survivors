@@ -14,6 +14,7 @@ function state.update(dt)
 		missile:update(dt)
 		if not missile:isHittingRectangle(STATE.camera:getRect()) then
 			table.remove(STATE.player.missiles,i)
+			print('offscreen')
 		else
 			for j,e in ipairs(STATE.enemies) do
 				if collision.polygons(missile:getPolygon(),e:getPolygon()) then--missile:isHittingRectangle(e.collisionBox:getRect()) then
@@ -43,7 +44,7 @@ function state.update(dt)
 																		,color={0,255,0}
 							})
 						end
-						missile.pierce = missile.pierce - 1
+						missile.pierce = missile.pierce and missile.pierce - 1
 						STATE.screenshake = STATE.screenshake+0.3
 						if missile.type == 'basic' then
 							if missile.pierce > 0 then
@@ -52,7 +53,7 @@ function state.update(dt)
 								table.remove(STATE.player.missiles,i)
 								break
 							end
-						elseif missile.type == 'double break' then--crazy missile don't have piercing yet
+						elseif missile.type == 'split' then--crazy missile don't have piercing yet
 							if missile.pierce + 1 > 0 then
 								table.insert(STATE.player.missiles,laser.make{
 												x= missile.x
@@ -63,7 +64,7 @@ function state.update(dt)
 												,pierce=missile.pierce
 												,Image=images.greenLaser
 												,width = missile.width
-												,type = 'double break'
+												,type = 'split'
 												,piercedList = {e}
 											}
 										)
@@ -76,17 +77,29 @@ function state.update(dt)
 												,pierce=missile.pierce
 												,Image=images.greenLaser
 												,width = missile.width
-												,type = 'double break'
+												,type = 'split'
 												,piercedList = {e}
 											}
 										)
 							end
-							if missile.pierce > 0 then
-								table.insert(missile.piercedList,e)
-							else
-								table.remove(STATE.player.missiles,i)
-								break
+						elseif missile.type == 'mega' then
+							local em
+							for k = #STATE.enemyMissiles,1,-1 do
+								em = STATE.enemyMissiles[k]
+								if collision.polygons(missile:getPolygon(), em:getPolygon()) then
+									table.remove(STATE.enemyMissiles, k)
+								end
 							end
+							e.health = -1
+						end
+						if missile.type == 'mega' then
+							print(tostring(missile.pierce))
+						end
+						if missile.pierce and missile.pierce > 0 then
+							table.insert(missile.piercedList,e)
+						elseif missile.pierce then
+							table.remove(STATE.player.missiles,i)
+							break
 						end
 					end
 				else
@@ -179,8 +192,8 @@ end
 function state.keypressed(key)
 	if key == 'p' then
 		STATE.paused = true
-	elseif key == 'e' then
-		STATE.player.isCloaked = not STATE.player.isCloaked
+	else
+		STATE.player:keypressed(key)
 	end
 end
 

@@ -464,14 +464,14 @@ function collision.pointPolygon(x,y,points)
 	end
 
 	for i=3,#points-1,2 do
-		if collision.rayLineSegment(x,y,0,0, points[i-2],points[i-1], points[i],points[i+1]) then
+		if collision.rayLineSegment(x,y,-9999999999,-9999999999, points[i-2],points[i-1], points[i],points[i+1]) then
 			count = count + 1
 		end
 	end
 
 	--print('checking this part')
 	local n = #points
-	if collision.rayLineSegment(x,y, 0,0 , points[1],points[2], points[n-1],points[n]) then
+	if collision.rayLineSegment(x,y, -9999999999,-9999999999 , points[1],points[2], points[n-1],points[n]) then
 		count = count + 1
 	end
 
