@@ -168,14 +168,19 @@ function state.update(dt)
 		end
 	end
 
+	--print('paused = ' ..  tostring(STATE.paused))
 	if not STATE.player.dead then
 		for i=#STATE.enemyMissiles,1,-1 do
 			local missile = STATE.enemyMissiles[i]
 			missile:update(dt)
 			missile.HELP = false
-			if collision.polygons(STATE.player:getPolygon(),missile:getPolygon()) then--missile:isHittingRectangle(STATE.player.collisionBox:getRect()) then
-				missile.HELP = true
-				print('missile')
+			local p1, p2 = STATE.player:getPolygon(),missile:getPolygon()
+			if collision.polygons(p1, p2) then--missile:isHittingRectangle(STATE.player.collisionBox:getRect()) then
+				if myDebug then require("mobdebug").on() end
+        missile.HELP = true
+	--			print(tostring(collision.polygons(p1,p2)))
+	--			print('p2 = {' .. table.concat(p2, ',') .. '}')
+	--			print('p1 = {' .. table.concat(p1, ',') .. '}')
 				if not STATE.player.isCloaked then
 					if die then
 						STATE.player:die()
@@ -183,6 +188,7 @@ function state.update(dt)
 						STATE.paused = true
 					end
 				end
+         if myDebug then require("mobdebug").off() end
 			elseif not missile:isHittingRectangle(STATE.camera.getRect()) then
 				table.remove(STATE.enemyMissiles,i)
 			end

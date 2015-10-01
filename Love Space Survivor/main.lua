@@ -39,7 +39,10 @@ LUA_PATH, path = "?;?.lua",LUA_PATH
 LUA_PATH, path = path, LUA_PATH
 
 
-function love.load()
+function love.load(arg)
+  if arg[#arg] == "-debug" then require("mobdebug").start() myDebug = true end
+  if myDebug then require("mobdebug").off() end
+  
 	IMAGES_PATH = 'Assets/Images/'
 	GOOD_IMAGES_PATH = 'Assets/GoodImages/'
 	lovefunctions = {'keypressed','keyreleased','mousepressed','mousereleased'}
@@ -220,6 +223,7 @@ function love.run()
         --print(dt/maxDt)
         -- Call update and draw
         if dt < maxDt or dt/lastDt < 1.5 or true then
+      if myDebug then dt = 1/60 end
 			love.update(dt)
 			
 			love.graphics.clear()
