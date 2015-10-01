@@ -59,7 +59,7 @@ function piecewiseLaser.make(att)
 	self.subPoints[6] = {}
 	self.subPoints[7] = {}
 
-	self.lengthAnimation = animation.make(0,self.length,self.length/self.speed)
+	self.lengthAnimation = animation.make(0,self.length,self.length/self.speed*5)
 	self.done = false
 
 	self.bottomQuad = love.graphics.newQuad(0,0, 10,10, self.BottomImage.width, self.BottomImage.height)

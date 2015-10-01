@@ -63,18 +63,24 @@ function state.draw()
 	local p = {858.5,93.477216575782}
 	points = {0,0,  100,0,  100,500,  0,500}--{280.07602339181,-37.464670948157,309.92397660819,-37.464670948157,309.92397660819,32.067492794533,280.07602339181,32.067492794533}
 
+	p1 = {418,377.26774338907,420.5,383.51504942355,420.5,412.66914425114,418,418.91645028562,415.5,412.66914425114,415.5,383.51504942355}
+	p2 = {409.14031859979,486.280100702,369.14031859979,348.17665242614,369.14031859979,254.66636999807,449.14031859979,254.66636999807,449.14031859979,348.17665242614}
+
+
 	love.graphics.setColor(0,0,255)
-	love.graphics.polygon('line',points)
+	love.graphics.polygon('line',p1)
+	love.graphics.setColor(0,255,255)
+	love.graphics.polygon('line', p2)
 
 	love.graphics.setColor(255,255,255)
 	love.graphics.circle('fill',p[1],p[2],2)
 
-	love.graphics.print(tostring(collision.pointPolygon(MOUSE.x,MOUSE.y,points)),10,25)
+	love.graphics.print(tostring(collision.pointPolygon(MOUSE.x,MOUSE.y,p2)),10,25)
 	love.graphics.print(MOUSE.x..','..MOUSE.y,10,40)
 
 	love.graphics.setColor(255,0,0)
-	love.graphics.line(0,0, MOUSE.x, MOUSE.y)
-	--love.graphics.print(tostring(collision.lineLineSegment(0,0,MOUSE.x,MOUSE.y,points[1],points[2],points[3],points[4])),10,25)
+	--love.graphics.line(0,0, MOUSE.x, MOUSE.y)
+	love.graphics.print(tostring(collision.polygons(p1,p2)),10,60)
 	--local b, angle = collision.pointArc(MOUSE.x,MOUSE.y,unpack(arc))
 	--love.graphics.print(tostring(b) .. '\n'.. tostring(angle and angle/math.pi*180),10,10)
 	--love.graphics.print(MOUSE.x .. ' ' .. MOUSE.y, 10,50)

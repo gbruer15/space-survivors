@@ -52,6 +52,8 @@ function laser.make(att)
 	self.points[5] = {}
 	self.points[6] = {}
 
+	self:setPoints()
+
 	return self
 end
 
@@ -59,6 +61,10 @@ function laser:update(dt)
 	self.x = self.x + self.speed*math.cos(self.angle)*dt
 	self.y = self.y + self.speed*math.sin(self.angle)*dt
 
+	self:setPoints()
+end
+
+function laser:setPoints()
 	self.startX,self.startY = self.x-self.length/2*math.cos(self.angle), self.y-self.length/2*math.sin(self.angle)
 
 	self.endX, self.endY = self.x+self.length/2*math.cos(self.angle), self.y+self.length/2*math.sin(self.angle)
@@ -88,8 +94,6 @@ function laser:update(dt)
 
 	self.points[5].x = self.cx + self.length*0.35*math.cos(self.angle)
 	self.points[5].y = self.cy + self.length*0.35*math.sin(self.angle)
-	
-
 end
 
 function laser:draw()
@@ -104,11 +108,11 @@ function laser:draw()
 
 	love.graphics.pop()
 
---	local vertices = self:getPolygon()
+	local vertices = self:getPolygon()
 
---	love.graphics.setColor(0,0,255)
+	love.graphics.setColor(0,0,255)
 	
---	love.graphics.polygon('fill',vertices)
+	love.graphics.polygon('line',vertices)
 
 	--Collision lines
 	--[[]

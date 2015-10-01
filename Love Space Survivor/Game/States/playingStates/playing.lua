@@ -14,7 +14,6 @@ function state.update(dt)
 		missile:update(dt)
 		if not missile:isHittingRectangle(STATE.camera:getRect()) then
 			table.remove(STATE.player.missiles,i)
-			print('offscreen')
 		else
 			for j,e in ipairs(STATE.enemies) do
 				if collision.polygons(missile:getPolygon(),e:getPolygon()) then--missile:isHittingRectangle(e.collisionBox:getRect()) then
@@ -82,18 +81,11 @@ function state.update(dt)
 											}
 										)
 							end
-						elseif missile.type == 'mega' then
-							local em
-							for k = #STATE.enemyMissiles,1,-1 do
-								em = STATE.enemyMissiles[k]
-								if collision.polygons(missile:getPolygon(), em:getPolygon()) then
-									table.remove(STATE.enemyMissiles, k)
-								end
-							end
+						else
 							e.health = -1
 						end
 						if missile.type == 'mega' then
-							print(tostring(missile.pierce))
+							--print(tostring(missile.pierce))
 						end
 						if missile.pierce and missile.pierce > 0 then
 							table.insert(missile.piercedList,e)
@@ -105,6 +97,21 @@ function state.update(dt)
 				else
 				--	e.HELP = nil
 				--	missile.help = nil
+				end
+			end --end of enemy loop
+
+			if missile.type == 'mega' then
+				local em
+				for k = #STATE.enemyMissiles,1,-1 do
+					em = STATE.enemyMissiles[k]
+					if collision.polygons(missile:getPolygon(), em:getPolygon()) then
+						table.remove(STATE.enemyMissiles, k)
+					end
+
+					--print(i .. ' = {' .. table.concat(missile:getPolygon(), ',') .. '}' )
+					--print(k .. ' = {' .. table.concat(em:getPolygon(), ',') .. '}' )
+					--print('')
+
 				end
 			end
 		end
