@@ -3,6 +3,7 @@ require('Game/missile')
 require('1stPartyLib/display/animation')
 require('Game/projectile')
 require('Game/laser')
+require('Game/piecewiseLaser')
 function playerfunctions.make(att)
 	local self = {}
 	setmetatable(self, {__index = playerfunctions})
@@ -52,7 +53,7 @@ function playerfunctions.make(att)
 	self.totalScore = 0
 	self.totalCash = 0
 
-	self.fullauto = false
+	self.fullauto = true
 	self.fireDelay = 0.5
 
 	self.currentLevel = 1
@@ -244,13 +245,22 @@ function playerfunctions:die()
 end
 
 function playerfunctions:fireMegaLaser()
-	table.insert(self.missiles,laser.make{
+	local bottomImage
+	if math.random() > 0.5 then
+		bottomImage = images.greenLaserBottomSquished
+	else
+		bottomImage = images.greenLaserBottom
+	end
+	table.insert(self.missiles,piecewiseLaser.make{
 											x= self.x
-											,y=self.y-self.drawBox.height/2
-											,speed=180
-											,angle= -math.pi/2
+											,y=self.y - self.drawBox.height/2
+											,speed=1580
+											,angle= math.random(-1,1)*math.pi/6 - math.pi/2
 											,pierce=self.missilePierce
-											,Image=images.greenLaser
+											,Image = images.greenLaser
+											,TopImage = images.greenLaserTop
+											,MiddleImage = images.greenLaserMiddle
+											,BottomImage = bottomImage
 											,width = self.drawBox.width*2
 											,type = 'mega'
 										}
