@@ -69,9 +69,9 @@ function state.load(n)
 											name = 'Missile Speed'
 											,value = 1
 											,description = 'Upgrade missile speed'
-											,costFunction = function(v,c) return v*1000+5000 end
+											,costFunction = function(v,c) return v*500+4000 end
 											,upgradeFunction = function() 
-																state.player.missileSpeed = state.player.missileSpeed + 80
+																state.player.missileSpeed = state.player.missileSpeed + 140
 															end
 											,isMaxedOutFunction = function() 
 																return state.player.missileSpeed >= 2400

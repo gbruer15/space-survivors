@@ -19,6 +19,11 @@ images.spaceshipPoints = getGoodImagePoints('playerSpaceshipPoints')
 images.enemySpaceship = getImage('enemyspaceship.png')
 
 images.greenLaser = getGoodImage('laserGreen.png')
+images.greenLaserTop = getGoodImage('laserGreenTop.png')
+images.greenLaserMiddle = getGoodImage('laserGreenMiddle.png')
+images.greenLaserBottom = getGoodImage('laserGreenBottom.png')
+images.greenLaserBottomSquished = getGoodImage('laserGreenBottomSquished.png')
+
 images.redLaser = getGoodImage('laserRed.png')
 
 images.boss = getImage('big boss.png')

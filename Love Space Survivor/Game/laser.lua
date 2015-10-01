@@ -12,12 +12,14 @@ function laser.make(att)
 	self.angle = att.angle or -math.pi/2
 
 	self.damage = att.damage or 1
-	self.pierce = att.pierce or 1
 
 	self.type = att.type or 'basic'
 
-	if self.pierce > 1 then
-		self.piercedList = att.piercedList or {}
+	if self.type ~= 'mega' then
+		self.pierce = att.pierce or 1
+		if self.pierce > 1 then
+			self.piercedList = att.piercedList or {}
+		end
 	end
 
 	if not att.Image then
@@ -50,6 +52,8 @@ function laser.make(att)
 	self.points[5] = {}
 	self.points[6] = {}
 
+	self:setPoints()
+
 	return self
 end
 
@@ -57,6 +61,10 @@ function laser:update(dt)
 	self.x = self.x + self.speed*math.cos(self.angle)*dt
 	self.y = self.y + self.speed*math.sin(self.angle)*dt
 
+	self:setPoints()
+end
+
+function laser:setPoints()
 	self.startX,self.startY = self.x-self.length/2*math.cos(self.angle), self.y-self.length/2*math.sin(self.angle)
 
 	self.endX, self.endY = self.x+self.length/2*math.cos(self.angle), self.y+self.length/2*math.sin(self.angle)
@@ -71,23 +79,21 @@ function laser:update(dt)
 	self.bx = self.x+self.width/2 * math.sin(self.angle)
 	self.by = self.y-self.width/2 * math.cos(self.angle)
 
-	self.points[2].x = self.bx + self.length*0.35*math.cos(self.angle)
-	self.points[2].y = self.by + self.length*0.35*math.sin(self.angle)
+	self.points[3].x = self.bx + self.length*0.35*math.cos(self.angle)
+	self.points[3].y = self.by + self.length*0.35*math.sin(self.angle)
 
-	self.points[3].x = self.bx - self.length*0.35*math.cos(self.angle)
-	self.points[3].y = self.by - self.length*0.35*math.sin(self.angle)
+	self.points[2].x = self.bx - self.length*0.35*math.cos(self.angle)
+	self.points[2].y = self.by - self.length*0.35*math.sin(self.angle)
 
 	
 	self.cx = self.x-self.width/2 * math.sin(self.angle)
 	self.cy = self.y+self.width/2 * math.cos(self.angle)
 
-	self.points[5].x = self.cx - self.length*0.35*math.cos(self.angle)
-	self.points[5].y = self.cy - self.length*0.35*math.sin(self.angle)
+	self.points[6].x = self.cx - self.length*0.35*math.cos(self.angle)
+	self.points[6].y = self.cy - self.length*0.35*math.sin(self.angle)
 
-	self.points[6].x = self.cx + self.length*0.35*math.cos(self.angle)
-	self.points[6].y = self.cy + self.length*0.35*math.sin(self.angle)
-	
-
+	self.points[5].x = self.cx + self.length*0.35*math.cos(self.angle)
+	self.points[5].y = self.cy + self.length*0.35*math.sin(self.angle)
 end
 
 function laser:draw()
@@ -102,11 +108,12 @@ function laser:draw()
 
 	love.graphics.pop()
 
-	--local vertices = self:getPolygon()
+	local vertices = self:getPolygon()
 
 	love.graphics.setColor(0,0,255)
 	
-	--love.graphics.polygon('fill',vertices)
+	love.graphics.polygon('line',vertices)
+
 	--Collision lines
 	--[[]
 	love.graphics.setColor(0,255,255)
@@ -119,17 +126,15 @@ function laser:draw()
 end
 
 function laser:isHittingRectangle(x,y,w,h)
-	return collision.lineRectangle(self.points[1].x,self.points[1].y,self.points[4].x,self.points[4].y, x,y,w,h)--collision.pointRectangle(self.x,self.y, x,y,w,h) or collision.pointRectangle(self.endX,self.endY, x,y,w,h)
-		or collision.lineRectangle(self.points[2].x,self.points[2].y,self.points[3].x,self.points[3].y, x,y,w,h)
-		or collision.lineRectangle(self.points[5].x,self.points[5].y,self.points[6].x,self.points[6].y, x,y,w,h)
+	return collision.polygons(self:getPolygon(),{x,y, x+w,y, x+w,y+h, x,y+h})
 end
 
 function laser:getPolygon()
 	local p = {}
-	for i,v in ipairs(self.points) do 
+	for i,v in ipairs(self.points) do
 		table.insert(p,v.x)
 		table.insert(p,v.y)
-	end 
+	end
 
 	return p
 end

@@ -3,6 +3,7 @@ require('Game/missile')
 require('1stPartyLib/display/animation')
 require('Game/projectile')
 require('Game/laser')
+require('Game/piecewiseLaser')
 function playerfunctions.make(att)
 	local self = {}
 	setmetatable(self, {__index = playerfunctions})
@@ -64,7 +65,7 @@ function playerfunctions.make(att)
 	self.missilePierce = 1
 	self.missileWidth = 3
 
-	self.actualMissileType = 'double break'
+	self.actualMissileType = 'split'
 
 	self.fireSwirls = true
 	---------------------------------
@@ -202,6 +203,11 @@ function playerfunctions:makeMissile(x,angle)
 	end
 end
 function playerfunctions:keypressed(key)
+	if key == 'q' then
+		self:fireMegaLaser()
+	elseif key == 'e' then
+		self.isCloaked = not self.isCloaked
+	end
 end
 
 function playerfunctions:mousepressed(x,y,button)
@@ -236,6 +242,29 @@ function playerfunctions:die()
 	self.dead = true
 	self.lives = self.lives - 1
 	STATE.states.dead.load()
+end
+
+function playerfunctions:fireMegaLaser()
+	local bottomImage
+	if math.random() > 0.5 then
+		bottomImage = images.greenLaserBottomSquished
+	else
+		bottomImage = images.greenLaserBottom
+	end
+	table.insert(self.missiles,piecewiseLaser.make{
+											x= self.x
+											,y=self.y - self.drawBox.height/2
+											,speed=1580
+											,angle= math.random(-1,1)*math.pi/6 - math.pi/2
+											,pierce=self.missilePierce
+											,Image = images.greenLaser
+											,TopImage = images.greenLaserTop
+											,MiddleImage = images.greenLaserMiddle
+											,BottomImage = bottomImage
+											,width = self.drawBox.width*2
+											,type = 'mega'
+										}
+									)
 end
 
 function playerfunctions:getPolygon()

@@ -26,3 +26,7 @@ function math.constrain(n,min,max)
 	end
 	return math.min(max,math.max(n,min))
 end
+
+function math.randomSign()
+	return math.random(0,1)*2-1
+end

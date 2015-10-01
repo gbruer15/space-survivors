@@ -45,6 +45,11 @@ function rectangle:getRect(returnTable)
 	return self:getLeft(),self:getTop(),self.width,self.height
 end
 
+function rectangle:changeHeight(h)
+	self.dy = (self.dy/self.height) * h
+	self.height = h
+end
+
 
 function rectangle:draw(mode)
 	love.graphics.rectangle(mode or 'fill',self.anchor.x-self.dx, self.anchor.y-self.dy, self.width,self.height)

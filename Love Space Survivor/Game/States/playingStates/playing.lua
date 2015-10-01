@@ -43,7 +43,7 @@ function state.update(dt)
 																		,color={0,255,0}
 							})
 						end
-						missile.pierce = missile.pierce - 1
+						missile.pierce = missile.pierce and missile.pierce - 1
 						STATE.screenshake = STATE.screenshake+0.3
 						if missile.type == 'basic' then
 							if missile.pierce > 0 then
@@ -52,7 +52,7 @@ function state.update(dt)
 								table.remove(STATE.player.missiles,i)
 								break
 							end
-						elseif missile.type == 'double break' then--crazy missile don't have piercing yet
+						elseif missile.type == 'split' then--crazy missile don't have piercing yet
 							if missile.pierce + 1 > 0 then
 								table.insert(STATE.player.missiles,laser.make{
 												x= missile.x
@@ -63,7 +63,7 @@ function state.update(dt)
 												,pierce=missile.pierce
 												,Image=images.greenLaser
 												,width = missile.width
-												,type = 'double break'
+												,type = 'split'
 												,piercedList = {e}
 											}
 										)
@@ -76,22 +76,42 @@ function state.update(dt)
 												,pierce=missile.pierce
 												,Image=images.greenLaser
 												,width = missile.width
-												,type = 'double break'
+												,type = 'split'
 												,piercedList = {e}
 											}
 										)
 							end
-							if missile.pierce > 0 then
-								table.insert(missile.piercedList,e)
-							else
-								table.remove(STATE.player.missiles,i)
-								break
-							end
+						else
+							e.health = -1
+						end
+						if missile.type == 'mega' then
+							--print(tostring(missile.pierce))
+						end
+						if missile.pierce and missile.pierce > 0 then
+							table.insert(missile.piercedList,e)
+						elseif missile.pierce then
+							table.remove(STATE.player.missiles,i)
+							break
 						end
 					end
 				else
 				--	e.HELP = nil
 				--	missile.help = nil
+				end
+			end --end of enemy loop
+
+			if missile.type == 'mega' then
+				local em
+				for k = #STATE.enemyMissiles,1,-1 do
+					em = STATE.enemyMissiles[k]
+					if collision.polygons(missile:getPolygon(), em:getPolygon()) then
+						table.remove(STATE.enemyMissiles, k)
+					end
+
+					--print(i .. ' = {' .. table.concat(missile:getPolygon(), ',') .. '}' )
+					--print(k .. ' = {' .. table.concat(em:getPolygon(), ',') .. '}' )
+					--print('')
+
 				end
 			end
 		end
@@ -148,14 +168,19 @@ function state.update(dt)
 		end
 	end
 
+	--print('paused = ' ..  tostring(STATE.paused))
 	if not STATE.player.dead then
 		for i=#STATE.enemyMissiles,1,-1 do
 			local missile = STATE.enemyMissiles[i]
 			missile:update(dt)
 			missile.HELP = false
-			if collision.polygons(STATE.player:getPolygon(),missile:getPolygon()) then--missile:isHittingRectangle(STATE.player.collisionBox:getRect()) then
-				missile.HELP = true
-				print('missile')
+			local p1, p2 = STATE.player:getPolygon(),missile:getPolygon()
+			if collision.polygons(p1, p2) then--missile:isHittingRectangle(STATE.player.collisionBox:getRect()) then
+				if myDebug then require("mobdebug").on() end
+        missile.HELP = true
+	--			print(tostring(collision.polygons(p1,p2)))
+	--			print('p2 = {' .. table.concat(p2, ',') .. '}')
+	--			print('p1 = {' .. table.concat(p1, ',') .. '}')
 				if not STATE.player.isCloaked then
 					if die then
 						STATE.player:die()
@@ -163,6 +188,7 @@ function state.update(dt)
 						STATE.paused = true
 					end
 				end
+         if myDebug then require("mobdebug").off() end
 			elseif not missile:isHittingRectangle(STATE.camera.getRect()) then
 				table.remove(STATE.enemyMissiles,i)
 			end
@@ -179,8 +205,8 @@ end
 function state.keypressed(key)
 	if key == 'p' then
 		STATE.paused = true
-	elseif key == 'e' then
-		STATE.player.isCloaked = not STATE.player.isCloaked
+	else
+		STATE.player:keypressed(key)
 	end
 end
 
