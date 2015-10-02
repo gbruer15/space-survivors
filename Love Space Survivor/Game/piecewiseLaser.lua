@@ -174,7 +174,6 @@ function piecewiseLaser:draw()
 	if self.HELP then love.graphics.setColor(255,0,255) end
 
 	if self.done then
-		--love.graphics.draw(self.Image.image,self.drawBox:getLeft(),self.drawBox:getTop(),0,self.drawBox.width/self.Image.width,self.drawBox.height/self.Image.height)
 		love.graphics.draw(self.BottomImage.image, self.drawBox:getLeft(), self.drawBox:getBottom()-self.bottomHeight,
 									0, self.drawBox.width/self.BottomImage.width, self.bottomHeight/self.BottomImage.height)
 		love.graphics.draw(self.MiddleImage.image, self.drawBox:getLeft(), self.drawBox:getBottom() - self.bottomHeight - self.middleHeight,
@@ -186,7 +185,6 @@ function piecewiseLaser:draw()
 			local quadHeight = self.BottomImage.height * self.drawBox.height/self.bottomHeight
 			self.bottomQuad:setViewport(0, self.BottomImage.height - quadHeight, self.BottomImage.width, quadHeight)
 			love.graphics.draw(self.BottomImage.image, self.bottomQuad, self.drawBox:getLeft(),self.drawBox:getTop(), 0,self.drawBox.width/self.BottomImage.width,self.drawBox.height/quadHeight)
-			--love.graphics.draw(self.BottomImage.image,self.drawBox:getLeft(),self.drawBox:getTop(),0,self.drawBox.width/self.BottomImage.width,self.drawBox.height/self.BottomImage.height)
 		elseif self.drawBox.height <= self.bottomHeight + self.middleHeight then
 			love.graphics.draw(self.BottomImage.image, self.drawBox:getLeft(), self.drawBox:getBottom()-self.bottomHeight,
 									0, self.drawBox.width/self.BottomImage.width, self.bottomHeight/self.BottomImage.height)
@@ -204,8 +202,6 @@ function piecewiseLaser:draw()
 
 			love.graphics.draw(self.TopImage.image, self.topQuad, self.drawBox:getLeft(), self.drawBox:getTop(), 
 								0, self.drawBox.width/self.TopImage.width, drawHeight/quadHeight)
-			--love.graphics.draw(self.TopImage.image, self.drawBox:getLeft(), self.drawBox:getTop(),
-			--						0, self.drawBox.width/self.TopImage.width, (self.drawBox.height-self.bottomHeight - self.middleHeight)/self.TopImage.height)
 		end
 	end
 	love.graphics.pop()
@@ -213,30 +209,6 @@ function piecewiseLaser:draw()
 	local vertices = self:getPolygon()
 
 	love.graphics.setColor(0,0,255)
-	
-	--love.graphics.polygon('line',vertices)
-
-
-	--[[
-	love.graphics.setColor(255,0,255)
-	love.graphics.circle('fill',self.startX,self.startY, 2)
-
-	love.graphics.setColor(255,0,255)
-	love.graphics.circle('fill',self.bx,self.by, 2)
-
-
-	love.graphics.setColor(0,200,0)
-	love.graphics.circle('fill',self.cx,self.cy, 2)
-	--]]
-	--Collision lines
-	--[[]
-	love.graphics.setColor(0,255,255)
-	love.graphics.setLineWidth(1)
-	love.graphics.line(self.points[1].x, self.points[1].y, self.points[4].x, self.points[4].y)
-
-	love.graphics.line(self.points[2].x,self.points[2].y,self.points[3].x,self.points[3].y)
-	love.graphics.line(self.points[5].x,self.points[5].y,self.points[6].x,self.points[6].y)
-	--]]
 end
 
 function piecewiseLaser:isHittingRectangle(x,y,w,h)

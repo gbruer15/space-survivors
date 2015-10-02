@@ -97,15 +97,6 @@ function collision.lineRectangle(ax,ay,bx,by, left,top,width,height)
 end
 
 function collision.getRectanglePoints(l,t,w,h,a)
-	--[[local points = {{l,t}}
-	local inA = math.atan(h/w)
-	local hyp = math.sqrt(h*h+w*w)
-	
-	table.insert(points,{l+w*math.cos(a),t+w*math.sin(a)})
-	table.insert(points,{l+hyp*math.cos(a+inA),t+hyp*math.sin(a+inA)})
-	table.insert(points,{l-h*math.cos(-a+math.pi/2),t+h*math.sin(-a+math.pi/2)})
-	return points
-	--]]
 	a = a or 0
 	local inA = math.atan(h/w)
 	local hyp = math.sqrt(h*h+w*w)
@@ -117,10 +108,6 @@ function collision.getRectanglePoints(l,t,w,h,a)
 	return points
 end
 
-
-function collision.rectangleVector(left,top,width,height,  vx,vy,vr,vmag)
-
-end
 
 collision.direction = {}
 function collision.direction.rectangles1(left1,top1,width1,height1,xspeed1,yspeed1, left2,top2,width2,height2,xspeed2,yspeed2)
@@ -209,22 +196,7 @@ function collision.direction.pointRectangle(px,py,pxspeed,pyspeed, left,top,widt
 			return 'bottom'
 		end
 	end
-
-
-	--[[
-	if px < left and py > top and py < top + height then
-		return 'left'
-	elseif px > left + width and py > top and py < top + height then
-		return 'right'
-	elseif py < top and px > left and px < left + width then
-		return 'top'
-	elseif py > top + height and px > left and px < left + width then
-		return 'bottom'
-	end
-	--]]
 end
---(v.x+(v.width/2)) > (player.x - (player.width/2)) and (v.x-(v.width/2)) < (player.x + (player.width/2)) and (v.y-(v.height/2)) < (player.y+(player.height/2)) and (v.y+(v.height/2)) > (player.y - (player.height/2))
-
 
 function collision.circles(centerx1,centery1,radius1, centerx2,centery2,radius2)
 	return (  ( ((centerx1-centerx2)^2) + ((centery1-centery2)^2) )^0.5 < (radius1 + radius2) )
@@ -243,6 +215,7 @@ function collision.pointCircle(x,y, centerx,centery,radius)
 	return    (x-centerx)^2 + (y-centery)^2 < radius*radius 
 end
 
+--ax,ay,bx,by define a line, while ox, oy,px,py define a line segment
 function collision.lineLineSegment(ax,ay,bx,by,  ox,oy,px,py)
   local a = {X = ax, Y = ay}  
   local b = {X = bx, Y = by}
@@ -253,7 +226,7 @@ function collision.lineLineSegment(ax,ay,bx,by,  ox,oy,px,py)
   local  numerator1 = ((a.Y - c.Y) * (d.X - c.X)) - ((a.X - c.X) * (d.Y - c.Y));
   local  numerator2 = ((a.Y - c.Y) * (b.X - a.X)) - ((a.X - c.X) * (b.Y - a.Y));
 
-  -- Detect coincident lines (has a problem, read below)
+  -- Detect coincident lines (has a problem, read below) (http://gamedev.stackexchange.com/questions/26004/how-to-detect-2d-line-on-line-collision)
   if (denominator == 0) then return numerator1 == 0 and numerator2 == 0, bx,by end
 
   local r = numerator1 / denominator;
@@ -261,6 +234,7 @@ function collision.lineLineSegment(ax,ay,bx,by,  ox,oy,px,py)
 
   return (s >= 0 and s <= 1), ox + s*(px-ox), oy + s*(py-oy)
 end
+
 function collision.lineSegments(ax,ay,bx,by,  ox,oy,px,py)
   local a = {X = ax, Y = ay}  
   local b = {X = bx, Y = by}
@@ -271,7 +245,7 @@ function collision.lineSegments(ax,ay,bx,by,  ox,oy,px,py)
   local  numerator1 = ((a.Y - c.Y) * (d.X - c.X)) - ((a.X - c.X) * (d.Y - c.Y));
   local  numerator2 = ((a.Y - c.Y) * (b.X - a.X)) - ((a.X - c.X) * (b.Y - a.Y));
 
-  -- Detect coincident lines (has a problem, read below)
+  -- Detect coincident lines (has a problem, read below) 
   if (denominator == 0) then return numerator1 == 0 and numerator2 == 0, bx,by end
 
   local r = numerator1 / denominator;
@@ -280,175 +254,25 @@ function collision.lineSegments(ax,ay,bx,by,  ox,oy,px,py)
   return (r >= 0 and r <= 1) and (s >= 0 and s <= 1), ox + s*(px-ox), oy + s*(py-oy)
 end
 
---ax,ay,bx,by define a line, while ox, oy,px,py define a line segment
-function collision.lineLineSegment1(ax,ay,bx,by,  ox,oy,px,py)
-	if ax ~= bx then
-		local abslope = (ay-by)/(ax-bx)
-		local abyinter = ay - abslope*ax
-		
-		if ox ~= px then
-			--both are non-vertical
-			local opslope = (oy-py)/(ox-px)
-			local opyinter = oy - opslope*ox
-			
-			if abslope == opslope then
-				if abyinter == opyinter then 
-					--print('here6') 
-				end
-				local l1 = math.min(ax,bx)
-				local l2 = math.min(ox,px)
-				local r1 = math.max(ax,bx)
-				local r2 = math.max(ox,px)
-				local overlap = r1 > l2 and l1 < r2
-				return abyinter == opyinter and overlap,bx, by
-			else
-				--  abslope * x + abyinter = opslope * x + opyinter
-				local solux = (opyinter-abyinter)/(abslope-opslope)
-				local soluy = abslope * solux + abyinter
-        local onSegment = (solux >= ox and solux <= px) or (solux >= px and solux <= ox) or (soluy >= oy and soluy <= py) or (soluy >= py and soluy <= oy)
-				return onSegment, solux, soluy
-			end
-		else
-			-- line segment is vertical, need to solve for y solution of intersection
-			-- line is in form of y = mx + b
-			-- segment is in form x = c, so solution is simply y = m*c + b
-			local soluy = abslope*ox + abyinter
-			if (soluy >= oy and soluy <= py) or (soluy >= py and soluy <= oy) then 
-				--print('here8') 
-			end
-			return (soluy >= oy and soluy <= py) or (soluy >= py and soluy <= oy), ox, soluy
-		end
-	else
-		--line is a vertical line given by x = ax (= bx)
-		if ox ~= px then
-			--line segment is y = mx+b
-			--intersection is solution to equation y = m*ax+b
-			local opslope = (oy-py)/(ox-px)
-			local opyinter = oy - opslope*ox
-
-			local soluy = opslope*ax + opyinter
-
-			if (soluy >= oy and soluy <= py) or (soluy >= py and soluy <= oy) then 
-				--print('here5')
-			end
-			return (soluy >= oy and soluy <= py) or (soluy >= py and soluy <= oy), bx, soluy
-		else
-			--both are vertical
-			if ax == ox then 
-				--print('here3') 
-			end
-			local l1 = math.min(ay,by)
-			local l2 = math.min(oy,py)
-			local r1 = math.max(ay,by)
-			local r2 = math.max(oy,py)
-			local overlap = r1 > l2 and l1 < r2
-			return ax == ox and overlap,bx, by
-		end
-	end
-end
-
 --ax,ay,bx,by define a ray starting at ax,ay and passing through bx,by. ox,oy,px,py define line segment
 function collision.rayLineSegment(ax,ay,bx,by,  ox,oy,px,py, debug, i)
-  if myDebug and doubleDebug then require("mobdebug").on() end
-  
 	local col, solux, soluy = collision.lineLineSegment(ax,ay,bx,by,  ox,oy,px,py)
-  
-  local ans = (col and math.getSign(solux-ax) == math.getSign(bx-ax)) --and math.getSign(soluy-ay) == math.getSign(by-ay)
-	if debug and not dididd then
-		love.graphics.setColor(255,255,0)
-		love.graphics.line(ax,ay, bx + (bx-ax)*100, by+(by-ay)*100)
-		dididd = true
-	end
-	if debug then
-		if not col then
-			love.graphics.setColor(0,255,100)
-		elseif ans then
-			love.graphics.setColor(255,0,0)
-		else
-			love.graphics.setColor(255,255,255)
-		end
-		love.graphics.circle('fill', solux, soluy, 2)
-	end
-	--return false if solux is not in direction of bx or if soluy is not in direction of by
-  if myDebug and doubleDebug then require("mobdebug").off() end
-  doubleDebug = false
-  
-	return ans
+
+	--return false if solux is not in direction of bx
+	return (col and math.getSign(solux-ax) == math.getSign(bx-ax))
 end
-
-
-function collision.lineSegments2(ax,ay,bx,by, ox,oy,px,py)
-	if (ax > ox and ax > px and bx > ox and bx > px) or (ax < ox and ax < px and bx < ox and bx < px) or (ay > oy and ay > py and by > oy and by > py) or (ay < oy and ay < py and by < oy and by < py) then
-		return false
-		
-	elseif false then
-	
-		local aprop = (ax - ox)/(ox-px)
-		aabove = ay < oy + (oy-py)*aprop
-		
-		
-		local bprop = (bx - ox)/(ox-px)
-		babove = by < oy + (oy-py)*bprop
-		
-		return aabove ~= babove, aabove,babove, aprop, bprop
-	else
-		-- y = mx + b
-		-- b = y - mx
-		local abslope = (ay-by)/(ax-bx)
-		local abyinter = ay - abslope*ax
-		
-		local opslope = (oy-py)/(ox-px)
-		local opyinter = oy - opslope*ox
-		
-		if abslope == opslope then
-			return abyinter == opyinter
-			
-		else
-			--  abslope * x + abyinter = opslope * x + opyinter
-			local solux = (opyinter-abyinter)/(abslope-opslope)
-			local soluy = abslope * solux + abyinter
-			return ((solux >= ox and solux <= px) or (solux >= px and solux <= ox)) and ((solux >= ax and solux <= bx) or (solux <= ax and solux >= bx)), solux, soluy
-		end
-		
-	end
-	
-	--[[
-	ox + (ox-px) * prop == ax
-	prop == (ax - ox)/(ox-px)
-	
-	linex = ax
-	liney = oy + (oy-py)*prop
-	--]]
-	
-	--[[
-	x1 =  (ax < ox and bx > px)
-	x2 =  (ax < px and bx > ox)
-	x3 =  (ax > ox and bx < px)
-	x4 =  (ax > px and bx < ox)
-	--x =  (ax < ox and bx > px) or (ax < px and bx > ox) or (ax > ox and bx < px) or (ax > px and bx < ox)
-	--y =  (ay < oy and by > py) or (ay < py and by > oy) or (ay > oy and by < py) or (ay > py and by < oy)
-	y1 =  (ay < oy and by > py)
-	y2 =  (ay < py and by > oy)
-	y3 =  (ay > oy and by < py)
-	y4 =  (ay > py and by < oy)
-	return x1,x2,x3,x4,y1,y2,y3,y4	
-	--]]
-end
-
 
 function collision.polygons(array1,array2)
 	local i = 1
 	for i=1,#array1-3,2 do
 		for n=1,#array2-3,2  do
 			if collision.lineSegments(array1[i],array1[i+1],array1[i+2], array1[i+3], array2[n],array2[n+1],array2[n+2], array2[n+3]) then
-				--print(array1[i]..'a,'..array1[i+1]..','..array1[i+2]..','.. array1[i+3]..','.. array2[n]..','..array2[n+1]..','..array2[n+2]..','.. array2[n+3])
 				return true
 			end
 		end
 
 		--check line from first point to last point
 		if collision.lineSegments(array1[i],array1[i+1],array1[i+2], array1[i+3], array2[1],array2[2],array2[#array2-1], array2[#array2]) then
-			--print(array1[i]..'b,'..array1[i+1]..','..array1[i+2]..','.. array1[i+3]..','.. array2[1]..','..array2[2]..','..array2[#array2-1]..','.. array2[#array2])
 			return true
 		end
 	end
@@ -456,7 +280,6 @@ function collision.polygons(array1,array2)
 	--check line from first point to last point
 	for n=1,#array2-3,2  do
 		if collision.lineSegments(array1[1],array1[2],array1[#array1-1], array1[#array1], array2[n],array2[n+1],array2[n+2], array2[n+3]) then
-			--print(array1[1]..'c,'..array1[2]..','..array1[#array1-1]..','.. array1[#array1]..','.. array2[n]..','..array2[n+1]..','..array2[n+2]..','.. array2[n+3])
 			return true
 		end
 	end
@@ -465,14 +288,12 @@ function collision.polygons(array1,array2)
 
 	for i=1,#array1-1,2 do
 		if collision.pointPolygon(array1[i],array1[i+1], array2) then
-			--print('here')
 			return true
 		end
 	end
 
 	for i=1,#array2-1,2 do
 		if collision.pointPolygon(array2[i],array2[i+1], array1) then
-			--print('here2')
 			return true
 		end
 	end
@@ -514,13 +335,11 @@ end
 
 function collision.pointPolygon(x,y,points, debug)
 	--count the number of polygon edge collisions with an arbitrary ray
-	local count = 0
-	if not STATE.paused then
-		----print('\ncounting')
-	end
 	if #points % 2 ~= 0 then
 		error('missing half a point')
 	end
+
+	local count = 0
 
 	for i=3,#points-1,2 do
 		if collision.rayLineSegment(x,y,x+5,y+5, points[i-2],points[i-1], points[i],points[i+1], debug, i) then
@@ -534,9 +353,5 @@ function collision.pointPolygon(x,y,points, debug)
 	end
 
 	--the # of intersections will be odd if it's inside the polygon
-	----print(count)
-	if count%2 ~= 0 then
-		----print(count .. ' here4')
-	end
 	return count%2 ~= 0
 end
