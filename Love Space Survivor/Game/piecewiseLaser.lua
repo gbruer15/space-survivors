@@ -10,7 +10,7 @@ function piecewiseLaser.make(att)
 	self.x = att.x or 0
 	self.y = att.y or 0 --this starts out as the bottom of the image
 
-	self.speed = att.speed or 10
+	self.speed = att.speed or 100
 	self.angle = att.angle or -math.pi/2
 
 	self.damage = att.damage or 1
@@ -77,6 +77,7 @@ function piecewiseLaser:update(dt)
 
 		self.x = STATE.player.x
 		self.y =  STATE.player.y - STATE.player.drawBox.height/2
+
 	else
 		self.x = self.x + self.speed*math.cos(self.angle)*dt
 		self.y = self.y + self.speed*math.sin(self.angle)*dt
@@ -260,12 +261,10 @@ function piecewiseLaser:getPolygon()
 		end
 
 		local v
-		if not didit then print('end: ' .. endi) end
 		for i = 1, endi do
 			v = self.subPoints[i]
 			table.insert(p,v.x)
 			table.insert(p,v.y)
-			if not didit then print('i: ' .. i .. ' x: ' .. tostring(v.x) .. ' y: ' .. tostring(v.y)) didit = true end
 		end
 	end
 

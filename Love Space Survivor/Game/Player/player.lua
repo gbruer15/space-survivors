@@ -254,8 +254,8 @@ function playerfunctions:fireMegaLaser()
 	table.insert(self.missiles,piecewiseLaser.make{
 											x= self.x
 											,y=self.y - self.drawBox.height/2
-											,speed=1580
-											,angle= math.random(-1,1)*math.pi/6 - math.pi/2
+											,speed=480
+											,angle= -math.pi/2--math.random(-1,1)*math.pi/6 - math.pi/2
 											,pierce=self.missilePierce
 											,Image = images.greenLaser
 											,TopImage = images.greenLaserTop

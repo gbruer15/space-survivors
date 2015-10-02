@@ -16,7 +16,7 @@ function state.update(dt)
 			table.remove(STATE.player.missiles,i)
 		else
 			for j,e in ipairs(STATE.enemies) do
-				if collision.polygons(missile:getPolygon(),e:getPolygon()) then--missile:isHittingRectangle(e.collisionBox:getRect()) then
+				if collision.polygons(missile:getPolygon(),e:getPolygon()) then
 					local found
 					if missile.piercedList then
 						for a,f in ipairs(missile.piercedList) do
@@ -84,9 +84,6 @@ function state.update(dt)
 						else
 							e.health = -1
 						end
-						if missile.type == 'mega' then
-							--print(tostring(missile.pierce))
-						end
 						if missile.pierce and missile.pierce > 0 then
 							table.insert(missile.piercedList,e)
 						elseif missile.pierce then
@@ -107,10 +104,6 @@ function state.update(dt)
 					if collision.polygons(missile:getPolygon(), em:getPolygon()) then
 						table.remove(STATE.enemyMissiles, k)
 					end
-
-					--print(i .. ' = {' .. table.concat(missile:getPolygon(), ',') .. '}' )
-					--print(k .. ' = {' .. table.concat(em:getPolygon(), ',') .. '}' )
-					--print('')
 
 				end
 			end

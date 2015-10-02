@@ -1,4 +1,4 @@
-love.window.setFullscreen(false,'desktop')
+love.window.setFullscreen(true,'desktop')
 
 love.graphics.setBackgroundColor(0,0,0)
 
@@ -40,8 +40,10 @@ LUA_PATH, path = path, LUA_PATH
 
 
 function love.load(arg)
+  print('hat')
   if arg[#arg] == "-debug" then require("mobdebug").start() myDebug = true end
   if myDebug then require("mobdebug").off() end
+  print('hat2')
   
 	IMAGES_PATH = 'Assets/Images/'
 	GOOD_IMAGES_PATH = 'Assets/GoodImages/'
