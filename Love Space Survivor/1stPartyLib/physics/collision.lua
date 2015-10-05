@@ -225,8 +225,8 @@ function collision.lineLineSegment(ax,ay,bx,by,  ox,oy,px,py)
   local denominator = ((b.X - a.X) * (d.Y - c.Y)) - ((b.Y - a.Y) * (d.X - c.X));
   local  numerator1 = ((a.Y - c.Y) * (d.X - c.X)) - ((a.X - c.X) * (d.Y - c.Y));
   local  numerator2 = ((a.Y - c.Y) * (b.X - a.X)) - ((a.X - c.X) * (b.Y - a.Y));
-
-  -- Detect coincident lines (has a problem, read below) (http://gamedev.stackexchange.com/questions/26004/how-to-detect-2d-line-on-line-collision)
+	
+  -- check for parallel lines	
   if (denominator == 0) then return numerator1 == 0 and numerator2 == 0, bx,by end
 
   local r = numerator1 / denominator;
@@ -245,8 +245,32 @@ function collision.lineSegments(ax,ay,bx,by,  ox,oy,px,py)
   local  numerator1 = ((a.Y - c.Y) * (d.X - c.X)) - ((a.X - c.X) * (d.Y - c.Y));
   local  numerator2 = ((a.Y - c.Y) * (b.X - a.X)) - ((a.X - c.X) * (b.Y - a.Y));
 
-  -- Detect coincident lines (has a problem, read below) 
-  if (denominator == 0) then return numerator1 == 0 and numerator2 == 0, bx,by end
+  -- Detect parallel lines 
+  if (denominator == 0) then
+  	 if numerator1 ~= 0 or numerator2 ~= 0 then
+  		return false, bx,by 
+  	end
+  	--else the line segments are coincident. need to do something special
+  	local ro
+  	if bx ~= ax then
+  		ro = (ox - ax)/(bx-ax)
+  	else
+  		ro = (oy - ay)/(by-ay)
+  	end
+  	local rp
+  	if bx ~= ax then
+  		rp = (px - ax)/(bx-ax)
+  	else
+  		rp = (py - ay)/(by-ay)
+  	end
+
+  	if (1 > ro and 0 < rp) or (1 > rp and 0 < ro) then
+  		local r = math.constrain(ro, 0, 1)
+  		return true, ax + r*(ax-ax), ay + r*(ay-ay)
+  	end
+
+  	return false
+  end
 
   local r = numerator1 / denominator;
   local s = numerator2 / denominator;

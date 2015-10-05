@@ -146,10 +146,15 @@ function state.update(dt)
 			v.HELP = true
 			print('enemy')
 			if not STATE.player.isCloaked then
-				if die then
-					STATE.player:die()
+				if STATE.player.shield > 0 then 
+					STATE.player.shield = STATE.player.shield - 1
+					v.health = -1
 				else
-					STATE.paused = true
+					if die then
+						STATE.player:die()
+					else
+						STATE.paused = true
+					end
 				end
 			end
 		elseif v.drawBox:getLeft() > STATE.camera.x+STATE.camera.width/2 then
@@ -175,10 +180,15 @@ function state.update(dt)
 	--			print('p2 = {' .. table.concat(p2, ',') .. '}')
 	--			print('p1 = {' .. table.concat(p1, ',') .. '}')
 				if not STATE.player.isCloaked then
-					if die then
-						STATE.player:die()
+					if STATE.player.shield > 0 then 
+						STATE.player.shield = STATE.player.shield - 1
+						table.remove(STATE.enemyMissiles,i)
 					else
-						STATE.paused = true
+						if die then
+							STATE.player:die()
+						else
+							STATE.paused = true
+						end
 					end
 				end
          if myDebug then require("mobdebug").off() end

@@ -21,6 +21,7 @@ function state.load()
 								,trueText = 'Yes'
 								,falseText = 'No'
 							}
+
 end
 
 function state.update(dt)
@@ -47,6 +48,8 @@ function state.mousepressed(x,y,button)
 			if STATE.level.onDeath then
 				STATE.level.onDeath()
 			end
+			STATE.player.x = STATE.camera.x
+			STATE.player.y = STATE.camera.y
 		else
 			STATE.player.levelCash = 0
 			STATE.player.levelScore = 0

@@ -65,9 +65,11 @@ function playerfunctions.make(att)
 	self.missilePierce = 1
 	self.missileWidth = 3
 
-	self.actualMissileType = 'split'
+	self.actualMissileType = 'basic'
 
 	self.fireSwirls = true
+
+	self.shield = 0
 	---------------------------------
 
 	self.fireCountdown = self.fireDelay
@@ -132,7 +134,16 @@ function playerfunctions:draw(drawColBox,colBoxMode,color)
 	end
 
 	
+	if self.shield > 0 then
+		love.graphics.push()
+		love.graphics.translate(self.x,self.y)
 
+		love.graphics.setLineWidth(3)
+		love.graphics.setColor(0,255,0, 25 + math.min(self.shield^1.5, 5^1.5)*200/(5^1.5))
+		love.graphics.polygon('line',self.imagePoints)
+
+		love.graphics.pop()
+	end
 	if drawColBox then
 		love.graphics.setColor(color or {0,255,0,100})
 		--self.collisionBox:draw(colBoxMode or 'line')
@@ -207,6 +218,11 @@ function playerfunctions:keypressed(key)
 		self:fireMegaLaser()
 	elseif key == 'e' then
 		self.isCloaked = not self.isCloaked
+	elseif key == 'r' then
+		self.shield = self.shield + 1
+		if self.shield > 5 then
+			self.shield = 5
+		end
 	end
 end
 
