@@ -1,5 +1,6 @@
 local state = {}
 
+require('Game/powerup')
 enemy = require('Game/Enemy/enemy')
 local tempText = require('1stPartyLib/display/tempText')
 function state.load()
@@ -8,6 +9,19 @@ end
 function state.update(dt)
 	STATE.hud:update(dt)
 	STATE.player:update(dt)
+
+	for i = #STATE.powerups, 1, -1 do
+		local p = STATE.powerups[i]
+		p:update(dt)
+		if collision.polygons(p:getPolygon(), STATE.player:getPolygon()) then
+			--give the power to the player
+			if p:apply(STATE.player) then
+				table.remove(STATE.powerups,i)
+			end			
+		elseif not p:isHittingRectangle(STATE.camera.getRect()) then
+			table.remove(STATE.powerups, i)
+		end
+	end
 
 	for i=#STATE.player.missiles,1,-1 do
 		local missile = STATE.player.missiles[i]
@@ -208,6 +222,14 @@ end
 function state.keypressed(key)
 	if key == 'p' then
 		STATE.paused = true
+	elseif key == 't' then
+		table.insert(STATE.powerups, powerup.make{
+			x = STATE.player.x,
+			y = 0,
+			xspeed = 0,
+			yspeed = 150,
+			type = 'megaLaser'
+			})
 	else
 		STATE.player:keypressed(key)
 	end

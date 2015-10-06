@@ -37,6 +37,9 @@ function level.reload()
 	level.enemySpawnRateTimer = level.enemySpawnRateSlowdown*2
 
 	level.enemyMissileMotionSensor = -40
+
+	level.powerupSlowdown = 5
+	level.powerupTimer = level.powerupSlowdown
 end
 
 function level.update(dt)
@@ -123,6 +126,18 @@ function level.update(dt)
 			enemy.firing = enemy.drawBox:getLeft()-level.enemyMissileMotionSensor <= STATE.player.drawBox:getRight()
 							and enemy.drawBox:getRight()+level.enemyMissileMotionSensor >= STATE.player.drawBox:getLeft() 
 		end
+	end
+
+	level.powerupTimer = level.powerupTimer - dt
+	if level.powerupTimer <= 0 then
+		level.powerupTimer = level.powerupSlowdown
+		table.insert(STATE.powerups, powerup.make{
+			x = math.random(STATE.camera.x - STATE.camera.width/2, STATE.camera.x+STATE.camera.width/2)
+			,y = 0
+			,xspeed = 0
+			,yspeed = 120
+			,type = math.random() < 0.5 and 'megaLaser' or 'shield'
+		})
 	end
 
 end

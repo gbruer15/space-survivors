@@ -124,6 +124,7 @@ function state.load(n)
 	state.paused = false
 
 	state.tempTexts = {}
+	state.powerups = {}
 	-------------------------
 
 	for i,v in pairs(state.states) do
@@ -242,7 +243,11 @@ function state.draw()
 	love.graphics.setColor(state.level.enemyMissileColor)
 	for i,v in ipairs(state.enemyMissiles) do
 		v:draw()
-	end	
+	end
+
+	for i,v in ipairs(state.powerups) do
+		v:draw()
+	end
 
 	state.state.draw()
 

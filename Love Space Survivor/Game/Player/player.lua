@@ -65,6 +65,8 @@ function playerfunctions.make(att)
 	self.missilePierce = 1
 	self.missileWidth = 3
 
+	self.megaLasers = 0
+
 	self.actualMissileType = 'basic'
 
 	self.fireSwirls = true
@@ -261,6 +263,11 @@ function playerfunctions:die()
 end
 
 function playerfunctions:fireMegaLaser()
+	if self.megaLasers > 0 then
+		self.megaLasers = self.megaLasers - 1
+	else
+		return
+	end
 	local bottomImage
 	if math.random() > 0.5 then
 		bottomImage = images.greenLaserBottomSquished
