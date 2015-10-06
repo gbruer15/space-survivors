@@ -22,6 +22,11 @@ function missile.make(att,x,y,speed,angle, length, width)
 	self.width = att.width or 2
 
 	self.endX, self.endY = self.x+self.length*math.cos(self.angle), self.y+self.length*math.sin(self.angle)
+	
+	self.polygon = {}
+
+	self:updatePolygon()
+
 	return self
 end
 
@@ -43,14 +48,10 @@ function missile:isHittingRectangle(x,y,w,h)
 	return collision.pointRectangle(self.x,self.y, x,y,w,h) or collision.pointRectangle(self.endX,self.endY, x,y,w,h)
 end
 
-function missile:getPolygon()
-	local p = {}
+function missile:updatePolygon()
+	self.polygon[1] = self.x
+	self.polygon[2] = self.y
 
-	p[1] = self.x
-	p[2] = self.y
-
-	p[3] = self.endX
-	p[4] = self.endY
-
-	return p
+	self.polygon[3] = self.endX
+	self.polygon[4] = self.endY
 end

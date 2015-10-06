@@ -75,6 +75,10 @@ function playerfunctions.make(att)
 	---------------------------------
 
 	self.fireCountdown = self.fireDelay
+
+	self.polygon = {}
+	self:updatePolygon()
+	
 	return self
 end
 
@@ -108,7 +112,8 @@ function playerfunctions:update(dt)
 		end
 		self.quad:setViewport(math.floor(math.abs(self.moveAnimation))*self.Image.spriteWidth,0,self.Image.spriteWidth,self.Image.spriteHeight)
 	end
-	
+
+	self:updatePolygon()
 end
 
 function playerfunctions:draw(drawColBox,colBoxMode,color)
@@ -141,7 +146,7 @@ function playerfunctions:draw(drawColBox,colBoxMode,color)
 		love.graphics.translate(self.x,self.y)
 
 		love.graphics.setLineWidth(3)
-		love.graphics.setColor(0,255,0, 25 + math.min(self.shield^1.5, 5^1.5)*200/(5^1.5))
+		love.graphics.setColor(0,255,0, 40 + math.min(self.shield^1.5, 5^1.5)*200/(5^1.5))
 		love.graphics.polygon('line',self.imagePoints)
 
 		love.graphics.pop()
@@ -225,6 +230,8 @@ function playerfunctions:keypressed(key)
 		if self.shield > 5 then
 			self.shield = 5
 		end
+	elseif key == 'g' then
+		self.megaLasers = self.megaLasers + 1
 	end
 end
 
@@ -290,12 +297,15 @@ function playerfunctions:fireMegaLaser()
 									)
 end
 
-function playerfunctions:getPolygon()
-	local p = {}
+function playerfunctions:updatePolygon()
 	for i=1,#self.imagePoints-1,2 do
-		p[i] = self.imagePoints[i]+self.x
-		p[i+1] = self.imagePoints[i+1] + self.y
+		self.polygon[i] = self.imagePoints[i]+self.x
+		self.polygon[i+1] = self.imagePoints[i+1] + self.y
 	end
+	
+end
+
+function playerfunctions:getPolygon()
 	return p
 end
 

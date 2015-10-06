@@ -13,12 +13,12 @@ function state.update(dt)
 	for i = #STATE.powerups, 1, -1 do
 		local p = STATE.powerups[i]
 		p:update(dt)
-		if collision.polygons(p:getPolygon(), STATE.player:getPolygon()) then
+		if collision.polygons(p.polygon, STATE.player.polygon) then
 			--give the power to the player
 			if p:apply(STATE.player) then
 				table.remove(STATE.powerups,i)
 			end			
-		elseif not p:isHittingRectangle(STATE.camera.getRect()) then
+		elseif not collision.polygons(p.polygon, STATE.camera.polygon) then
 			table.remove(STATE.powerups, i)
 		end
 	end
@@ -26,11 +26,11 @@ function state.update(dt)
 	for i=#STATE.player.missiles,1,-1 do
 		local missile = STATE.player.missiles[i]
 		missile:update(dt)
-		if not missile:isHittingRectangle(STATE.camera:getRect()) then
+		if not collision.polygons(missile.polygon, STATE.camera.polygon) then
 			table.remove(STATE.player.missiles,i)
 		else
 			for j,e in ipairs(STATE.enemies) do
-				if collision.polygons(missile:getPolygon(),e:getPolygon()) then
+				if collision.polygons(missile.polygon,e.polygon) then
 					local found
 					if missile.piercedList then
 						for a,f in ipairs(missile.piercedList) do
@@ -115,7 +115,7 @@ function state.update(dt)
 				local em
 				for k = #STATE.enemyMissiles,1,-1 do
 					em = STATE.enemyMissiles[k]
-					if collision.polygons(missile:getPolygon(), em:getPolygon()) then
+					if collision.polygons(missile.polygon, em.polygon) then
 						table.remove(STATE.enemyMissiles, k)
 					end
 
@@ -156,7 +156,7 @@ function state.update(dt)
 														,text = '+$' .. v.loot
 														,color={0,255,0}
 							})
-		elseif collision.polygons(STATE.player:getPolygon(),v:getPolygon()) then--STATE.player.collisionBox:collideRectangle(v.collisionBox) then
+		elseif collision.polygons(STATE.player.polygon,v.polygon) then--STATE.player.collisionBox:collideRectangle(v.collisionBox) then
 			v.HELP = true
 			print('enemy')
 			if not STATE.player.isCloaked then
@@ -186,13 +186,9 @@ function state.update(dt)
 			local missile = STATE.enemyMissiles[i]
 			missile:update(dt)
 			missile.HELP = false
-			local p1, p2 = STATE.player:getPolygon(),missile:getPolygon()
-			if collision.polygons(p1, p2) then--missile:isHittingRectangle(STATE.player.collisionBox:getRect()) then
+			if collision.polygons(STATE.player.polygon, missile.polygon) then--missile:isHittingRectangle(STATE.player.collisionBox:getRect()) then
 				if myDebug then require("mobdebug").on() end
         missile.HELP = true
-	--			print(tostring(collision.polygons(p1,p2)))
-	--			print('p2 = {' .. table.concat(p2, ',') .. '}')
-	--			print('p1 = {' .. table.concat(p1, ',') .. '}')
 				if not STATE.player.isCloaked then
 					if STATE.player.shield > 0 then 
 						STATE.player.shield = STATE.player.shield - 1
@@ -206,7 +202,7 @@ function state.update(dt)
 					end
 				end
          if myDebug then require("mobdebug").off() end
-			elseif not missile:isHittingRectangle(STATE.camera.getRect()) then
+			elseif not collision.polygons(missile.polygon, STATE.camera.polygon) then
 				table.remove(STATE.enemyMissiles,i)
 			end
 		end

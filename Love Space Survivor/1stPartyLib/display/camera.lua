@@ -16,6 +16,9 @@ function camera.make(att)
 
 	camera.lock = true
 
+	camera.polygon = {}
+	camera.updatePolygon()
+
 	return camera
 end
 
@@ -59,7 +62,8 @@ function camera.update(dt)
 	end
 	camera.x = camera.x + camera.offset.x
 	camera.y = camera.y + camera.offset.y
-	
+
+	camera.updatePolygon()
 end
 
 function camera.set()
@@ -83,6 +87,25 @@ end
 
 function camera.getRect()
 	return camera.x-camera.width/2,camera.y-camera.height/2,camera.width,camera.height
+end
+
+function camera.updatePolygon()
+	local l = camera.x - camera.width/2
+	local t = camera.y - camera.height/2
+	local r = l + camera.width
+	local b = t + camera.height
+
+	camera.polygon[1] = l
+	camera.polygon[2] = t
+	
+	camera.polygon[3] = r
+	camera.polygon[4] = t
+	
+	camera.polygon[5] = r
+	camera.polygon[6] = b
+	
+	camera.polygon[7] = l
+	camera.polygon[8] = b
 end
 
 return camera

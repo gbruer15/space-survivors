@@ -71,9 +71,6 @@ function powerup:updatePolygon()
 	end
 end
 
-function powerup:getPolygon()
-	return self.polygon
-end
 function powerup:isHittingRectangle(l, t, w, h)
 	return collision.polygons(self.polygon, {l,t, l+w,t, l+w,t+h, l, t+h})
 end

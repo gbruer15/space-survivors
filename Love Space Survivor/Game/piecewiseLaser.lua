@@ -66,6 +66,12 @@ function piecewiseLaser.make(att)
 	self.middleQuad = love.graphics.newQuad(0,0, 10,10, self.MiddleImage.width, self.MiddleImage.height)
 	self.topQuad= love.graphics.newQuad(0,0, 10,10, self.TopImage.width, self.TopImage.height)
 
+
+	self:setPoints()
+	
+	self.polygon = {}
+	self:updatePolygon()
+
 	return self
 end
 
@@ -83,6 +89,11 @@ function piecewiseLaser:update(dt)
 		self.y = self.y + self.speed*math.sin(self.angle)*dt
 	end
 
+	self:setPoints()
+	self:updatePolygon()
+end
+
+function piecewiseLaser:setPoints()
 	self.startX,self.startY = self.x, self.y--self.length/2*math.sin(self.angle)
 	self.endX = self.x + self.length*math.cos(self.angle)
 	self.endY = self.y + self.length*math.sin(self.angle)
@@ -206,21 +217,19 @@ function piecewiseLaser:draw()
 	end
 	love.graphics.pop()
 
-	local vertices = self:getPolygon()
-
 	love.graphics.setColor(0,0,255)
+	love.graphics.polygon('line', self.polygon)
 end
 
-function piecewiseLaser:isHittingRectangle(x,y,w,h)
-	return collision.polygons(self:getPolygon(),{x,y, x+w,y, x+w,y+h, x,y+h})
-end
-
-function piecewiseLaser:getPolygon()
-	local p = {}
+function piecewiseLaser:updatePolygon()
 	if self.done then
 		for i,v in ipairs(self.points) do
-			table.insert(p,v.x)
-			table.insert(p,v.y)
+			self.polygon[2*i - 1] = v.x
+			self.polygon[2*i] = v.y
+		end
+
+		for i = #self.points*2 + 1, #self.polygon do
+			self.polygon[i] = nil
 		end
 	else
 		local endi 
@@ -235,10 +244,13 @@ function piecewiseLaser:getPolygon()
 		local v
 		for i = 1, endi do
 			v = self.subPoints[i]
-			table.insert(p,v.x)
-			table.insert(p,v.y)
+			self.polygon[2*i - 1] = v.x
+			self.polygon[2*i] = v.y
+		end
+
+		for i = 2*endi + 1, #self.polygon do
+			self.polygon[i] = nil
 		end
 	end
 
-	return p
 end
