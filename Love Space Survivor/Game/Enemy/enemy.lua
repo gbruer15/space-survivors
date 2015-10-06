@@ -38,6 +38,8 @@ function enemy.make(att)
 	self.loot = att.loot or math.ceil(self.drawBox.width * (math.random() + 0.5))
 	self.points = math.ceil(self.loot * 1.4)
 	
+	self.polygon = {}
+	self:updatePolygon()
 
 	return self
 end
@@ -51,6 +53,8 @@ function enemy:update(dt)
 		self:fireMissile()
 		self.fireCountdown = self.fireDelay
 	end
+
+	self:updatePolygon()
 end
 
 function enemy:draw(drawColBox, colBoxMode)
@@ -82,23 +86,19 @@ function enemy:fireMissile()
 											)
 end
 
-function enemy:getPolygon()
-	local p = {}
-
+function enemy:updatePolygon()
 	local l,t, w,h = self.collisionBox:getRect()
+	self.polygon[1] = l
+	self.polygon[2] = t
 
-	p[1] = l
-	p[2] = t
+	self.polygon[3] = l+w
+	self.polygon[4] = t
 
-	p[3] = l+w
-	p[4] = t
+	self.polygon[5] = l+w
+	self.polygon[6] = t+h
 
-	p[5] = l+w
-	p[6] = t+h
-
-	p[7] = l
-	p[8] = t+h
-
-	return p
+	self.polygon[7] = l
+	self.polygon[8] = t+h
 end
+
 return enemy

@@ -54,6 +54,10 @@ function laser.make(att)
 
 	self:setPoints()
 
+	self.polygon = {}
+	self:updatePolygon()
+
+
 	return self
 end
 
@@ -62,6 +66,7 @@ function laser:update(dt)
 	self.y = self.y + self.speed*math.sin(self.angle)*dt
 
 	self:setPoints()
+	self:updatePolygon()
 end
 
 function laser:setPoints()
@@ -108,11 +113,10 @@ function laser:draw()
 
 	love.graphics.pop()
 
-	local vertices = self:getPolygon()
 
 	love.graphics.setColor(0,0,255)
 	
-	love.graphics.polygon('line',vertices)
+	--love.graphics.polygon('line',self.polygon)
 
 	--Collision lines
 	--[[]
@@ -129,12 +133,9 @@ function laser:isHittingRectangle(x,y,w,h)
 	return collision.polygons(self:getPolygon(),{x,y, x+w,y, x+w,y+h, x,y+h})
 end
 
-function laser:getPolygon()
-	local p = {}
+function laser:updatePolygon()
 	for i,v in ipairs(self.points) do
-		table.insert(p,v.x)
-		table.insert(p,v.y)
+		self.polygon[2*i - 1] = v.x
+		self.polygon[2*i] = v.y
 	end
-
-	return p
 end

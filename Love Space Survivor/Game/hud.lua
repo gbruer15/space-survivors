@@ -68,6 +68,9 @@ function hud:draw()
 
 	love.graphics.print('Score: ' .. STATE.player.levelScore,self.x+15,45)
 
+	love.graphics.print(STATE.player.megaLasers .. ' L', self.x + 20, 80)
+	love.graphics.print(STATE.player.shield .. ' S', self.x + 20, 95)
+
 	love.graphics.print('Cash: $' .. STATE.player.levelCash,self.x+15,135)
 	
 	love.graphics.print('Lives: ' .. STATE.player.lives,self.x+15,180)
