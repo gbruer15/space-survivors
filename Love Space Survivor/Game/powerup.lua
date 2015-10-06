@@ -23,15 +23,14 @@ function powerup.make(att)
 	local self = {}
 	setmetatable(self, powerup)
 
-	self.radius = att.radius or 15
+	self.radius = att.radius or 14
 
-	local radius = 10
 	angle = 0
 	self.points = {}
 	for i = 1, 7, 2 do
 		angle = angle + math.pi/2
-		self.points[i] = radius*math.cos(angle)
-		self.points[i+1] = radius*math.sin(angle) 
+		self.points[i] = self.radius*math.cos(angle)
+		self.points[i+1] = self.radius*math.sin(angle) 
 	end
 
 	self.x = att.x or 0
@@ -57,6 +56,10 @@ end
 function powerup:draw()
 	love.graphics.setColor(0,0,200)
 	love.graphics.polygon('fill', self.polygon)
+
+	love.graphics.setLineWidth(1)
+	love.graphics.setColor(255,255,255,180)
+	love.graphics.polygon('line', self.polygon)
 
 	love.graphics.setColor(255,255,255)
 	love.graphics.printf(self.type.name, self.x - self.radius, self.y-self.radius/2, self.radius*2, 'center')
