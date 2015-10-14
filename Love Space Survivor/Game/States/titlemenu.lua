@@ -1,6 +1,5 @@
 local state = {}	
 function state.load()
-
 	state.buttons = {}
 
 	state.buttons.play = button.make{
@@ -17,6 +16,9 @@ function state.load()
 	state.initializeStarryBackground(500)
 
 	missiles = {}
+
+	music.first:setLooping(true)
+	music.first:play()
 end
 
 function state.update(dt)

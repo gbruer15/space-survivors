@@ -47,6 +47,7 @@ function love.load(arg)
   
 	IMAGES_PATH = 'Assets/Images/'
 	GOOD_IMAGES_PATH = 'Assets/GoodImages/'
+	GOOD_SOUNDS_PATH = 'Assets/GoodSounds/'
 	lovefunctions = {'keypressed','keyreleased','mousepressed','mousereleased'}
 	require('1stPartyLib/physics/collision')
 	require('resources')
@@ -74,7 +75,6 @@ function love.load(arg)
 end
 
 function love.update(dt)
-	
 
 	MOUSE.x, MOUSE.y = love.mouse.getPosition()
 	STATE.update(dt)
@@ -90,21 +90,32 @@ end
 
 function love.draw()
 	STATE.draw()
-	--[[
-	states[state].draw()	
+	--[
+	--states[state].draw()	
 
 	------Draw Cool Cursor Thing--------
 	local x,y = love.mouse.getPosition()
 
-	local ang = (love.timer.getTime()*5) or love.timer.getTime()+ math.sin(love.timer.getTime())*5
+	love.graphics.push()
+	love.graphics.translate(x,y)
+	love.graphics.scale(0.5, 0.5)
+	love.graphics.translate(-x, -y)
+
+	love.mouse.setVisible(false)
 	
-	ang = math.pi/12
+
+	local ang = (love.timer.getTime()*5 and false) or love.timer.getTime()+ math.sin(love.timer.getTime())*5
 	
-	love.graphics.setColor((math.sin(ang)+1)*127,(math.cos(ang/2)+1)*127,math.sin(love.timer.getTime())*100+10)
+	--ang = math.pi/12
+	
+	local colorChange = {(math.sin(ang)+1)*127,(math.cos(ang/2)+1)*127,math.sin(love.timer.getTime())*100+10, 0}
+	--love.graphics.setColor(colorChange)
 	--local xd,yd = (40*math.cos(ang)),(40*math.cos(ang/2))
 	local xd,yd = math.abs(20*math.cos(ang)),math.abs(20*math.cos(ang/2))
+	xd = math.max(3, xd)
+	yd = math.max(3, yd)
 
-	drawBlur.ellipse(x,y,xd,yd,ang,nil,15, {255,255,255},{255,0,0,0})
+	drawBlur.ellipse(x,y,xd,yd,ang,nil,15, {255,255,255},colorChange)
 	love.graphics.setColor(255,255,255)
 	love.graphics.ellipse("fill",x,y,xd,yd,ang)
 	drawBlur.ellipse(x,y,xd-math.min(10,xd),yd-math.min(10,yd/2),ang,nil,math.min(5,yd,xd), {0,0,0,0},{255,255,255})
@@ -112,9 +123,10 @@ function love.draw()
 	love.graphics.ellipse("fill",x,y,xd-math.min(10,xd/2),yd-math.min(10,yd/2),ang)
 	------------------------------------------------------------------------------
 	
-	love.graphics.setColor(0,0,0)
+	love.graphics.setColor(255,255,255,100)
 	love.graphics.circle("fill",x,y,2)
 
+	love.graphics.pop()
 --]]
 	--[[
 	love.graphics.setColor(0,0,0)
@@ -137,6 +149,11 @@ end
 
 
 function love.keypressed(key)
+	if key == '1' then
+		music.first:setPitch(music.first:getPitch()/2)
+	elseif key == '2' then
+		music.first:setPitch(music.first:getPitch()*2)
+	end
 	if STATE.keypressed then
 		STATE.keypressed(key)
 	end

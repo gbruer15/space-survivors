@@ -1,4 +1,3 @@
-images = {}
 
 local function getImage(name)
 	local i = love.graphics.newImage(IMAGES_PATH .. name)
@@ -13,6 +12,11 @@ end
 local function getGoodImagePoints(name)
 	return require(GOOD_IMAGES_PATH..name)
 end
+
+
+---------Images--------------
+images = {}
+
 images.spaceship = getGoodImage('playerSpaceship.png')
 images.spaceshipPoints = getGoodImagePoints('playerSpaceshipPoints')
 
@@ -47,3 +51,13 @@ outlines.basicOutline = outline.make{
 							,straight = images.basicOutlineStraight.image
 							,lineWidth = 5
 						}
+
+
+
+
+------Music----------
+music = {}
+
+music.first = love.audio.newSource(GOOD_SOUNDS_PATH .. 'First.mp3', 'stream')
+
+
