@@ -20,11 +20,13 @@ function hud.make(att)
 								centerx = self.x+self.width/2
 								,centery = self.y+self.height-100
 								,text = 'P(ause)'
+								,font = fonts.basic[24]
 							}
 	self.buttons.returnToLevelSelect = button.make{
 								centerx = self.x+self.width/2
 								,centery = self.y+self.height-50
 								,text = 'Level Select'
+								,font = fonts.basic[16]
 							}
 	return self
 end
@@ -63,14 +65,17 @@ function hud:draw()
 	love.graphics.setColor(255,255,255)
 	outlines.basicOutline:draw(self.x,self.y,self.width,self.height)
 
-
+	love.graphics.setFont(fonts.basic[48])
 	love.graphics.printf('Level ' .. STATE.level.number, self.x,self.y,self.width,'center')
 
-	love.graphics.print('Score: ' .. STATE.player.levelScore,self.x+15,45)
+	love.graphics.setFont(fonts.basic[24])
+	love.graphics.printf('Score: ' .. STATE.player.levelScore,self.x,45,self.width, 'center')
 
+	love.graphics.setFont(fonts.basic[12])
 	love.graphics.print(STATE.player.megaLasers .. ' L', self.x + 20, 80)
 	love.graphics.print(STATE.player.shield .. ' S', self.x + 20, 95)
 
+	love.graphics.setFont(fonts.basic[20])
 	love.graphics.print('Cash: $' .. STATE.player.levelCash,self.x+15,135)
 	
 	love.graphics.print('Lives: ' .. STATE.player.lives,self.x+15,180)
@@ -80,13 +85,17 @@ function hud:draw()
 	end
 
 	if self.hoveredUpgrade then
-		love.graphics.printf(self.hoveredUpgrade.description,self.x+15,315+#STATE.upgrades*15,self.width,'center')
+		love.graphics.setFont(fonts.basic[16])
+		love.graphics.printf(self.hoveredUpgrade.description,self.x+10,315+#STATE.upgrades*15,self.width-20,'center')
 		love.graphics.setColor(50,50,50)
-		love.graphics.rectangle('fill',self.upgradesX, self.upgradesY+(self.selectedIndex-1)*15,self.width,self.upgradesHeight)
+		love.graphics.rectangle('fill',(self.upgradesX + self.x)/2, self.upgradesY+(self.selectedIndex-1)*15,self.width - 2*(self.upgradesX - (self.upgradesX + self.x)/2),self.upgradesHeight)
 	end
 
 	love.graphics.setColor(255,255,255)
-	love.graphics.print('Upgrades',self.x+15,280)
+	love.graphics.setFont(fonts.basic[24])
+	love.graphics.printf('Upgrades',self.x,280, self.width, 'center')
+
+	love.graphics.setFont(fonts.basic[12])
 	local x = self.upgradesX
 	for i,v in ipairs(STATE.upgrades) do
 		y = self.upgradesY+(i-1)*15
@@ -108,10 +117,12 @@ function hud:draw()
 	end
 
 	love.graphics.setColor(255,255,255)
-	love.graphics.print('FPS: ' .. love.timer.getFPS(),self.x + 4, self.y + self.height - 55)
+	love.graphics.setFont(fonts.basic[14])
+	love.graphics.print('FPS: ' .. love.timer.getFPS(),self.x + 4, self.y + self.height - 185)
 
 	if not die then
-		love.graphics.print('Collision debug on\n(turn off with o)',self.x + 4, self.y + self.height - 35)
+		love.graphics.setFont(fonts.basic[12])
+		love.graphics.print('Collision debug on\n(turn off with o)',self.x + 4, self.y + self.height - 165)
 	end
 	if self.boolBox then
 		self.boolBox:draw()

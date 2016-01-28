@@ -8,6 +8,7 @@ function state.update(dt)
 end
 
 function state.draw()
+	love.graphics.setFont(fonts.basic[20])
 	if state.countdown then
 		love.graphics.printf(math.ceil(state.countdown),0,80,STATE.camera.width,'center')
 	else

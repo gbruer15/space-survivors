@@ -1,32 +1,20 @@
 local state = {}	
 function state.load()
+
 	state.buttons = {}
 
-	state.buttons.play = button.make{
-										text='play'
+	state.buttons.back = button.make{
+										text='Back'
 										,centerx=window.width/2
-										,y=window.height/2-50
+										,y=window.height-150
 										,image=false
-										,imagecolor={200,200,0,150}
-										,textcolor={20,20,20}
-									}
-	state.buttons.options = button.make{
-										text='options'
-										,centerx=window.width/2
-										,y=window.height/2
-										,image=false
-										,imagecolor={200,150,50,150}
+										,imagecolor={250,100,0,150}
 										,textcolor={20,20,20}
 									}
 
 	state.maxStarSpeed = 800
 	state.minStarSpeed = 40
 	state.initializeStarryBackground(500)
-
-	missiles = {}
-
-	music.first:setLooping(true)
-	music.first:play()
 end
 
 function state.update(dt)
@@ -40,9 +28,9 @@ end
 function state.draw()
 	state.drawStarryBackground()
 
-	love.graphics.setColor(255,255,255, 20)
-	love.graphics.setFont(fonts.basic[60])
-	love.graphics.printf("Space Survivors!!", 0, 100, window.width, 'center')
+	love.graphics.setColor(255,255,255, 50)
+	love.graphics.setFont(fonts.basic[48])
+	love.graphics.printf("Options Screen!!", 0, 100, window.width, 'center')
 
 	for i,b in pairs(state.buttons) do
 		b:draw()
@@ -51,17 +39,14 @@ end
 
 function state.keypressed(key)
 	if key == ' ' then
-		STATE = require("Game/States/levelselect")
+		STATE = require("Game/States/titlemenu")
 		STATE.load()
 	end
 end
 
 function state.mousepressed(x,y,button)
-	if state.buttons.play.hover then
-		STATE = require("Game/States/levelselect")
-		STATE.load()
-	elseif state.buttons.options.hover then
-		STATE = require("Game/States/options")
+	if state.buttons.back.hover then
+		STATE = require("Game/States/titlemenu")
 		STATE.load()
 	end
 end

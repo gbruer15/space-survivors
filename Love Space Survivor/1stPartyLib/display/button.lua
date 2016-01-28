@@ -13,7 +13,7 @@ function button.make(att) --att stands for attributes
 		
 	b.text = att.text or ""
 	b.textcolor = att.textcolor or {255,255,255}
-	b.font = att.font or love.graphics.newFont(12)
+	b.font = att.font or (fonts and fonts.basic and fonts.basic[12]) or love.graphics.newFont(12) 
 	b.textheight = b.font:getHeight()
 	b.textwidth = b.font:getWidth(b.text)	
 	

@@ -31,6 +31,7 @@ function state.load()
 										,image=false
 										,imagecolor={200,200,0,150}
 										,textcolor={20,20,20}
+										,font = fonts.basic[36]
 									}
 				else
 					print('Level ' .. n .. " skipped because it's not an integer.")
@@ -43,6 +44,17 @@ function state.load()
 			print('"' .. file:sub(1,5) .. '" ~= "level" or "' .. file:sub(-4) .. ' ~= ".lua"')
 		end
 	end
+
+	state.buttons = {}
+	state.buttons.back = button.make{
+									text='Back'
+									,centerx=window.width/2
+									,y=window.height-150
+									,image=false
+									,imagecolor={250,100,0,150}
+									,textcolor={20,20,20}
+								}
+
 
 	state.maxStarSpeed = 800
 	state.minStarSpeed = 40
@@ -60,6 +72,10 @@ function state.update(dt)
 			state.levelHover = i
 		end
 	end
+
+	for i,b in pairs(state.buttons) do
+		b:update(dt)
+	end
 end
 
 function state.draw()
@@ -68,6 +84,15 @@ function state.draw()
 	for i,b in pairs(state.levelButtons) do
 		b:draw()
 	end
+
+	for i,b in pairs(state.buttons) do
+		b:draw()
+	end
+
+	love.graphics.setColor(255,255,255,50)
+	love.graphics.setFont(fonts.basic[48])
+	love.graphics.printf('Select a level!!', 0, 20, window.width, 'center')
+
 end
 
 function state.keypressed(key)
@@ -81,6 +106,9 @@ function state.mousepressed(x,y,button)
 	if state.levelHover then
 		STATE = require("Game/States/game")
 		STATE.load(state.levelHover)
+	elseif state.buttons.back.hover then
+		STATE = require('Game/States/titlemenu')
+		STATE.load()
 	end
 end
 

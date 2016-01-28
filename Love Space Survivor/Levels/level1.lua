@@ -8,7 +8,7 @@ function level.load()
 
 	level.enemyMissileColor = {254, 35,40}
 
-	level.killsToWin = 500
+	level.killsToWin = 1000
 
 	level.reload()
 end
@@ -77,17 +77,17 @@ function level.update(dt)
 			level.enemyHealth = level.enemyHealth + 1
 		end	
 
-		level.killThreshold = level.killThreshold + 20
+		level.killThreshold = level.killThreshold + 25
 	end
 
 	level.enemySpawnRateTimer = level.enemySpawnRateTimer - dt
 	if level.enemySpawnRateTimer <= 0 then
 		level.enemySpawnRateTimer = level.enemySpawnRateSlowdown
 		level.enemySpawnRateSlowdown = level.enemySpawnRateSlowdown + 0.125
-		if level.enemySpawnSlowdown > 0.1 then
+		if level.enemySpawnSlowdown > 0.06 then
 			level.enemySpawnSlowdown = level.enemySpawnSlowdown - 0.125
-			if level.enemySpawnSlowdown < 0.1 then
-				level.enemySpawnSlowdown = 0.1
+			if level.enemySpawnSlowdown < 0.06 then
+				level.enemySpawnSlowdown = 0.06
 			end
 		end
 	end
