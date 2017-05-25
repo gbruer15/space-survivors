@@ -61,7 +61,7 @@ function boolBox:draw(blur)
 end
 
 function boolBox:mousepressed(x,y,button)
-	if button=='l' then
+	if button==1 then
 		self.value = self.hover
 	end
 end

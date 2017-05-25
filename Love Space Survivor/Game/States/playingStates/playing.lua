@@ -232,7 +232,7 @@ function state.keypressed(key)
 end
 
 function state.mousepressed(x,y,button)
-	if button == 'r' then
+	if button == 2 then
 		STATE.paused = true
 		return
 	end

@@ -39,7 +39,7 @@ function state.keypressed(key)
 end
 
 function state.mousepressed(x,y,button)
-	if button == 'l' and STATE.player.drawBox:collidePoint(x,y) and not state.countdown then
+	if button == 1 and STATE.player.drawBox:collidePoint(x,y) and not state.countdown then
 		state.countdown = 3
 	end
 end

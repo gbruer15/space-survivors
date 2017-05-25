@@ -2215,8 +2215,9 @@ while True :
 
                         if event.button == 1:
                             tooexpensive = False                    
-                                    
+                            print(event.pos)
                             if player.collidepoint(event.pos):
+                                print(event.pos)
                                 pause = False
 
                             if quitlevelbutton.collidepoint(event.pos):
