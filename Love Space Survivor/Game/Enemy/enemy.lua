@@ -11,6 +11,7 @@ function enemy.make(att)
 	self.y = att.y or 0
 
 	self.Image = att.Image or images.enemySpaceship
+	self.color = att.color or {255, 255, 255}
 
 	local width = att.width or 50
 	local scale = width/self.Image.width
@@ -58,20 +59,20 @@ function enemy:update(dt)
 end
 
 function enemy:draw(drawColBox, colBoxMode)
-	love.graphics.setColor(255,255,255)
+	love.graphics.setColor(self.color)
 	if self.HELP then
-		love.graphics.setColor(255,255,0)
+		love.graphics.setColor(self.color[1],self.color[2],0)
 	end
 	love.graphics.draw(self.Image.image,self.drawBox:getLeft(),self.drawBox:getTop(),0,self.drawBox.width/self.Image.width, self.drawBox.height/self.Image.height)
 
-	if drawColBox or true then
+	if drawColBox then
 		love.graphics.setColor(color or {0,255,0,255})
 		if self.HELP then
 			love.graphics.setColor(255,255,0)
 		end
-		--self.collisionBox:draw(colBoxMode or 'line')
-		--local p = self:getPolygon()
-		--love.graphics.polygon('line',p)
+		self.collisionBox:draw(colBoxMode or 'line')
+		-- local p = self:getPolygon()
+		-- love.graphics.polygon('line',p)
 	end
 end
 
@@ -84,6 +85,7 @@ function enemy:fireMissile()
 													,width=5 --* self.drawBox.width / 60
 												}
 											)
+	sounds.chirp:play()
 end
 
 function enemy:updatePolygon()

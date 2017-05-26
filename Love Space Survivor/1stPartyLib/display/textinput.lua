@@ -1,7 +1,7 @@
 	
 function textinput(maxchar)
 	local maxchar = maxchar or 256
-	local acceptableinput = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','1','2','3','4','5','6','7','8','9','0',' '}
+	local acceptableinput = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','1','2','3','4','5','6','7','8','9','0','space'}
 	local oldkeypressed = love.keypressed
 	local oldmousepressed = love.mousepressed
 
@@ -35,6 +35,7 @@ function textinput(maxchar)
 						if love.keyboard.isDown('lshift') or love.keyboard.isDown('shift') then
 							key = key:upper()
 						end
+						if key == 'space' then key = ' ' end
 						inputstring = string.sub(inputstring,1,insertat) .. key .. string.sub(inputstring,insertat+1)
 						insertat = insertat + 1
 					end

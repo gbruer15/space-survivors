@@ -50,7 +50,7 @@ function state.draw()
 end
 
 function state.keypressed(key)
-	if key == ' ' then
+	if key == 'space' then
 		STATE = require("Game/States/levelselect")
 		STATE.load()
 	end

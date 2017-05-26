@@ -37,6 +37,7 @@ function state.load()
 									}
 
 	state.text = 'You won!'
+	-- sounds.winning_noises:play()
 end
 
 function state.update(dt)

@@ -56,12 +56,16 @@ outlines.basicOutline = outline.make{
 
 
 ------Music----------
-music = {}
-fonts = {}
 
-fonts.basic = {}
+music = {}
 
 music.first = love.audio.newSource(GOOD_SOUNDS_PATH .. 'First.mp3', 'stream')
+
+
+------Fonts----------
+
+fonts = {}
+fonts.basic = {}
 local sizes = {10, 12, 14, 16, 20, 24, 36, 48, 60}
 
 for i, v in ipairs(sizes) do
@@ -69,4 +73,15 @@ for i, v in ipairs(sizes) do
 end
 
 
+------Sounds----------
+
+sounds = {}
+
+sounds.chirp = love.audio.newSource(GOOD_SOUNDS_PATH .. 'chirp.wav', 'static')
+sounds.explosion = love.audio.newSource(GOOD_SOUNDS_PATH .. 'explosion.wav', 'static')
+sounds.enemies = love.audio.newSource(GOOD_SOUNDS_PATH .. 'enemies.wav', 'static')
+sounds.whoosh = love.audio.newSource(GOOD_SOUNDS_PATH .. 'whoosh.wav', 'static')
+sounds.dying_noises = love.audio.newSource(GOOD_SOUNDS_PATH .. 'dying_noises.wav', 'static')
+sounds.winning_noises = love.audio.newSource(GOOD_SOUNDS_PATH .. 'winning_noises.wav', 'static')
+sounds.sneeze = love.audio.newSource(GOOD_SOUNDS_PATH .. 'sneeze.mp3', 'static')
 

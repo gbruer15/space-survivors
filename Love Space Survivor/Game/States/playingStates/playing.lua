@@ -156,6 +156,7 @@ function state.update(dt)
 														,text = '+$' .. v.loot
 														,color={0,255,0}
 							})
+			sounds.explosion:play()
 		elseif collision.polygons(STATE.player.polygon,v.polygon) then--STATE.player.collisionBox:collideRectangle(v.collisionBox) then
 			v.HELP = true
 			print('enemy')

@@ -78,6 +78,8 @@ function playerfunctions.make(att)
 
 	self.polygon = {}
 	self:updatePolygon()
+
+	self.mouseControl = true
 	
 	return self
 end
@@ -153,7 +155,7 @@ function playerfunctions:draw(drawColBox,colBoxMode,color)
 	end
 	if drawColBox then
 		love.graphics.setColor(color or {0,255,0,100})
-		--self.collisionBox:draw(colBoxMode or 'line')
+		self.collisionBox:draw(colBoxMode or 'line')
 	end
 end
 
@@ -298,10 +300,25 @@ function playerfunctions:fireMegaLaser()
 end
 
 function playerfunctions:updatePolygon()
-	for i=1,#self.imagePoints-1,2 do
-		self.polygon[i] = self.imagePoints[i]+self.x
-		self.polygon[i+1] = self.imagePoints[i+1] + self.y
-	end
+	-- set polygon to collision box
+	local l,t, w,h = self.collisionBox:getRect()
+	self.polygon[1] = l
+	self.polygon[2] = t
+
+	self.polygon[3] = l+w
+	self.polygon[4] = t
+
+	self.polygon[5] = l+w
+	self.polygon[6] = t+h
+
+	self.polygon[7] = l
+	self.polygon[8] = t+h
+
+	-- This would make the collision box actually look like the player image
+	-- for i=1,#self.imagePoints-1,2 do
+	-- 	self.polygon[i] = self.imagePoints[i]+self.x
+	-- 	self.polygon[i+1] = self.imagePoints[i+1] + self.y
+	-- end
 	
 end
 

@@ -125,6 +125,7 @@ function state.load(n)
 	state.initializeStarryBackground(500)
 
 	state.screenshake = 0
+	die = true
 end
 
 function state.loadLevel(levelNumber)

@@ -15,6 +15,12 @@ function level.load()
 	level.maxBossHealth = 1000
 	level.maxBossSpeed = 400
 
+	level.maxEnemySize = 70
+	level.minEnemySize = 20
+
+	level.maxEnemySpeed = 120
+	level.minEnemySpeed = 40
+
 	level.boss = enemy.make{
 							Image=images.boss
 							,width= STATE.camera.width/3
@@ -31,6 +37,7 @@ function level.load()
 											,angle=math.pi/2
 										})
 		end
+		sounds.whoosh:play()
 	end
 
 	level.reload()
@@ -61,6 +68,12 @@ function level.reload()
 	level.boss.xspeed = 0
 	level.boss.fireDelay = 2.5
 	level.boss.fireCountdown = 10
+
+	level.isSneezing = false
+	level.sneezeSlowdown = 30
+	level.sneezeTimer = 30
+	level.sneezeBuildup = 0.55
+	level.sneezeDuration = 1.45
 
 	level.onDeath()
 end
@@ -97,6 +110,7 @@ function level.update(dt)
 		STATE.state = STATE.states.won
 		return
 	end
+
 
 	level.bossSpeedChangeTimer = level.bossSpeedChangeTimer - dt
 	if level.bossSpeedChangeTimer <= 0 then
@@ -141,6 +155,29 @@ function level.update(dt)
         level.maxBossSpeed = 880
     end
 
+	level.sneezeTimer = level.sneezeTimer - dt
+	if level.sneezeTimer <= 0 then
+		if level.isSneezing then
+			-- Spawn several enemies and lasers
+			local left = level.boss.drawBox:getLeft()
+			local bottom = level.boss.drawBox:getBottom()
+			local spacing = level.boss.drawBox.width/8
+			for i=1,7 do
+				level.spawnEnemy(left+i*spacing,bottom,nil,nil, math.random(-level.maxEnemySpeed, level.maxEnemySpeed), {255, 255, 0})
+			end
+
+			level.isSneezing = false
+			level.sneezeTimer = level.sneezeSlowdown
+		else
+			-- Start a sneeze
+			level.enemySpawnTimer = level.enemySpawnTimer + level.sneezeBuildup + level.sneezeDuration + 1
+			level.sneezeTimer = level.sneezeBuildup
+			level.isSneezing = true
+
+			sounds.sneeze:play()
+		end
+	end
+
 	level.enemySpawnTimer = level.enemySpawnTimer - dt
 	if level.enemySpawnTimer <= 0 then
 		level.enemySpawnTimer = level.enemySpawnSlowdown
@@ -151,6 +188,7 @@ function level.update(dt)
 		for i=1,4 do
 			level.spawnEnemy(left+i*spacing,bottom,enemyWidth,80)
 		end
+		sounds.enemies:play()
 	end
 end
 
@@ -167,7 +205,7 @@ function level.drawToHud(x,y,width,height)
 	love.graphics.rectangle('fill',x + padding, y+padding ,healthWidth,height-padding*2)
 end
 
-function level.spawnEnemy(x,y,width,yspeed)
+function level.spawnEnemy(x,y,width,yspeed, xspeed, color)
 	table.insert(STATE.enemies, enemy.make{
 										x = x or math.random(STATE.camera.x-STATE.camera.width/2,STATE.camera.x+STATE.camera.width/2)
 										,y = y or -level.maxEnemySpeed*1.5
@@ -177,6 +215,8 @@ function level.spawnEnemy(x,y,width,yspeed)
 										,width = width or math.random(level.minEnemySize, level.maxEnemySize)
 										,yspeed = yspeed or math.random(level.minEnemySpeed, level.maxEnemySpeed)
 										,firing= level.enemyMissileFire
+										,xspeed = xspeed
+										,color = color
 											})
 end
 

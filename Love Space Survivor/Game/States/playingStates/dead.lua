@@ -21,7 +21,7 @@ function state.load()
 								,trueText = 'Yes'
 								,falseText = 'No'
 							}
-
+	-- sounds.dying_noises:play()
 end
 
 function state.update(dt)
