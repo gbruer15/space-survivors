@@ -4,7 +4,7 @@ pygame.mixer.pre_init(44100, -16, 2, 2048)
 pygame.init()
 mainClock = pygame.time.Clock()
 #from time import clock, time
-
+print("Use Python3 because of integer division in Python2")
 highscore = 0
 score = 0
 FPS = 40
